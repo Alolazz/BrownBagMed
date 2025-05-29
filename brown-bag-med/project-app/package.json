@@ -1,0 +1,21 @@
+{
+  "name": "project-app",
+  "version": "1.0.0",
+  "description": "A project that includes payment processing with Bitcoin.",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "build": "tsc",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0",
+    "bitcoinjs-lib": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
