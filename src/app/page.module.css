@@ -169,6 +169,84 @@
   margin: 0;
 }
 
+/* Why Trust Us Section */
+.trustSection {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.trustContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trustTitle {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  color: #1e40af;
+  margin: 0 0 60px 0;
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.trustCard {
+  padding: 32px 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.trustCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+}
+
+.trustCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15);
+  border-color: #dbeafe;
+}
+
+.trustIcon {
+  display: inline-flex;
+  padding: 20px;
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-radius: 20px;
+  color: #2563eb;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.1);
+}
+
+.trustCardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e40af;
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+}
+
+.trustCardDescription {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+}
+
 /* Footer */
 .footer {
   padding: 40px 20px;
@@ -225,6 +303,24 @@
   .features {
     padding: 60px 20px;
   }
+
+  .trustSection {
+    padding: 60px 20px;
+  }
+
+  .trustTitle {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .trustGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .trustCard {
+    padding: 28px 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -252,5 +348,17 @@
 
   .featureCard {
     padding: 32px 24px;
+  }
+
+  .trustTitle {
+    font-size: 24px;
+  }
+
+  .trustCardTitle {
+    font-size: 18px;
+  }
+
+  .trustCardDescription {
+    font-size: 14px;
   }
 }
