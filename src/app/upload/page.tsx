@@ -11,9 +11,24 @@ export default function UploadPage () {
   const [uploadMessage, setUploadMessage] = useState('')
   const router = useRouter()
 
+  // New state for optional health info
+  const [healthInfo, setHealthInfo] = useState({
+    dateOfBirth: '',
+    medicalConditions: '',
+    knownAllergies: '',
+    additionalComments: ''
+  })
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFiles(e.target.files)
     setUploadMessage('')
+  }
+
+  const handleHealthInfoChange = (field: string, value: string) => {
+    setHealthInfo(prev => ({
+      ...prev,
+      [field]: value
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,6 +55,9 @@ export default function UploadPage () {
         formData.append('files', files[i])
       }
 
+      // Add health information as JSON
+      formData.append('healthInfo', JSON.stringify(healthInfo))
+
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData
@@ -51,8 +69,8 @@ export default function UploadPage () {
 
       const result = await response.json()
 
-      // Redirect to the report page with the patient ID
-      router.push(`/report/${result.patientId}`)
+      // Redirect to the confirmation page with the patient ID
+      router.push(`/confirmation/${result.patientId}`)
     } catch (error) {
       console.error('Upload error:', error)
       setUploadMessage('Upload failed. Please try again.')
@@ -200,6 +218,90 @@ export default function UploadPage () {
               </div>
             </div>
           )}
+
+          {/* Optional Health Info Section */}
+          <div className={styles.healthInfoSection}>
+            <h3 className={styles.healthInfoTitle}>Optional Health Info</h3>
+            <p className={styles.healthInfoSubtitle}>
+              This information helps our pharmacists provide more accurate
+              analysis (all fields are optional)
+            </p>
+
+            <div className={styles.healthInfoGrid}>
+              {/* Date of Birth */}
+              <div className={styles.inputGroup}>
+                <label htmlFor='dateOfBirth' className={styles.inputLabel}>
+                  Date of Birth
+                </label>
+                <input
+                  id='dateOfBirth'
+                  type='date'
+                  value={healthInfo.dateOfBirth}
+                  onChange={e =>
+                    handleHealthInfoChange('dateOfBirth', e.target.value)
+                  }
+                  className={styles.dateInput}
+                />
+              </div>
+
+              {/* Medical Conditions */}
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor='medicalConditions'
+                  className={styles.inputLabel}
+                >
+                  Medical Conditions
+                </label>
+                <textarea
+                  id='medicalConditions'
+                  placeholder='e.g. diabetes, hypertension'
+                  value={healthInfo.medicalConditions}
+                  onChange={e =>
+                    handleHealthInfoChange('medicalConditions', e.target.value)
+                  }
+                  className={styles.textareaInput}
+                  rows={3}
+                />
+              </div>
+
+              {/* Known Allergies */}
+              <div className={styles.inputGroup}>
+                <label htmlFor='knownAllergies' className={styles.inputLabel}>
+                  Known Allergies
+                </label>
+                <textarea
+                  id='knownAllergies'
+                  placeholder='e.g. penicillin, lactose'
+                  value={healthInfo.knownAllergies}
+                  onChange={e =>
+                    handleHealthInfoChange('knownAllergies', e.target.value)
+                  }
+                  className={styles.textareaInput}
+                  rows={3}
+                />
+              </div>
+
+              {/* Additional Comments */}
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor='additionalComments'
+                  className={styles.inputLabel}
+                >
+                  Additional Comments
+                </label>
+                <textarea
+                  id='additionalComments'
+                  placeholder="Anything else you'd like us to know?"
+                  value={healthInfo.additionalComments}
+                  onChange={e =>
+                    handleHealthInfoChange('additionalComments', e.target.value)
+                  }
+                  className={styles.textareaInput}
+                  rows={3}
+                />
+              </div>
+            </div>
+          </div>
 
           {/* Consent Checkbox */}
           <div className={styles.consentSection}>

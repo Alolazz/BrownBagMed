@@ -1,0 +1,21 @@
+{
+  "patientId": "patient_001",
+  "uploadTimestamp": "2025-05-29T18:40:49.202Z",
+  "filesCount": 1,
+  "files": [
+    {
+      "fileName": "medication_1.png",
+      "originalName": "ChatGPT Image May 29, 2025, 07_39_46 PM.png",
+      "size": 1026240,
+      "type": "image/png"
+    }
+  ],
+  "healthInfo": {
+    "dateOfBirth": null,
+    "medicalConditions": null,
+    "knownAllergies": null,
+    "additionalComments": null
+  },
+  "status": "uploaded",
+  "analysisStatus": "pending"
+}
