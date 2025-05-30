@@ -1,0 +1,14 @@
+{
+  "patientId": "patient_17ee90d6-06b2-4953-91c1-b146fc97a046",
+  "uploadDate": "2025-05-30T12:33:31.549Z",
+  "files": [
+    "medication_1.pdf"
+  ],
+  "healthInfo": {
+    "dateOfBirth": "",
+    "medicalConditions": [],
+    "knownAllergies": "",
+    "additionalComments": "",
+    "gender": ""
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "patientId": "patient_84e8397b-677d-4530-9b44-eddf5f10ebe8",
+  "uploadDate": "2025-05-29T21:34:11.272Z",
+  "files": [
+    "medication_1.png"
+  ],
+  "healthInfo": {
+    "dateOfBirth": "",
+    "medicalConditions": "gfh",
+    "knownAllergies": "",
+    "additionalComments": ""
+  }
+}

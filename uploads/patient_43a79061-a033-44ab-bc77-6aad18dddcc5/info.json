@@ -1,0 +1,17 @@
+{
+  "patientId": "patient_43a79061-a033-44ab-bc77-6aad18dddcc5",
+  "uploadDate": "2025-05-30T07:54:15.375Z",
+  "files": [
+    "medication_1.pdf"
+  ],
+  "healthInfo": {
+    "dateOfBirth": "1988-05-01",
+    "medicalConditions": [
+      "Asthma",
+      "Thyroid Disorder"
+    ],
+    "knownAllergies": "jh",
+    "additionalComments": "",
+    "gender": ""
+  }
+}

@@ -101,6 +101,40 @@
   font-style: italic;
 }
 
+.copyTextarea {
+  width: 100%;
+  min-height: 38px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 7px;
+  color: #1e293b;
+  font-size: 14px;
+  font-family: 'Geist Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+  padding: 7px 12px;
+  margin-bottom: 4px;
+  resize: none;
+  transition: border 0.2s;
+}
+
+.copyTextarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px #2563eb33;
+}
+
+/* Tooltip animation for copy button */
+@keyframes fade-in-out {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Add this class to the tooltip span if you want animation */
+.animate-fade-in-out {
+  animation: fade-in-out 1.8s linear;
+}
+
 /* Responsive design */
 @media (max-width: 640px) {
   .container {

@@ -2,7 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import CreatableSelect from 'react-select/creatable';
 import styles from './upload.module.css'
+
+// Explicit type for react-select options
+interface OptionType {
+  value: string;
+  label: string;
+}
 
 export default function UploadPage () {
   const [files, setFiles] = useState<FileList | null>(null)
@@ -14,17 +21,21 @@ export default function UploadPage () {
   // New state for optional health info
   const [healthInfo, setHealthInfo] = useState({
     dateOfBirth: '',
-    medicalConditions: '',
+    medicalConditions: [], // array of strings
     knownAllergies: '',
-    additionalComments: ''
+    additionalComments: '',
+    gender: ''
   })
+
+  // Use useState to generate a stable, client-only ID for react-select
+  const [medicalConditionsId] = useState(() => `react-select-${Math.random().toString(36).slice(2)}`);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFiles(e.target.files)
     setUploadMessage('')
   }
 
-  const handleHealthInfoChange = (field: string, value: string) => {
+  const handleHealthInfoChange = (field: string, value: string | string[]) => {
     setHealthInfo(prev => ({
       ...prev,
       [field]: value
@@ -55,8 +66,21 @@ export default function UploadPage () {
         formData.append('files', files[i])
       }
 
-      // Add health information as JSON
-      formData.append('healthInfo', JSON.stringify(healthInfo))
+      // Prepare health info for submission
+      let healthInfoToSend = { ...healthInfo }
+
+      // Convert dateOfBirth to ISO format if valid DD.MM.YYYY
+      if (healthInfo.dateOfBirth && /^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth)) {
+        const [day, month, year] = healthInfo.dateOfBirth.split('.')
+        healthInfoToSend.dateOfBirth = `${year}-${month}-${day}`
+      }
+
+      // If needed, convert array to string for backend
+      if (Array.isArray(healthInfo.medicalConditions)) {
+        healthInfoToSend.medicalConditions = healthInfo.medicalConditions.filter(Boolean)
+      }
+
+      formData.append('healthInfo', JSON.stringify(healthInfoToSend))
 
       const response = await fetch('/api/upload', {
         method: 'POST',
@@ -64,6 +88,8 @@ export default function UploadPage () {
       })
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Upload failed:', errorText);
         throw new Error('Upload failed')
       }
 
@@ -139,7 +165,7 @@ export default function UploadPage () {
               multiple
               accept='image/*,.pdf'
               onChange={handleFileChange}
-              className={styles.fileInput}
+              className={`${styles.fileInput} text-black bg-white placeholder-gray-500 border border-gray-300 p-2 w-full rounded`}
             />
           </div>
 
@@ -220,8 +246,8 @@ export default function UploadPage () {
           )}
 
           {/* Optional Health Info Section */}
-          <div className={styles.healthInfoSection}>
-            <h3 className={styles.healthInfoTitle}>Optional Health Info</h3>
+          <div className={styles.healthInfoSection + " bg-white/80"}>
+            <h3 className={styles.healthInfoTitle}> Basic Informations</h3>
             <p className={styles.healthInfoSubtitle}>
               This information helps our pharmacists provide more accurate
               analysis (all fields are optional)
@@ -235,32 +261,61 @@ export default function UploadPage () {
                 </label>
                 <input
                   id='dateOfBirth'
-                  type='date'
+                  type='text'
+                  inputMode='numeric'
+                  pattern='\d{2}\.\d{2}\.\d{4}'
+                  placeholder='DD.MM.YYYY'
                   value={healthInfo.dateOfBirth}
-                  onChange={e =>
-                    handleHealthInfoChange('dateOfBirth', e.target.value)
-                  }
-                  className={styles.dateInput}
+                  onChange={e => handleHealthInfoChange('dateOfBirth', e.target.value)}
+                  className={styles.dateInput + ' w-full'}
                 />
+                <span className="date-format-note">Format: DD.MM.YYYY</span>
               </div>
 
               {/* Medical Conditions */}
-              <div className={styles.inputGroup}>
-                <label
-                  htmlFor='medicalConditions'
-                  className={styles.inputLabel}
-                >
+              <div className={styles.inputGroup} style={{ position: 'relative', zIndex: 20 }}>
+                <label htmlFor={medicalConditionsId} className={styles.inputLabel}>
                   Medical Conditions
                 </label>
-                <textarea
-                  id='medicalConditions'
-                  placeholder='e.g. diabetes, hypertension'
-                  value={healthInfo.medicalConditions}
-                  onChange={e =>
-                    handleHealthInfoChange('medicalConditions', e.target.value)
+                <CreatableSelect<OptionType, true>
+                  inputId={medicalConditionsId}
+                  key={medicalConditionsId}
+                  isMulti
+                  placeholder="e.g. diabetes, hypertension..."
+                  options={[
+                    { value: 'Hypertension', label: 'Hypertension' },
+                    { value: 'Diabetes', label: 'Diabetes' },
+                    { value: 'Asthma', label: 'Asthma' },
+                    { value: 'COPD', label: 'COPD' },
+                    { value: 'Heart Disease', label: 'Heart Disease' },
+                    { value: 'Cancer', label: 'Cancer' },
+                    { value: 'Thyroid Disorder', label: 'Thyroid Disorder' },
+                    { value: 'Arthritis', label: 'Arthritis' },
+                    { value: 'Depression', label: 'Depression' },
+                    { value: 'Anxiety', label: 'Anxiety' },
+                  ]}
+                  value={Array.isArray(healthInfo.medicalConditions)
+                    ? healthInfo.medicalConditions.filter(Boolean).map((c) => ({ value: c, label: c }))
+                    : []}
+                  onChange={(selected) =>
+                    handleHealthInfoChange(
+                      'medicalConditions',
+                      Array.isArray(selected)
+                        ? selected.filter((opt): opt is OptionType => !!opt && typeof opt.value === 'string').map(opt => opt.value)
+                        : []
+                    )
                   }
-                  className={styles.textareaInput}
-                  rows={3}
+                  classNamePrefix="react-select"
+                  menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                  menuPosition="fixed"
+                  styles={{
+                    menuPortal: base => ({ ...base, zIndex: 9999 }),
+                    option: base => ({ ...base, color: '#000', backgroundColor: '#fff' }),
+                    menu: base => ({ ...base, backgroundColor: '#fff' }),
+                    multiValueRemove: base => ({ ...base, display: 'none' }), // Remove the small empty square/icon
+                  }}
+                  isClearable
+                  aria-label="Medical Conditions"
                 />
               </div>
 
@@ -273,10 +328,8 @@ export default function UploadPage () {
                   id='knownAllergies'
                   placeholder='e.g. penicillin, lactose'
                   value={healthInfo.knownAllergies}
-                  onChange={e =>
-                    handleHealthInfoChange('knownAllergies', e.target.value)
-                  }
-                  className={styles.textareaInput}
+                  onChange={e => handleHealthInfoChange('knownAllergies', e.target.value)}
+                  className="bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                   rows={3}
                 />
               </div>
@@ -293,72 +346,70 @@ export default function UploadPage () {
                   id='additionalComments'
                   placeholder="Anything else you'd like us to know?"
                   value={healthInfo.additionalComments}
-                  onChange={e =>
-                    handleHealthInfoChange('additionalComments', e.target.value)
-                  }
-                  className={styles.textareaInput}
+                  onChange={e => handleHealthInfoChange('additionalComments', e.target.value)}
+                  className="bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                   rows={3}
                 />
+              </div>
+
+              {/* Gender Selection */}
+              <div className={styles.inputGroup}>
+                <label htmlFor="gender" className={styles.inputLabel}>
+                  Gender
+                </label>
+                <select
+                  id="gender"
+                  value={healthInfo.gender || ''}
+                  onChange={e => handleHealthInfoChange('gender', e.target.value)}
+                  className="dateInput" // uses same styling as other inputs
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </div>
             </div>
           </div>
 
-          {/* Consent Checkbox */}
-          <div className={styles.consentSection}>
-            <label className={styles.checkboxLabel}>
+          {/* Agreement Checkbox */}
+          <div className={styles.agreementSection}>
+            <label className={styles.agreementLabel}>
               <input
-                type='checkbox'
+                type="checkbox"
                 checked={isAgreed}
                 onChange={e => setIsAgreed(e.target.checked)}
-                className={styles.checkbox}
+                className={styles.agreementCheckbox}
               />
-              <span className={styles.checkboxText}>
-                I agree that my medications will be analyzed anonymously for
-                clinical safety
+              <span className={styles.agreementText}>
+                I agree to the{' '}
+                <a
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.agreementLink}
+                >
+                  terms of anonymous analysis
+                </a>
               </span>
             </label>
           </div>
 
-          {/* Upload Message */}
-          {uploadMessage && (
-            <div className={styles.message}>{uploadMessage}</div>
-          )}
-
           {/* Submit Button */}
           <button
             type='submit'
-            disabled={!files || files.length === 0 || !isAgreed || isUploading}
-            className={styles.submitButton}
+            className={`${styles.submitButton} ${
+              isUploading ? styles.uploading : ''
+            }`}
+            disabled={isUploading}
           >
-            {isUploading ? (
-              <div className={styles.loadingContainer}>
-                <div className={styles.spinner}></div>
-                <span>Uploading...</span>
-              </div>
-            ) : (
-              'Upload for Analysis'
-            )}
+            {isUploading ? 'Uploading...' : 'Upload Medications'}
           </button>
-        </form>
 
-        {/* Information Section */}
-        <div className={styles.infoSection}>
-          <h3 className={styles.infoTitle}>What happens next?</h3>
-          <div className={styles.infoGrid}>
-            <div className={styles.infoItem}>
-              <div className={styles.infoNumber}>1</div>
-              <p>Your files are uploaded securely and anonymously</p>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.infoNumber}>2</div>
-              <p>Licensed pharmacists review your medications</p>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.infoNumber}>3</div>
-              <p>You receive a detailed safety analysis report</p>
-            </div>
-          </div>
-        </div>
+          {/* Upload Message */}
+          {uploadMessage && (
+            <p className={styles.uploadMessage}>{uploadMessage}</p>
+          )}
+        </form>
       </div>
     </div>
   )

@@ -1,0 +1,13 @@
+{
+  "patientId": "patient_d00cbd1a-6aff-43d5-91f6-c41cf0a394c0",
+  "uploadDate": "2025-05-29T22:05:54.339Z",
+  "files": [
+    "medication_1.pdf"
+  ],
+  "healthInfo": {
+    "dateOfBirth": "",
+    "medicalConditions": "hsadyye\njsdhfsd",
+    "knownAllergies": "sdkhhywek",
+    "additionalComments": "hhdfyashkkdfksdlfsdlkfjsuefhsdfuhrhfsufdsfkshrrfscsd"
+  }
+}

@@ -177,13 +177,13 @@
 
 /* Consent Section */
 .consentSection {
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
+  background: #7c1010;
+  border: 1px solid #000000;
   border-radius: 12px;
   padding: 20px;
 }
 
-.checkboxLabel {
+.checkboxLabel, .agreementLabel {
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -198,10 +198,16 @@
   cursor: pointer;
 }
 
-.checkboxText {
+.checkboxText, .agreementText {
   font-size: 16px;
-  color: #92400e;
+  color: #1f2937 !important; /* Tailwind text-gray-800 */
   line-height: 1.5;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.consentSection, .agreementSection {
+  color: unset !important;
 }
 
 /* Message */
@@ -316,8 +322,8 @@
 
 /* Optional Health Info Section */
 .healthInfoSection {
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
+  background: #f8fafc; /* match .page and .filesSection backgrounds for homogeneity */
+  border: 1px solid #e2e8f0; /* match .filesSection border */
   border-radius: 12px;
   padding: 32px;
   margin: 8px 0;
@@ -356,43 +362,159 @@
   margin-bottom: 4px;
 }
 
-.dateInput {
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-  background: #ffffff;
-  transition: all 0.2s ease;
-  font-family: inherit;
+/* --- Homogenize all input/select/textarea and react-select styles for upload page --- */
+.inputGroup input,
+.inputGroup textarea,
+.inputGroup select,
+.react-select__control {
+  background: #fff !important;
+  color: #111827 !important;
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  min-height: 44px !important;
+  font-size: 14px !important;
+  font-family: inherit !important;
+  box-shadow: none !important;
+  padding: 12px 16px !important;
+  transition: all 0.2s ease !important;
+}
+.inputGroup input:focus,
+.inputGroup textarea:focus,
+.inputGroup select:focus,
+.react-select__control--is-focused {
+  outline: none !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
+}
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder,
+.react-select__placeholder {
+  color: #6b7280 !important;
+  font-size: 14px !important;
+}
+.react-select__input-container {
+  color: #111827 !important;
+  background: #fff !important;
+}
+.react-select__multi-value {
+  background: #f1f5f9 !important;
+  border-radius: 6px !important;
+}
+.react-select__multi-value__label {
+  color: #1e40af !important;
+  font-size: 14px !important;
+}
+.react-select__menu {
+  z-index: 9999 !important;
+  background: #fff !important;
+  color: #111827 !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+}
+.react-select__option {
+  color: #1e293b !important; /* slate-800 for best readability */
+  background: #fff !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  transition: background 0.2s;
+  padding: 12px 18px !important;
+}
+.react-select__option--is-focused {
+  background: #e0e7ef !important; /* blue-100 */
+  color: #2563eb !important; /* blue-600 */
+}
+.react-select__option--is-selected {
+  background: #2563eb !important;
+  color: #fff !important;
+}
+.react-select__menu {
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(37,99,235,0.13), 0 2px 8px rgba(0,0,0,0.06);
+  padding: 8px 0 !important;
+  border: 1.5px solid #e0e7ef !important;
+}
+.react-select__single-value {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+.react-select__multi-value {
+  background: #e0e7ef !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  padding: 2px 8px !important;
+}
+.react-select__multi-value__label {
+  color: #2563eb !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+.react-select__multi-value__remove {
+  display: none !important;
+  width: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  background: none !important;
+  border: none !important;
+}
+.react-select__placeholder {
+  color: #64748b !important; /* slate-400 */
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+.react-select__control {
+  background: #fff !important;
+  border-radius: 10px !important;
+  border: 2px solid #e2e8f0 !important;
+  min-height: 48px !important;
+  font-size: 16px !important;
+  font-family: inherit !important;
+  box-shadow: none !important;
+  padding: 0 4px !important;
+  transition: border 0.2s;
+}
+.react-select__control--is-focused {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.12) !important;
+}
+.react-select__indicator-separator {
+  display: none !important;
+}
+.react-select__dropdown-indicator {
+  color: #2563eb !important;
+  opacity: 0.9;
+}
+.react-select__dropdown-indicator:hover {
+  color: #1e40af !important;
 }
 
-.dateInput:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+/* Date format note - more professional, subtle, and readable */
+.inputGroup :global(.date-format-note) {
+  color: #2563eb !important;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-size: 13px !important;
+  margin-top: 4px !important;
+  font-weight: 500;
+  display: block;
+  padding: 2px 10px 2px 8px;
+  letter-spacing: 0.01em;
 }
 
-.textareaInput {
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-  background: #ffffff;
-  transition: all 0.2s ease;
-  resize: vertical;
-  min-height: 80px;
-  font-family: inherit;
-  line-height: 1.5;
+/* Agreement Checkbox - blue accent, scoped to module */
+.agreementCheckbox {
+  accent-color: #2563eb;
+  background-color: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(171, 173, 201, 0.76);
+  transition: border 0.2s;
 }
-
-.textareaInput:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.textareaInput::placeholder {
-  color: #9ca3af;
+.agreementCheckbox:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
 }
 
 /* Responsive Design */
@@ -482,3 +604,4 @@
     font-size: 14px;
   }
 }
+

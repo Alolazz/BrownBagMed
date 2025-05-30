@@ -114,6 +114,25 @@ export default function Home () {
         </div>
       </section>
 
+      {/* Pricing Link Section */}
+      <div style={{ textAlign: 'center', margin: '32px 0 0 0' }}>
+        <a
+          href="/pricing"
+          style={{
+            color: '#2563eb',
+            fontWeight: 600,
+            fontSize: 18,
+            textDecoration: 'underline',
+            display: 'inline-block',
+            marginTop: 8,
+            letterSpacing: '0.01em',
+            transition: 'color 0.2s',
+          }}
+        >
+          See our Pricing Plans &rarr;
+        </a>
+      </div>
+
       {/* Features Section */}
       <section className={styles.features}>
         <div className={styles.featuresContainer}>
@@ -199,10 +218,10 @@ export default function Home () {
         </div>
       </section>
 
-      {/* Why Trust Us Section */}
+      {/* Clinical Excellence Section */}
       <section className={styles.trustSection}>
         <div className={styles.trustContainer}>
-          <h2 className={styles.trustTitle}>Why Trust Us</h2>
+          <h2 className={styles.trustTitle}>Clinical Excellence</h2>
 
           <div className={styles.trustGrid}>
             {/* Licensed Pharmacists */}
@@ -310,6 +329,10 @@ export default function Home () {
           <p className={styles.footerText}>
             GDPR-compliant • No personal data collected • Anonymous analysis
           </p>
+          <div style={{ marginTop: 12, fontSize: 14 }}>
+            <a href="/privacy" style={{ color: '#2563eb', marginRight: 18 }}>Privacy Policy</a>
+            <a href="/terms" style={{ color: '#2563eb' }}>Terms of Service</a>
+          </div>
         </div>
       </footer>
     </div>

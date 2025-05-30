@@ -1,59 +1,100 @@
 'use client'
 
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import { useParams, usePathname } from 'next/navigation'
 import styles from './confirmation.module.css'
 
-export default function ConfirmationPage () {
+export default function ConfirmationPage() {
   const params = useParams()
   const patientId = params.patientId as string
+  const [reportReady, setReportReady] = useState<null | boolean>(null)
+  const [checking, setChecking] = useState(true)
+  const [copied, setCopied] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const pathname = usePathname()
+
+  // Build the full URL for copy
+  const fullUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}${pathname}`
+    : pathname
+
+  useEffect(() => {
+    if (!patientId) return
+    setChecking(true)
+    fetch(`/api/checkReportReady?patientId=${encodeURIComponent(patientId)}`)
+      .then(res => res.json())
+      .then(data => {
+        setReportReady(!!data.exists)
+        setChecking(false)
+      })
+      .catch(() => {
+        setReportReady(null)
+        setChecking(false)
+      })
+  }, [patientId])
+
+  const handleCopy = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard.writeText(fullUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    }
+  }
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.content}>
-          {/* Success Icon */}
-          <div className={styles.iconContainer}>
-            <svg
-              className={styles.successIcon}
-              width='64'
-              height='64'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
+          <h1 className={styles.title}>Thank you for your submission!</h1>
+          {checking ? (
+            <p className={styles.message}>Checking report status...</p>
+          ) : reportReady ? (
+            <>
+              <p className={styles.message}>
+                <span role="img" aria-label="ready">✅</span> Your medication analysis is ready. Click below to download your report.
+              </p>
+              <a
+                href={`/uploads/${patientId}/report.pdf`}
+                className={styles.reportButton}
+                download
+              >
+                <span role="img" aria-label="download">🔽</span> Download Report PDF
+              </a>
+            </>
+          ) : (
+            <>
+              <p className={styles.message}>
+                <span role="img" aria-label="waiting">⏳</span> Your report is being prepared. Please check again in 24–72 hours.
+              </p>
+            </>
+          )}
+          <div style={{ width: '100%', marginTop: 24 }}>
+            <textarea
+              ref={textareaRef}
+              className={styles.copyTextarea}
+              value={fullUrl}
+              readOnly
+              rows={2}
+              aria-label="Page link"
+              onFocus={e => e.target.select()}
+              style={{ marginBottom: 8 }}
+            />
+            <button
+              onClick={handleCopy}
+              className={styles.reportButton}
+              type="button"
+              style={{ marginBottom: 4 }}
             >
-              <circle cx='12' cy='12' r='10' />
-              <polyline points='9,12 12,15 23,4' />
-            </svg>
-          </div>
-
-          {/* Success Message */}
-          <h1 className={styles.title}>Upload Successful!</h1>
-
-          <p className={styles.message}>
-            Your medication files have been uploaded successfully and are being
-            analyzed by our licensed pharmacists.
-          </p>
-
-          <p className={styles.submessage}>
-            You can now view your analysis report or bookmark it for later
-            reference.
-          </p>
-
-          {/* Action Button */}
-          <Link href={`/report/${patientId}`} className={styles.reportButton}>
-            Go to My Report
-          </Link>
-
-          {/* Additional Info */}
-          <div className={styles.infoBox}>
-            <p className={styles.infoText}>
-              <strong>Patient ID:</strong> {patientId}
-            </p>
-            <p className={styles.infoSubtext}>
-              Save this ID to access your report later
-            </p>
+              Copy Link
+              {copied && (
+                <span className="animate-fade-in-out" style={{ marginLeft: 8, fontSize: 13, color: '#2563eb' }}>
+                  Link copied!
+                </span>
+              )}
+            </button>
+            <div style={{ color: '#64748b', fontSize: 13, marginTop: 2 }}>
+              <span role="img" aria-label="tip">📎</span> Tip: Save this link or check back within 24–72 hours.
+            </div>
           </div>
         </div>
       </div>
