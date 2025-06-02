@@ -11,6 +11,15 @@ export default function TermsOfServicePage() {
           <li><b>Limitation of Liability</b><br />To the extent permitted by law, Brown Bag Med is not liable for any damages arising from use of our service.</li>
           <li><b>Changes</b><br />We may update these terms; continued use constitutes acceptance. Notifications will be posted on this page.</li>
         </ol>
+        <section style={{ marginTop: '2.5rem' }}>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem' }}>Disclaimer</h2>
+          <p className="text-xs text-gray-400 mt-2">
+            Brown Bag Med does not provide medical diagnoses or replace physician consultation. All services are pharmaceutical consultations by a licensed pharmacist and comply with §20 ApBetrO (Germany).
+          </p>
+          <p className="text-xs text-gray-400 mt-2">
+            Brown Bag Med provides medication analysis services for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult your physician or pharmacist before making any changes to your medication.
+          </p>
+        </section>
       </div>
     </main>
   );

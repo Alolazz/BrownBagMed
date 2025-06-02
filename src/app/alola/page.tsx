@@ -2,7 +2,7 @@ import React from "react";
 import prisma from "@/app/models/patient";
 import Link from "next/link";
 
-export default async function AdminDashboard() {
+export default async function AlolaDashboard() {
   // Fetch all patients from Prisma
   const patients = await prisma.patient.findMany({
     orderBy: { uploadedAt: "desc" }
@@ -11,7 +11,7 @@ export default async function AdminDashboard() {
   return (
     <main className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
       <div className="w-full max-w-6xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Admin Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Alola Dashboard</h1>
         <div className="overflow-x-auto bg-white rounded shadow">
           <table className="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
             <thead className="bg-gray-100">
@@ -51,7 +51,7 @@ export default async function AdminDashboard() {
                   </td>
                   <td className="px-4 py-2">
                     <Link
-                      href={`/admin/${p.id}`}
+                      href={`/alola/${p.id}`}
                       className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700"
                     >
                       View Files

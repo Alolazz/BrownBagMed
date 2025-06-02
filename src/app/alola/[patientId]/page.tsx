@@ -17,7 +17,7 @@ export default function PatientDetailPage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`/api/admin/listFiles?patientId=${patientId}`);
+        const res = await fetch(`/api/alola/listFiles?patientId=${patientId}`);
         if (!res.ok) throw new Error("Could not load files");
         const data = await res.json();
         setFiles(data.files || []);
@@ -43,7 +43,7 @@ export default function PatientDetailPage() {
     const formData = new FormData();
     formData.append("report", file);
     try {
-      const res = await fetch(`/api/admin/uploadReport?patientId=${patientId}`, {
+      const res = await fetch(`/api/alola/uploadReport?patientId=${patientId}`, {
         method: "POST",
         body: formData,
       });
@@ -75,7 +75,7 @@ export default function PatientDetailPage() {
                 <li key={filename} className="flex items-center justify-between py-2">
                   <span className="truncate mr-2">{filename}</span>
                   <a
-                    href={`/api/admin/download?patientId=${patientId}&filename=${encodeURIComponent(filename)}`}
+                    href={`/api/alola/download?patientId=${patientId}&filename=${encodeURIComponent(filename)}`}
                     className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
                     download
                   >

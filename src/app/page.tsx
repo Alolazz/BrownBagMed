@@ -158,7 +158,7 @@ export default function Home () {
               </div>
               <h3 className={styles.featureTitle}>Interaction Check</h3>
               <p className={styles.featureDescription}>
-                We examine your medications for potential interactions.
+                We help you make sense of your medications — what they’re for, how they interact, and whether they’re still needed.
               </p>
             </div>
 
@@ -224,99 +224,70 @@ export default function Home () {
           <h2 className={styles.trustTitle}>Clinical Excellence</h2>
 
           <div className={styles.trustGrid}>
-            {/* Licensed Pharmacists */}
+            {/* Licensed Medication Experts */}
             <div className={styles.trustCard}>
               <div className={styles.trustIcon}>
-                <svg
-                  width='48'
-                  height='48'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                >
-                  <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-                  <circle cx='12' cy='12' r='3' />
-                </svg>
+                {/* UserCheckIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg>
               </div>
-              <h3 className={styles.trustCardTitle}>Licensed Pharmacists</h3>
+              <h3 className={styles.trustCardTitle}>Licensed Medication Experts</h3>
               <p className={styles.trustCardDescription}>
-                Our medication reviews are conducted by licensed pharmacists
-                with clinical AMTS training in Germany.
+                Your medications are carefully reviewed by certified pharmacists with AMTS training, ensuring safe and structured analysis backed by clinical expertise.
               </p>
             </div>
-
             {/* German AMTS Standards */}
             <div className={styles.trustCard}>
               <div className={styles.trustIcon}>
-                <svg
-                  width='48'
-                  height='48'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                >
-                  <path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' />
-                  <path d='M9 12l2 2 4-4' />
-                </svg>
+                {/* ShieldCheckIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
               </div>
               <h3 className={styles.trustCardTitle}>German AMTS Standards</h3>
               <p className={styles.trustCardDescription}>
-                We follow German AMTS (Arzneimitteltherapiesicherheit) standards
-                for drug interaction checks, dosing analysis, and personalized
-                medication safety.
+                We follow Arzneimitteltherapiesicherheit (AMTS) principles — Germany’s gold standard for medication safety and drug interaction checks.
               </p>
             </div>
-
-            {/* Manual Professional Review */}
+            {/* Reviewed & Delivered Fast */}
             <div className={styles.trustCard}>
               <div className={styles.trustIcon}>
-                <svg
-                  width='48'
-                  height='48'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                >
-                  <path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z' />
-                  <polyline points='14,2 14,8 20,8' />
-                  <line x1='16' y1='13' x2='8' y2='13' />
-                  <line x1='16' y1='17' x2='8' y2='17' />
-                  <polyline points='10,9 9,9 8,9' />
-                  <path d='M9 12l2 2 4-4' />
-                </svg>
+                {/* ClockIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
               </div>
-              <h3 className={styles.trustCardTitle}>
-                Manual Professional Review
-              </h3>
+              <h3 className={styles.trustCardTitle}>Reviewed &amp; Delivered Fast</h3>
               <p className={styles.trustCardDescription}>
-                Every report is reviewed manually by professionals — not an
-                automated system.
+                We deliver your medication review within 72 hours. Fast, accurate, and personally tailored for you.
               </p>
             </div>
-
-            {/* GDPR Compliant */}
+            {/* Privacy by Design */}
             <div className={styles.trustCard}>
               <div className={styles.trustIcon}>
-                <svg
-                  width='48'
-                  height='48'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                >
-                  <rect x='3' y='11' width='18' height='11' rx='2' ry='2' />
-                  <circle cx='12' cy='16' r='1' />
-                  <path d='M7 11V7a5 5 0 0 1 10 0v4' />
-                </svg>
+                {/* LockClosedIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><circle cx="12" cy="16" r="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </div>
-              <h3 className={styles.trustCardTitle}>GDPR Compliant</h3>
+              <h3 className={styles.trustCardTitle}>Privacy by Design</h3>
               <p className={styles.trustCardDescription}>
-                We never store personal data. All uploads are anonymous and
-                GDPR-compliant.
+                We never store personal data. All uploads are anonymous and GDPR-compliant.
+              </p>
+            </div>
+            {/* Trust & Credentials */}
+            <div className={styles.trustCard}>
+              <div className={styles.trustIcon}>
+                {/* BadgeCheckIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 3l2.09 6.26L21 9.27l-5 4.87L17.18 21 12 17.27 6.82 21 8 14.14l-5-4.87 6.91-1.01z"/><path d="M9 12l2 2 4-4" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </div>
+              <h3 className={styles.trustCardTitle}>Trust &amp; Credentials</h3>
+              <p className={styles.trustCardDescription}>
+                Our team is led by a licensed pharmacist and certified healthcare professional in the EU/EEA/CH, with more than 15 years of clinical and pharmaceutical experience. Credibility and expertise you can trust.
+              </p>
+            </div>
+            {/* Multilingual Support */}
+            <div className={styles.trustCard}>
+              <div className={styles.trustIcon}>
+                {/* GlobeIcon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+              </div>
+              <h3 className={styles.trustCardTitle}>Multilingual Support</h3>
+              <p className={styles.trustCardDescription}>
+                Available in English, German, and Arabic — because better medication safety should be accessible to everyone.
               </p>
             </div>
           </div>
@@ -326,12 +297,12 @@ export default function Home () {
       {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <p className={styles.footerText}>
-            GDPR-compliant • No personal data collected • Anonymous analysis
-          </p>
+          <div className="mt-2 text-sm text-gray-500">
+            {/* Disclaimer moved to Terms & Conditions page */}
+          </div>
           <div style={{ marginTop: 12, fontSize: 14 }}>
             <a href="/privacy" style={{ color: '#2563eb', marginRight: 18 }}>Privacy Policy</a>
-            <a href="/terms" style={{ color: '#2563eb' }}>Terms of Service</a>
+            <a href="/terms" style={{ color: '#2563eb', marginRight: 18 }}>Terms &amp; Conditions</a>
           </div>
         </div>
       </footer>
