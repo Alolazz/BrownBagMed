@@ -114,6 +114,17 @@ export default function Home () {
         </div>
       </section>
 
+      {/* Follow-up Link Section */}
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <a
+          href="/follow-up"
+          className="text-sm underline text-blue-600 hover:text-blue-800 text-center block"
+          style={{ margin: '16px auto', maxWidth: 320 }}
+        >
+          Have a question about your report?
+        </a>
+      </div>
+
       {/* Pricing Link Section */}
       <div style={{ textAlign: 'center', margin: '32px 0 0 0' }}>
         <a

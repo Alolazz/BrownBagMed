@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import CreatableSelect from 'react-select/creatable';
 import styles from './upload.module.css'
@@ -12,7 +12,8 @@ interface OptionType {
 }
 
 export default function UploadPage () {
-  const [files, setFiles] = useState<FileList | null>(null)
+  // Change files state to an array of File
+  const [medications, setMedications] = useState<File[]>([]);
   const [isAgreed, setIsAgreed] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadMessage, setUploadMessage] = useState('')
@@ -30,10 +31,17 @@ export default function UploadPage () {
   // Use useState to generate a stable, client-only ID for react-select
   const [medicalConditionsId] = useState(() => `react-select-${Math.random().toString(36).slice(2)}`);
 
+  useEffect(() => {
+    console.log("Landing page mounted");
+  }, []);
+
+  // Update handleFileChange to append files
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFiles(e.target.files)
-    setUploadMessage('')
-  }
+    if (!e.target.files) return;
+    const newFiles = Array.from(e.target.files);
+    setMedications((prev) => [...prev, ...newFiles]);
+    setUploadMessage('');
+  };
 
   const handleHealthInfoChange = (field: string, value: string | string[]) => {
     setHealthInfo(prev => ({
@@ -45,7 +53,7 @@ export default function UploadPage () {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!files || files.length === 0) {
+    if (medications.length === 0) {
       setUploadMessage('Please select at least one file to upload.')
       return
     }
@@ -62,9 +70,7 @@ export default function UploadPage () {
       const formData = new FormData()
 
       // Add all selected files to FormData
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i])
-      }
+      medications.forEach((file) => formData.append('files', file))
 
       // Prepare health info for submission
       let healthInfoToSend = { ...healthInfo }
@@ -104,17 +110,13 @@ export default function UploadPage () {
     }
   }
 
-  const removeFile = (index: number) => {
-    if (!files) return
-
-    const fileArray = Array.from(files)
-    fileArray.splice(index, 1)
-
-    // Create new FileList-like object
-    const dt = new DataTransfer()
-    fileArray.forEach(file => dt.items.add(file))
-    setFiles(dt.files)
-  }
+  // Add removeMedication and clearAllMedications
+  const removeMedication = (index: number) => {
+    setMedications((prev) => prev.filter((_, i) => i !== index));
+  };
+  const clearAllMedications = () => {
+    setMedications([]);
+  };
 
   return (
     <div className={styles.page}>
@@ -169,79 +171,30 @@ export default function UploadPage () {
             />
           </div>
 
-          {/* Selected Files Display */}
-          {files && files.length > 0 && (
-            <div className={styles.filesSection}>
-              <h3 className={styles.filesTitle}>
-                Selected Files ({files.length})
-              </h3>
-              <div className={styles.filesList}>
-                {Array.from(files).map((file, index) => (
-                  <div key={index} className={styles.fileItem}>
-                    <div className={styles.fileInfo}>
-                      <div className={styles.fileIcon}>
-                        {file.type.startsWith('image/') ? (
-                          <svg
-                            width='20'
-                            height='20'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                          >
-                            <rect
-                              x='3'
-                              y='3'
-                              width='18'
-                              height='18'
-                              rx='2'
-                              ry='2'
-                            />
-                            <circle cx='8.5' cy='8.5' r='1.5' />
-                            <polyline points='21,15 16,10 5,21' />
-                          </svg>
-                        ) : (
-                          <svg
-                            width='20'
-                            height='20'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                          >
-                            <path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z' />
-                            <polyline points='14,2 14,8 20,8' />
-                          </svg>
-                        )}
-                      </div>
-                      <div className={styles.fileDetails}>
-                        <span className={styles.fileName}>{file.name}</span>
-                        <span className={styles.fileSize}>
-                          {(file.size / 1024 / 1024).toFixed(2)} MB
-                        </span>
-                      </div>
+          {/* Uploaded Medications List */}
+          {medications.length > 0 && (
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {medications.map((file, idx) => (
+                <div key={idx} className="flex items-center bg-gray-50 rounded p-2 shadow-sm">
+                  {file.type.startsWith('image/') ? (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      className="w-16 h-16 object-cover rounded mr-3 border"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded mr-3">
+                      <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="4" width="24" height="24" rx="4"/><text x="16" y="22" textAnchor="middle" fontSize="10" fill="#333">PDF</text></svg>
                     </div>
-                    <button
-                      type='button'
-                      onClick={() => removeFile(index)}
-                      className={styles.removeButton}
-                      aria-label='Remove file'
-                    >
-                      <svg
-                        width='16'
-                        height='16'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                      >
-                        <line x1='18' y1='6' x2='6' y2='18' />
-                        <line x1='6' y1='6' x2='18' y2='18' />
-                      </svg>
-                    </button>
+                  )}
+                  <div className="flex-1">
+                    <div className="text-xs font-medium truncate">{file.name}</div>
+                    <div className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</div>
                   </div>
-                ))}
-              </div>
+                  <button type="button" onClick={() => removeMedication(idx)} className="ml-2 text-red-500 hover:text-red-700 text-lg font-bold">×</button>
+                </div>
+              ))}
+              <button type="button" onClick={clearAllMedications} className="col-span-full mt-2 text-xs text-gray-600 underline hover:text-red-600">Clear All</button>
             </div>
           )}
 
@@ -394,16 +347,26 @@ export default function UploadPage () {
             </label>
           </div>
 
-          {/* Submit Button */}
-          <button
-            type='submit'
-            className={`${styles.submitButton} ${
-              isUploading ? styles.uploading : ''
-            }`}
-            disabled={isUploading}
-          >
-            {isUploading ? 'Uploading...' : 'Upload Medications'}
-          </button>
+          {/* Submit Button and Follow-up Link in vertical flex container */}
+          <div className="flex flex-col items-center">
+            <button
+              type='submit'
+              className={`${styles.submitButton} ${isUploading ? styles.uploading : ''}`}
+              disabled={isUploading}
+            >
+              {isUploading ? 'Uploading...' : 'Upload Medications'}
+            </button>
+          </div>
+          <div className="mt-6 text-left">
+            <a
+              id="followup-link"
+              href="/follow-up"
+              className="block text-sm text-blue-600 hover:text-blue-800 border border-red-500 bg-yellow-100"
+              style={{ display: 'inline-block', padding: '2px 8px', background: '#fff' }}
+            >
+              &larr; Have a question about your report?
+            </a>
+          </div>
 
           {/* Upload Message */}
           {uploadMessage && (

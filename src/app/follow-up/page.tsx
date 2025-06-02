@@ -122,6 +122,10 @@ export default function FollowUpPage() {
             </div>
           )}
         </form>
+        {/* Debug Info */}
+        {/* <pre style={{background:'#f3f4f6',color:'#222',padding:'8px',borderRadius:'6px',margin:'12px 0',fontSize:'12px'}}>
+          {JSON.stringify(form, null, 2)}
+        </pre> */}
         <div className="mt-8 flex justify-center">
           <Link
             href="/"
