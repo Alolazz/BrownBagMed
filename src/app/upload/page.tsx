@@ -25,7 +25,8 @@ export default function UploadPage () {
     medicalConditions: [], // array of strings
     knownAllergies: '',
     additionalComments: '',
-    gender: ''
+    gender: '',
+    medicationNotes: '' // <-- add this field for free-text medication entry
   })
 
   // Use useState to generate a stable, client-only ID for react-select
@@ -320,6 +321,22 @@ export default function UploadPage () {
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+              </div>
+
+              {/* Free-text Medication Entry */}
+              <div className={styles.inputGroup}>
+                <label htmlFor="medicationNotes" className="block text-sm font-medium text-black mb-1">
+                  Write your medications (optional)
+                </label>
+                <textarea
+                  id="medicationNotes"
+                  name="medicationNotes"
+                  rows={4}
+                  placeholder="e.g., Metformin 500mg, taken twice daily"
+                  className="w-full p-2 border border-gray-300 rounded-md text-black placeholder-gray-500 mb-4"
+                  value={healthInfo.medicationNotes ?? ''}
+                  onChange={e => handleHealthInfoChange('medicationNotes', e.target.value)}
+                />
               </div>
             </div>
           </div>
