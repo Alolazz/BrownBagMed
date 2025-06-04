@@ -20,8 +20,7 @@ export async function GET(request: NextRequest) {
         'Content-Disposition': `attachment; filename="${filename}"`
       }
     })
-  } catch (e) {
-    // e is intentionally unused; ignore for lint
+  } catch {
     return new Response('File not found', { status: 404 })
   }
 }

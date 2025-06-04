@@ -25,8 +25,7 @@ export async function POST(request: NextRequest) {
     const files = await fs.readdir(patientDir)
     const filtered = files.filter(f => f !== 'info.json')
     return NextResponse.json({ message: 'Report uploaded', files: filtered })
-  } catch (e) {
-    // e is intentionally unused; ignore for lint
+  } catch {
     return NextResponse.json({ error: 'Failed to upload report' }, { status: 500 })
   }
 }

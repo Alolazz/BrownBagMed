@@ -22,8 +22,7 @@ export async function POST(request: NextRequest) {
     arr.push({ dob, question, date: new Date().toISOString() });
     await fs.writeFile(file, JSON.stringify(arr, null, 2));
     return NextResponse.json({ ok: true });
-  } catch (e) {
-    // e is intentionally unused; ignore for lint
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
