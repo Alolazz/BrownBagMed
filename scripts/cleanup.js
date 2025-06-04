@@ -14,7 +14,6 @@ async function cleanupUploads() {
     const fullPath = path.join(UPLOADS_DIR, entry);
     const stat = await fs.stat(fullPath);
     if (stat.isDirectory() && stat.mtimeMs < cutoff) {
-      console.log(`Deleting old folder: ${entry}`);
       await fs.remove(fullPath);
     }
   }

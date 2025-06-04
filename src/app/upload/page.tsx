@@ -33,7 +33,7 @@ export default function UploadPage () {
   const [medicalConditionsId] = useState(() => `react-select-${Math.random().toString(36).slice(2)}`);
 
   useEffect(() => {
-    console.log("Landing page mounted");
+    // console.log("Landing page mounted"); // Remove debug log for production
   }, []);
 
   // Update handleFileChange to append files
@@ -74,7 +74,7 @@ export default function UploadPage () {
       medications.forEach((file) => formData.append('files', file))
 
       // Prepare health info for submission
-      let healthInfoToSend = { ...healthInfo }
+      const healthInfoToSend = { ...healthInfo }
 
       // Convert dateOfBirth to ISO format if valid DD.MM.YYYY
       if (healthInfo.dateOfBirth && /^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth)) {

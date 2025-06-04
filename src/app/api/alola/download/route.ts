@@ -14,13 +14,14 @@ export async function GET(request: NextRequest) {
   try {
     await fs.access(filePath)
     const stream = createReadStream(filePath)
-    return new Response(stream as any, {
+    return new Response(stream as unknown as ReadableStream, {
       headers: {
         'Content-Type': 'application/octet-stream',
         'Content-Disposition': `attachment; filename="${filename}"`
       }
     })
   } catch (e) {
+    // e is intentionally unused; ignore for lint
     return new Response('File not found', { status: 404 })
   }
 }

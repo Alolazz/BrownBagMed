@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     // Only keep minimal info, do not store permanently unless required
@@ -23,6 +23,7 @@ export async function POST(request) {
     await fs.writeFile(file, JSON.stringify(arr, null, 2));
     return NextResponse.json({ ok: true });
   } catch (e) {
+    // e is intentionally unused; ignore for lint
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     const filtered = files.filter(f => f !== 'info.json')
     return NextResponse.json({ files: filtered })
   } catch (e) {
+    // e is intentionally unused; ignore for lint
     return NextResponse.json({ error: 'Could not list files' }, { status: 404 })
   }
 }

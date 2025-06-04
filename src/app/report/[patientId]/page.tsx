@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import { BITCOIN_ADDRESS, BITCOIN_QR } from "./bitcoin";
+import Image from "next/image";
 
 export default function ReportPage({ params }: { params: { patientId: string } }) {
   const searchParams = useSearchParams();
@@ -39,7 +42,7 @@ export default function ReportPage({ params }: { params: { patientId: string } }
         {/* Bitcoin */}
         <div className="bg-white rounded shadow p-4 flex flex-col items-center">
           <div className="mb-2 font-semibold">Pay with Bitcoin</div>
-          <img src={BITCOIN_QR} alt="Bitcoin QR" className="w-32 h-32 mb-2" />
+          <Image src={BITCOIN_QR} alt="Bitcoin QR" width={128} height={128} className="w-32 h-32 mb-2" />
           <div className="text-xs break-all text-gray-700">{BITCOIN_ADDRESS}</div>
           <div className="mt-2 text-xs text-gray-500">Send exactly 0.0025 BTC</div>
         </div>

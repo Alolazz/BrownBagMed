@@ -8,6 +8,9 @@ export default function Home () {
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
             <h1 className={styles.heroTitle}>
+              Brown Bag Med
+            </h1>
+            <h1 className="text-center font-normal text-xl md:text-2xl text-blue-900 mb-2" style={{letterSpacing: '-1px'}}>
               Medication Analysis & Management
             </h1>
             <p className={styles.heroSubtitle}>
@@ -19,103 +22,18 @@ export default function Home () {
             </a>
           </div>
           <div className={styles.heroImage}>
-            <div className={styles.medBagSvg}>
-              <svg
-                width='300'
-                height='300'
-                viewBox='0 0 300 300'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                {/* Brown paper bag */}
-                <rect
-                  x='50'
-                  y='80'
-                  width='200'
-                  height='180'
-                  fill='#8B4513'
-                  rx='8'
-                />
-
-                {/* Bag top fold */}
-                <rect
-                  x='40'
-                  y='60'
-                  width='220'
-                  height='40'
-                  fill='#D2B48C'
-                  rx='8'
-                />
-                <rect
-                  x='130'
-                  y='70'
-                  width='40'
-                  height='8'
-                  fill='#8B4513'
-                  rx='4'
-                />
-
-                {/* Pills coming out */}
-                <ellipse cx='120' cy='50' rx='15' ry='8' fill='#FF6B6B' />
-                <ellipse cx='150' cy='40' rx='15' ry='8' fill='#4ECDC4' />
-                <ellipse cx='180' cy='55' rx='15' ry='8' fill='#45B7D1' />
-
-                {/* Pill bottle */}
-                <rect
-                  x='80'
-                  y='100'
-                  width='30'
-                  height='60'
-                  fill='#FFFFFF'
-                  rx='4'
-                />
-                <rect
-                  x='75'
-                  y='95'
-                  width='40'
-                  height='15'
-                  fill='#FF6B6B'
-                  rx='7'
-                />
-                <text
-                  x='95'
-                  y='135'
-                  fontFamily='Arial'
-                  fontSize='8'
-                  textAnchor='middle'
-                  fill='#333'
-                >
-                  RX
-                </text>
-
-                {/* Blister pack */}
-                <rect
-                  x='140'
-                  y='120'
-                  width='60'
-                  height='40'
-                  fill='#E8E8E8'
-                  rx='4'
-                />
-                <circle cx='155' cy='135' r='6' fill='#4ECDC4' />
-                <circle cx='170' cy='135' r='6' fill='#4ECDC4' />
-                <circle cx='185' cy='135' r='6' fill='#FFD93D' />
-                <circle cx='155' cy='150' r='6' fill='#FFD93D' />
-                <circle cx='170' cy='150' r='6' fill='#FF6B6B' />
-                <circle cx='185' cy='150' r='6' fill='#FF6B6B' />
-
-                {/* More pills in bag */}
-                <circle cx='90' cy='180' r='8' fill='#45B7D1' />
-                <circle cx='110' cy='200' r='8' fill='#FFD93D' />
-                <circle cx='170' cy='190' r='8' fill='#4ECDC4' />
-                <circle cx='190' cy='210' r='8' fill='#FF6B6B' />
-              </svg>
-            </div>
+            <img
+              src="/logo.png"
+              alt="Brown Bag Med Logo"
+              className="mx-auto mb-4"
+              style={{ maxWidth: 160, height: 'auto' }}
+            />
           </div>
         </div>
       </section>
 
       {/* Follow-up Link Section */}
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
+      <div style={{ textAlign: 'center', marginTop: 16 }}>
         <a
           href="/follow-up"
           className="text-sm underline text-blue-600 hover:text-blue-800 text-center block"

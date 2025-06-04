@@ -53,7 +53,7 @@ export default function PricingPage() {
 					</p>
 				</div>
 				<div className={styles.pricingGrid}>
-					{plans.map((plan, idx) => (
+					{plans.map((plan) => (
 						<div key={plan.name} className={`${styles.card} ${plan.accent}`}>
 							<h2 className={styles.cardTitle}>{plan.name}</h2>
 							<div className={styles.cardPrice}>{plan.price}</div>
@@ -64,7 +64,9 @@ export default function PricingPage() {
 										className={
 											item.startsWith('✓')
 												? styles.cardCheck
-												: styles.cardTime
+												: item.startsWith('⏱')
+													? styles.cardTime
+													: undefined
 										}
 									>
 										{item}
