@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function PatientDetailPage() {
   const params = useParams();
-  const patientId = params?.patientId;
+  const patientId = params?.patientId as string | undefined;
   const [files, setFiles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,15 +22,15 @@ export default function PatientDetailPage() {
         if (!res.ok) throw new Error("Could not load files");
         const data = await res.json();
         setFiles(data.files || []);
-      } catch (e: any) {
-        setError(e.message || "Error loading files");
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Error loading files");
       }
       setLoading(false);
     }
     if (patientId) fetchFiles();
   }, [patientId]);
 
-  async function handleUpload(e: React.FormEvent) {
+  async function handleUpload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setMessage("");
     setError("");
@@ -53,8 +53,8 @@ export default function PatientDetailPage() {
       // Refresh file list
       const data = await res.json();
       setFiles(data.files || []);
-    } catch (e: any) {
-      setError(e.message || "Upload failed");
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Upload failed");
     }
     setUploading(false);
   }

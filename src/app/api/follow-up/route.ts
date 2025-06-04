@@ -18,11 +18,17 @@ export async function POST(request: NextRequest) {
     try {
       const existing = await fs.readFile(file, 'utf8');
       arr = JSON.parse(existing);
-    } catch {}
+    } catch (error) {
+      // If file doesn't exist or parse fails, start with empty array
+      if (error && typeof error === 'object' && 'code' in error && (error as any).code !== 'ENOENT') {
+        console.error(error);
+      }
+    }
     arr.push({ dob, question, date: new Date().toISOString() });
     await fs.writeFile(file, JSON.stringify(arr, null, 2));
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
