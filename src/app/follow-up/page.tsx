@@ -47,15 +47,15 @@ export default function FollowUpPage() {
           aria-label="Follow-Up Question Form"
         >
           <div className={styles.inputGroup}>
-            <label htmlFor="reportId" className="text-gray-700 text-sm font-medium">
-              Report ID
+            <label htmlFor="patientId" className="text-gray-700 text-sm font-medium">
+              Patient ID
             </label>
             <input
-              id="reportId"
-              name="reportId"
+              id="patientId"
+              name="patientId"
               type="text"
-              placeholder="e.g., report_123"
-              value={form.reportId}
+              placeholder="e.g., patient_123"
+              value={form.patientId}
               onChange={handleChange}
               className="w-full border rounded-md px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:border-blue-400"
               required
