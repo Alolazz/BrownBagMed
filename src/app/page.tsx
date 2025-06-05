@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styles from './page.module.css'
 
 export default function Home () {
@@ -22,11 +23,14 @@ export default function Home () {
             </a>
           </div>
           <div className={styles.heroImage}>
-            <img
+            <Image
               src="/logo.png"
               alt="Brown Bag Med Logo"
+              width={380}
+              height={180}
               className="mx-auto mb-4"
               style={{ maxWidth: 380, height: 'auto' }}
+              priority
             />
           </div>
         </div>

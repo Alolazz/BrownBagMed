@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import CreatableSelect from 'react-select/creatable';
+import Image from 'next/image'
 import styles from './upload.module.css'
 
 // Explicit type for react-select options
@@ -178,10 +179,13 @@ export default function UploadPage () {
               {medications.map((file, idx) => (
                 <div key={idx} className="flex items-center bg-gray-50 rounded p-2 shadow-sm">
                   {file.type.startsWith('image/') ? (
-                    <img
+                    <Image
                       src={URL.createObjectURL(file)}
                       alt={file.name}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 object-cover rounded mr-3 border"
+                      unoptimized
                     />
                   ) : (
                     <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded mr-3">

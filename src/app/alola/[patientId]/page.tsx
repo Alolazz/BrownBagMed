@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 
 export default function PatientDetailPage() {
   const params = useParams();
@@ -107,25 +106,6 @@ export default function PatientDetailPage() {
           {error && <div className="text-center text-red-600 text-sm mt-2">{error}</div>}
         </form>
       </div>
-    </main>
-  );
-}
-
-interface AlolaPatientPageProps {
-  params: { patientId: string };
-}
-
-export function AlolaPatientPage({ params }: AlolaPatientPageProps) {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8">
-      <h1 className="text-2xl font-bold mb-4">Patient Details</h1>
-      <p className="mb-6">
-        This is a placeholder page for patient ID:{" "}
-        <span className="font-mono text-blue-700">{params.patientId}</span>
-      </p>
-      <Link href="/alola" className="text-blue-600 hover:underline">
-        &larr; Back to Dashboard
-      </Link>
     </main>
   );
 }
