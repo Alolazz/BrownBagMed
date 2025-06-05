@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import { BITCOIN_ADDRESS, BITCOIN_QR } from "./bitcoin";
 import Image from "next/image";
 
-export default function ReportPage({ params }: { params: { patientId: string } }) {
+export default function ReportPage() {
   const searchParams = useSearchParams();
+  const params = useParams();
+  const patientId = params.patientId as string;
   const status = searchParams.get("status");
-  const { patientId } = params;
 
   if (status === "paid") {
     return (
