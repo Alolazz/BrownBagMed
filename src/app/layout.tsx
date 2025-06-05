@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Brown Bag Med – Medication Analysis & Management",
-  description: "Understand your medications. Prevent risks. Get a clear pharmacist-reviewed report.",
+  title: "Brown Bag Med – Medication Analysis and Management",
+  description: "We help patients safely manage medications through structured analysis by licensed pharmacists.",
   icons: {
-    icon: "/favicon.ico"
-  }
+    icon: "/logo1.png",
+  },
 };
 
 export default function RootLayout({
