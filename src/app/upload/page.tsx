@@ -186,6 +186,7 @@ export default function UploadPage () {
                       height={64}
                       className="w-16 h-16 object-cover rounded mr-3 border"
                       unoptimized
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded mr-3">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
+import dynamic from 'next/dynamic';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   title: "Brown Bag Med – Medication Analysis and Management",
   description: "We help patients safely manage medications through structured analysis by licensed pharmacists.",
   icons: {
-    icon: "/logo1.png",
+    icon: "/logo1.webp",
   },
 };
 
@@ -51,3 +52,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+// Example: dynamically import a heavy component (replace with actual component names if needed)
+// const HeavyComponent = dynamic(() => import('./HeavyComponent'), { ssr: false, loading: () => <div>Loading...</div> });
