@@ -20,7 +20,13 @@ export async function POST(request: NextRequest) {
       arr = JSON.parse(existing);
     } catch (error) {
       // If file doesn't exist or parse fails, start with empty array
-      if (error && typeof error === 'object' && 'code' in error && (error as any).code !== 'ENOENT') {
+      if (
+        error &&
+        typeof error === 'object' &&
+        'code' in error &&
+        typeof (error as { code?: unknown }).code === 'string' &&
+        (error as { code: string }).code !== 'ENOENT'
+      ) {
         console.error(error);
       }
     }
