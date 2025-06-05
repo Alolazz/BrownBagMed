@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
-import dynamic from 'next/dynamic';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,29 +28,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {process.env.NODE_ENV === 'production' && (
           <>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XLB8C4V1X"></script>
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-5XLB8C4V1X');
-                `,
-              }}
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-5XLB8C4V1X"
+              strategy="afterInteractive"
             />
+            <Script id="ga4-inline" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-5XLB8C4V1X');
+              `}
+            </Script>
           </>
         )}
-      </Head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>
   );
 }
-
-// Example: dynamically import a heavy component (replace with actual component names if needed)
-// const HeavyComponent = dynamic(() => import('./HeavyComponent'), { ssr: false, loading: () => <div>Loading...</div> });
