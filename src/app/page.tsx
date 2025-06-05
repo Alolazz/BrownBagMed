@@ -26,7 +26,7 @@ export default function Home () {
               src="/logo.png"
               alt="Brown Bag Med Logo"
               className="mx-auto mb-4"
-              style={{ maxWidth: 160, height: 'auto' }}
+              style={{ maxWidth: 380, height: 'auto' }}
             />
           </div>
         </div>
