@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from './page.module.css'
 
 export default function Home () {
@@ -75,16 +76,18 @@ export default function Home () {
           <h2 className={styles.featuresTitle}>How It Works</h2>
           <div className={styles.featuresGrid}>
             {/* Card 1: Upload Anonymously */}
-            <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>
-                {/* Upload Icon */}
-                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><rect x="4" y="20" width="16" height="2" rx="1"/></svg>
+            <Link href="/upload" passHref legacyBehavior>
+              <div className={styles.featureCard} style={{ cursor: 'pointer' }} tabIndex={0} role="button" aria-label="Go to Upload Medications page">
+                <div className={styles.featureIcon}>
+                  {/* Upload Icon */}
+                  <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><rect x="4" y="20" width="16" height="2" rx="1"/></svg>
+                </div>
+                <h3 className={styles.featureTitle}>Upload Medications</h3>
+                <p className={styles.featureDescription}>
+                  Securely upload medication images — no personal info required.
+                </p>
               </div>
-              <h3 className={styles.featureTitle}>Upload Medications</h3>
-              <p className={styles.featureDescription}>
-                Securely upload medication images — no personal info required.
-              </p>
-            </div>
+            </Link>
             {/* Card 2: Professional Review */}
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>
