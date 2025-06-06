@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get('report') as File;
   const patientId = formData.get('patientId')?.toString();
