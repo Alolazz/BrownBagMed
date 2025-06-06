@@ -33,6 +33,61 @@ export default function UploadPage () {
   // Use useState to generate a stable, client-only ID for react-select
   const [medicalConditionsId] = useState(() => `react-select-${Math.random().toString(36).slice(2)}`);
 
+  // --- Date of Birth Formatting and Validation ---
+  const [dobError, setDobError] = useState<string>('');
+  const [medicationNotesError, setMedicationNotesError] = useState<string>('');
+
+  // Helper: Format input as DD.MM.YY or DD.MM.YYYY
+  function formatDateInput(raw: string): string {
+    // Remove all non-digits
+    let digits = raw.replace(/\D/g, '');
+    if (digits.length > 8) digits = digits.slice(0, 8);
+    let parts = [];
+    if (digits.length >= 2) parts.push(digits.slice(0, 2));
+    if (digits.length >= 4) parts.push(digits.slice(2, 4));
+    else if (digits.length > 2) parts.push(digits.slice(2));
+    if (digits.length > 4) parts.push(digits.slice(4));
+    return parts.join('.');
+  }
+
+  // Helper: Format input as DD.MM.YY or DD.MM.YYYY with dots
+  function formatGermanDateInput(raw: string): string {
+    // Remove all non-digits
+    const digits = raw.replace(/\D/g, '');
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return `${digits.slice(0,2)}.${digits.slice(2)}`;
+    if (digits.length <= 6) return `${digits.slice(0,2)}.${digits.slice(2,4)}.${digits.slice(4)}`;
+    // 8 digits: DDMMYYYY
+    return `${digits.slice(0,2)}.${digits.slice(2,4)}.${digits.slice(4,8)}`;
+  }
+
+  // Helper: Validate DD.MM.YYYY (or DD.MM.YY)
+  function isValidGermanDate(date: string): boolean {
+    // Accept DD.MM.YYYY or DD.MM.YY
+    if (!/^\d{2}\.\d{2}\.(\d{2}|\d{4})$/.test(date)) return false;
+    const [d, m, y] = date.split('.');
+    const day = parseInt(d, 10);
+    const month = parseInt(m, 10);
+    let year = parseInt(y, 10);
+    if (y.length === 2) {
+      // Assume 19xx for > 30, else 20xx
+      year += year > 30 ? 1900 : 2000;
+    }
+    const dt = new Date(year, month - 1, day);
+    return (
+      dt.getFullYear() === year &&
+      dt.getMonth() === month - 1 &&
+      dt.getDate() === day
+    );
+  }
+
+  // Enhanced handler for date input
+  const handleDateOfBirthChange = (raw: string) => {
+    const formatted = formatGermanDateInput(raw);
+    setHealthInfo(prev => ({ ...prev, dateOfBirth: formatted }));
+    setDobError(''); // Clear error on change
+  };
+
   useEffect(() => {
     // console.log("Landing page mounted"); // Remove debug log for production
   }, []);
@@ -53,7 +108,32 @@ export default function UploadPage () {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    let hasError = false;
+
+    // Validate date of birth (required)
+    if (!healthInfo.dateOfBirth) {
+      setDobError('This field is required.');
+      hasError = true;
+    } else if (!/^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth) || !isValidGermanDate(healthInfo.dateOfBirth)) {
+      setDobError('Please enter a valid date in DD.MM.YYYY format.');
+      hasError = true;
+    } else {
+      setDobError('');
+    }
+
+    // Validate medicationNotes (required as "Question")
+    if (!healthInfo.medicationNotes || healthInfo.medicationNotes.trim() === '') {
+      setMedicationNotesError('This field is required.');
+      hasError = true;
+    } else {
+      setMedicationNotesError('');
+    }
+
+    if (hasError) {
+      setUploadMessage('Please fill in all required fields.');
+      return;
+    }
 
     if (medications.length === 0) {
       setUploadMessage('Please select at least one file to upload.')
@@ -63,6 +143,15 @@ export default function UploadPage () {
     if (!isAgreed) {
       setUploadMessage('Please agree to the anonymous analysis terms.')
       return
+    }
+
+    // Validate date of birth if provided
+    if (healthInfo.dateOfBirth) {
+      if (!/^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth) || !isValidGermanDate(healthInfo.dateOfBirth)) {
+        setDobError('Please enter a valid date in DD.MM.YYYY format.');
+        setUploadMessage('');
+        return;
+      }
     }
 
     setIsUploading(true)
@@ -206,7 +295,7 @@ export default function UploadPage () {
 
           {/* Optional Health Info Section */}
           <div className={styles.healthInfoSection + " bg-white/80"}>
-            <h3 className={styles.healthInfoTitle}> Basic Informations</h3>
+            <h3 className={styles.healthInfoTitle}> Basic Information</h3>
             <p className={styles.healthInfoSubtitle}>
               This information helps our pharmacists provide more accurate
               analysis (all fields are optional)
@@ -225,9 +314,17 @@ export default function UploadPage () {
                   pattern='\d{2}\.\d{2}\.\d{4}'
                   placeholder='DD.MM.YYYY'
                   value={healthInfo.dateOfBirth}
-                  onChange={e => handleHealthInfoChange('dateOfBirth', e.target.value)}
-                  className={styles.dateInput + ' w-full'}
+                  onChange={e => handleDateOfBirthChange(e.target.value)}
+                  maxLength={10}
+                  className={
+                    styles.dateInput +
+                    ' w-full' +
+                    (dobError ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : '')
+                  }
+                  aria-invalid={!!dobError}
+                  aria-describedby={dobError ? 'dob-error' : undefined}
                 />
+                {dobError && <span id="dob-error" className="text-xs text-red-600">{dobError}</span>}
                 <span className="date-format-note">Format: DD.MM.YYYY</span>
               </div>
 
@@ -338,10 +435,16 @@ export default function UploadPage () {
                   name="medicationNotes"
                   rows={4}
                   placeholder="e.g., Metformin 500mg, taken twice daily"
-                  className="w-full p-2 border border-gray-300 rounded-md text-black placeholder-gray-500 mb-4"
+                  className={
+                    "w-full p-2 border border-gray-300 rounded-md text-black placeholder-gray-500 mb-4" +
+                    (medicationNotesError ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : '')
+                  }
                   value={healthInfo.medicationNotes ?? ''}
                   onChange={e => handleHealthInfoChange('medicationNotes', e.target.value)}
+                  aria-invalid={!!medicationNotesError}
+                  aria-describedby={medicationNotesError ? 'medicationNotes-error' : undefined}
                 />
+                {medicationNotesError && <span id="medicationNotes-error" className="text-xs text-red-600">{medicationNotesError}</span>}
               </div>
             </div>
           </div>
