@@ -68,8 +68,9 @@ export async function POST(request: NextRequest) {
     const pdfUpload = await put(`${patientId}/report_info.pdf`, pdfBlob, { access: 'public' });
 
     return NextResponse.json({
-      message: 'Files uploaded successfully',
-      patientId,
+      success: true,
+      link: `/uploads/${patientId.replace('patient_', '')}`,
+      patientId: patientId.replace('patient_', ''),
       files: savedFiles,
       fileUrls,
       pdfUrl: pdfUpload.url
