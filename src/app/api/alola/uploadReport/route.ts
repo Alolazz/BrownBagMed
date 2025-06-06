@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }
   try {
-    const blob = await put(`patient_${patientId}/report.pdf`, file, { access: 'public' });
+    await put(`patient_${patientId}/report.pdf`, file, { access: 'public' });
     return NextResponse.json({ success: true, patientId });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to upload report', details: error instanceof Error ? error.message : String(error) }, { status: 500 });

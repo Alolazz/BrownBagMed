@@ -92,7 +92,7 @@ export default function UploadPage () {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let hasError = false;
 
@@ -142,25 +142,19 @@ export default function UploadPage () {
     setIsUploading(true)
     setUploadMessage('Uploading your medications...')
     try {
-      const formData = new FormData()
-      medications.forEach((file) => formData.append('files', file))
-      const healthInfoToSend = { ...healthInfo }
+      const formData = new FormData();
+      medications.forEach((file) => formData.append('files', file));
+      const healthInfoToSend = { ...healthInfo };
       if (healthInfo.dateOfBirth && /^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth)) {
         const [day, month, year] = healthInfo.dateOfBirth.split('.')
-        healthInfoToSend.dateOfBirth = `${year}-${month}-${day}`
+        healthInfoToSend.dateOfBirth = `${year}-${month}-${day}`;
       }
       if (Array.isArray(healthInfo.medicalConditions)) {
-        healthInfoToSend.medicalConditions = healthInfo.medicalConditions.filter(Boolean)
+        healthInfoToSend.medicalConditions = healthInfo.medicalConditions.filter(Boolean);
       }
-      formData.append('healthInfo', JSON.stringify(healthInfoToSend))
-
-      // --- PDF report upload logic ---
-      // If you have a separate PDF report upload, adapt this block as needed
-      // Example: if (pdfReportFile) { ... upload logic ... }
+      formData.append('healthInfo', JSON.stringify(healthInfoToSend));
 
       // --- Main upload logic ---
-      // If you want to use the /api/alola/uploadReport endpoint for PDF report, do it here
-      // Otherwise, use the main /api/upload endpoint for medication files
       const response = await fetch('/api/alola/uploadReport?patientId=TEMP_ID', {
         method: 'POST',
         body: formData
@@ -172,8 +166,8 @@ export default function UploadPage () {
       } else {
         setUploadMessage(data.error || 'Upload failed. Please try again.');
       }
-    } catch (error: any) {
-      setUploadMessage(error?.message || 'Upload failed. Please try again.');
+    } catch (error) {
+      setUploadMessage(error instanceof Error ? error.message : 'Upload failed. Please try again.');
       setIsUploading(false);
     }
   }
