@@ -3,18 +3,14 @@ import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
-  const file = formData.get('report') as File | null;
-  const patientId = formData.get('patientId') as string | null;
+  const file = formData.get('report') as File;
+  const patientId = formData.get('patientId')?.toString();
 
   if (!file || !patientId) {
-    return NextResponse.json({ error: 'Missing file or patientId' }, { status: 400 });
+    return new Response('Missing file or patientId', { status: 400 });
   }
 
-  try {
-    await put(`patient_${patientId}/report.pdf`, file, { access: 'public' });
-    // Redirect to /uploads/{patientId} on success
-    return Response.redirect(`/uploads/${patientId}`, 303);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to upload report', details: error instanceof Error ? error.message : String(error) }, { status: 500 });
-  }
+  await put(`uploads/${patientId}/${file.name}`, file, { access: 'public' });
+
+  return Response.redirect(`/uploads/${patientId}`, 302);
 }
