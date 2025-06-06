@@ -69,6 +69,48 @@ export default function Home () {
         </a>
       </div>
 
+      {/* How It Works Section */}
+      <section className={styles.features} style={{ background: '#f8fafc', paddingTop: 0 }}>
+        <div className={styles.featuresContainer}>
+          <h2 className={styles.featuresTitle}>How It Works</h2>
+          <div className={styles.featuresGrid}>
+            {/* Card 1: Upload Anonymously */}
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>
+                {/* Upload Icon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><rect x="4" y="20" width="16" height="2" rx="1"/></svg>
+              </div>
+              <h3 className={styles.featureTitle}>Upload Anonymously</h3>
+              <p className={styles.featureDescription}>
+                Securely upload medication images — no personal info required.
+              </p>
+            </div>
+            {/* Card 2: Professional Review */}
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>
+                {/* Search Icon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="6"/><path d="M21 21l-3.5-3.5"/></svg>
+              </div>
+              <h3 className={styles.featureTitle}>Professional Review</h3>
+              <p className={styles.featureDescription}>
+                Our pharmacists check for interactions, dosing, and safety issues.
+              </p>
+            </div>
+            {/* Card 3: Results in 48 Hours */}
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>
+                {/* FileCheck Icon */}
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <h3 className={styles.featureTitle}>Results in 48 Hours</h3>
+              <p className={styles.featureDescription}>
+                Receive a personalized PDF report within 2 working days.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className={styles.features}>
         <div className={styles.featuresContainer}>
