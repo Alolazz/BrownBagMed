@@ -196,6 +196,53 @@ export default function UploadPage () {
     setMedications([]);
   };
 
+  // --- PDF Report Upload State and Handler ---
+  const [reportFile, setReportFile] = useState<File | null>(null);
+  const [reportPatientId, setReportPatientId] = useState('');
+  const [reportUploadStatus, setReportUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [reportUploadMessage, setReportUploadMessage] = useState('');
+
+  const handleReportFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setReportFile(e.target.files[0]);
+      setReportUploadMessage('');
+    }
+  };
+
+  const handleReportUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reportFile) {
+      setReportUploadMessage('Please select a PDF file to upload.');
+      setReportUploadStatus('error');
+      return;
+    }
+    if (!reportPatientId) {
+      setReportUploadMessage('Please enter the patient ID.');
+      setReportUploadStatus('error');
+      return;
+    }
+    setReportUploadStatus('uploading');
+    setReportUploadMessage('Uploading report...');
+    try {
+      const formData = new FormData();
+      formData.append('report', reportFile);
+      formData.append('patientId', reportPatientId);
+      const res = await fetch('/api/uploadReport', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!res.ok) {
+        throw new Error('Upload failed');
+      }
+      setReportUploadStatus('success');
+      setReportUploadMessage('Report uploaded successfully!');
+      // Optionally, do something with data.url
+    } catch {
+      setReportUploadStatus('error');
+      setReportUploadMessage('Failed to upload report.');
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -510,6 +557,50 @@ export default function UploadPage () {
           {uploadMessage && (
             <p className={styles.uploadMessage}>{uploadMessage}</p>
           )}
+
+          {/* PDF Report Upload Section */}
+          <div className="mt-10 p-4 border border-gray-200 rounded bg-gray-50">
+            <h3 className="font-semibold mb-2 text-gray-800">Upload a PDF Report</h3>
+            <form onSubmit={handleReportUpload} className="flex flex-col gap-2 sm:flex-row sm:items-end">
+              <div className="flex-1">
+                <label htmlFor="reportFile" className="block text-sm font-medium text-gray-700">PDF File</label>
+                <input
+                  id="reportFile"
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleReportFileChange}
+                  className="block w-full text-sm text-black border border-gray-300 rounded p-1 bg-white"
+                />
+              </div>
+              <div className="flex-1">
+                <label htmlFor="reportPatientId" className="block text-sm font-medium text-gray-700">Patient ID</label>
+                <input
+                  id="reportPatientId"
+                  type="text"
+                  value={reportPatientId}
+                  onChange={e => setReportPatientId(e.target.value)}
+                  className="block w-full text-sm text-black border border-gray-300 rounded p-1 bg-white"
+                  placeholder="e.g. patient_001"
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-2 sm:mt-0 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                disabled={reportUploadStatus === 'uploading'}
+              >
+                {reportUploadStatus === 'uploading' ? 'Uploading...' : 'Upload PDF'}
+              </button>
+            </form>
+            {reportUploadMessage && (
+              <div className={
+                reportUploadStatus === 'success'
+                  ? 'text-green-600 text-sm mt-2'
+                  : 'text-red-600 text-sm mt-2'
+              }>
+                {reportUploadMessage}
+              </div>
+            )}
+          </div>
         </form>
       </div>
     </div>
