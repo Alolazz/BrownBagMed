@@ -13,11 +13,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }
   try {
-    // Upload the PDF to Vercel Blob storage
     const blob = await put(`patient_${patientId}/report.pdf`, file, { access: 'public' });
-    return NextResponse.json({ success: true, link: `/uploads/${patientId}`, url: blob.url });
+    return NextResponse.json({ success: true, patientId });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to upload report' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to upload report', details: error instanceof Error ? error.message : String(error) }, { status: 500 });
   }
 }

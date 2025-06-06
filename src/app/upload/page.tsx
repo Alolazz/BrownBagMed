@@ -141,50 +141,40 @@ export default function UploadPage () {
 
     setIsUploading(true)
     setUploadMessage('Uploading your medications...')
-
     try {
       const formData = new FormData()
-
-      // Add all selected files to FormData
       medications.forEach((file) => formData.append('files', file))
-
-      // Prepare health info for submission
       const healthInfoToSend = { ...healthInfo }
-
-      // Convert dateOfBirth to ISO format if valid DD.MM.YYYY
       if (healthInfo.dateOfBirth && /^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth)) {
         const [day, month, year] = healthInfo.dateOfBirth.split('.')
         healthInfoToSend.dateOfBirth = `${year}-${month}-${day}`
       }
-
-      // If needed, convert array to string for backend
       if (Array.isArray(healthInfo.medicalConditions)) {
         healthInfoToSend.medicalConditions = healthInfo.medicalConditions.filter(Boolean)
       }
-
       formData.append('healthInfo', JSON.stringify(healthInfoToSend))
 
-      const response = await fetch('/api/upload', {
+      // --- PDF report upload logic ---
+      // If you have a separate PDF report upload, adapt this block as needed
+      // Example: if (pdfReportFile) { ... upload logic ... }
+
+      // --- Main upload logic ---
+      // If you want to use the /api/alola/uploadReport endpoint for PDF report, do it here
+      // Otherwise, use the main /api/upload endpoint for medication files
+      const response = await fetch('/api/alola/uploadReport?patientId=TEMP_ID', {
         method: 'POST',
         body: formData
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Upload failed:', errorText);
-        throw new Error('Upload failed')
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setUploadMessage('');
+        window.location.href = `/uploads/${data.patientId}`;
+      } else {
+        setUploadMessage(data.error || 'Upload failed. Please try again.');
       }
-
-      const result = await response.json()
-
-      // Redirect to the uploads confirmation page with the patient ID
-      if (response.ok && result.success) {
-        window.location.href = result.link;
-      }
-    } catch (error) {
-      console.error('Upload error:', error)
-      setUploadMessage('Upload failed. Please try again.')
-      setIsUploading(false)
+    } catch (error: any) {
+      setUploadMessage(error?.message || 'Upload failed. Please try again.');
+      setIsUploading(false);
     }
   }
 
