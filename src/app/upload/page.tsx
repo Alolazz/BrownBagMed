@@ -37,19 +37,6 @@ export default function UploadPage () {
   const [dobError, setDobError] = useState<string>('');
   const [medicationNotesError, setMedicationNotesError] = useState<string>('');
 
-  // Helper: Format input as DD.MM.YY or DD.MM.YYYY
-  function formatDateInput(raw: string): string {
-    // Remove all non-digits
-    let digits = raw.replace(/\D/g, '');
-    if (digits.length > 8) digits = digits.slice(0, 8);
-    let parts = [];
-    if (digits.length >= 2) parts.push(digits.slice(0, 2));
-    if (digits.length >= 4) parts.push(digits.slice(2, 4));
-    else if (digits.length > 2) parts.push(digits.slice(2));
-    if (digits.length > 4) parts.push(digits.slice(4));
-    return parts.join('.');
-  }
-
   // Helper: Format input as DD.MM.YY or DD.MM.YYYY with dots
   function formatGermanDateInput(raw: string): string {
     // Remove all non-digits
@@ -305,7 +292,7 @@ export default function UploadPage () {
               {/* Date of Birth */}
               <div className={styles.inputGroup}>
                 <label htmlFor='dateOfBirth' className={styles.inputLabel}>
-                  Date of Birth
+                  Date of Birth <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <input
                   id='dateOfBirth'
@@ -329,106 +316,123 @@ export default function UploadPage () {
               </div>
 
               {/* Medical Conditions */}
-              <div className={styles.inputGroup} style={{ position: 'relative', zIndex: 20 }}>
+              <div className={styles.inputGroup}>
                 <label htmlFor={medicalConditionsId} className={styles.inputLabel}>
-                  Medical Conditions
+                  Medical Conditions <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
-                <CreatableSelect<OptionType, true>
-                  inputId={medicalConditionsId}
-                  key={medicalConditionsId}
-                  isMulti
-                  placeholder="e.g. diabetes, hypertension..."
-                  options={[
-                    { value: 'Hypertension', label: 'Hypertension' },
-                    { value: 'Diabetes', label: 'Diabetes' },
-                    { value: 'Asthma', label: 'Asthma' },
-                    { value: 'COPD', label: 'COPD' },
-                    { value: 'Heart Disease', label: 'Heart Disease' },
-                    { value: 'Cancer', label: 'Cancer' },
-                    { value: 'Thyroid Disorder', label: 'Thyroid Disorder' },
-                    { value: 'Arthritis', label: 'Arthritis' },
-                    { value: 'Depression', label: 'Depression' },
-                    { value: 'Anxiety', label: 'Anxiety' },
-                  ]}
-                  value={Array.isArray(healthInfo.medicalConditions)
-                    ? healthInfo.medicalConditions.filter(Boolean).map((c) => ({ value: c, label: c }))
-                    : []}
-                  onChange={(selected) =>
-                    handleHealthInfoChange(
-                      'medicalConditions',
-                      Array.isArray(selected)
-                        ? selected.filter((opt): opt is OptionType => !!opt && typeof opt.value === 'string').map(opt => opt.value)
-                        : []
-                    )
-                  }
-                  classNamePrefix="react-select"
-                  menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                  menuPosition="fixed"
-                  styles={{
-                    menuPortal: base => ({ ...base, zIndex: 9999 }),
-                    option: base => ({ ...base, color: '#000', backgroundColor: '#fff' }),
-                    menu: base => ({ ...base, backgroundColor: '#fff' }),
-                    multiValueRemove: base => ({ ...base, display: 'none' }), // Remove the small empty square/icon
-                  }}
-                  isClearable
-                  aria-label="Medical Conditions"
-                />
+                <div className={dobError ? 'border border-red-500 rounded' : ''}>
+                  <CreatableSelect<OptionType, true>
+                    inputId={medicalConditionsId}
+                    key={medicalConditionsId}
+                    isMulti
+                    placeholder="e.g. diabetes, hypertension..."
+                    options={[
+                      { value: 'Hypertension', label: 'Hypertension' },
+                      { value: 'Diabetes', label: 'Diabetes' },
+                      { value: 'Asthma', label: 'Asthma' },
+                      { value: 'COPD', label: 'COPD' },
+                      { value: 'Heart Disease', label: 'Heart Disease' },
+                      { value: 'Cancer', label: 'Cancer' },
+                      { value: 'Thyroid Disorder', label: 'Thyroid Disorder' },
+                      { value: 'Arthritis', label: 'Arthritis' },
+                      { value: 'Depression', label: 'Depression' },
+                      { value: 'Anxiety', label: 'Anxiety' },
+                    ]}
+                    value={Array.isArray(healthInfo.medicalConditions)
+                      ? healthInfo.medicalConditions.filter(Boolean).map((c) => ({ value: c, label: c }))
+                      : []}
+                    onChange={(selected) =>
+                      handleHealthInfoChange(
+                        'medicalConditions',
+                        Array.isArray(selected)
+                          ? selected.filter((opt): opt is OptionType => !!opt && typeof opt.value === 'string').map(opt => opt.value)
+                          : []
+                      )
+                    }
+                    classNamePrefix="react-select"
+                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    menuPosition="fixed"
+                    styles={{
+                      menuPortal: base => ({ ...base, zIndex: 9999 }),
+                      option: base => ({ ...base, color: '#000', backgroundColor: '#fff' }),
+                      menu: base => ({ ...base, backgroundColor: '#fff' }),
+                      multiValueRemove: base => ({ ...base, display: 'none' }),
+                    }}
+                    isClearable
+                    aria-label="Medical Conditions"
+                  />
+                </div>
+                {/* Add error message if needed, e.g. medicalConditionsError */}
               </div>
 
               {/* Known Allergies */}
               <div className={styles.inputGroup}>
                 <label htmlFor='knownAllergies' className={styles.inputLabel}>
-                  Known Allergies
+                  Known Allergies <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id='knownAllergies'
                   placeholder='e.g. penicillin, lactose'
                   value={healthInfo.knownAllergies}
                   onChange={e => handleHealthInfoChange('knownAllergies', e.target.value)}
-                  className="bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className={
+                    'bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400' +
+                    (!healthInfo.knownAllergies ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : '')
+                  }
                   rows={3}
+                  aria-invalid={!healthInfo.knownAllergies}
+                  aria-describedby={!healthInfo.knownAllergies ? 'knownAllergies-error' : undefined}
                 />
+                {!healthInfo.knownAllergies && <span id="knownAllergies-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Additional Comments */}
               <div className={styles.inputGroup}>
-                <label
-                  htmlFor='additionalComments'
-                  className={styles.inputLabel}
-                >
-                  Additional Comments
+                <label htmlFor='additionalComments' className={styles.inputLabel}>
+                  Additional Comments <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id='additionalComments'
                   placeholder="Anything else you'd like us to know?"
                   value={healthInfo.additionalComments}
                   onChange={e => handleHealthInfoChange('additionalComments', e.target.value)}
-                  className="bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className={
+                    'bg-white text-black placeholder-gray-500 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400' +
+                    (!healthInfo.additionalComments ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : '')
+                  }
                   rows={3}
+                  aria-invalid={!healthInfo.additionalComments}
+                  aria-describedby={!healthInfo.additionalComments ? 'additionalComments-error' : undefined}
                 />
+                {!healthInfo.additionalComments && <span id="additionalComments-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Gender Selection */}
               <div className={styles.inputGroup}>
                 <label htmlFor="gender" className={styles.inputLabel}>
-                  Gender
+                  Gender <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <select
                   id="gender"
                   value={healthInfo.gender || ''}
                   onChange={e => handleHealthInfoChange('gender', e.target.value)}
-                  className="dateInput" // uses same styling as other inputs
+                  className={
+                    'dateInput' + (!healthInfo.gender ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : '')
+                  }
+                  aria-invalid={!healthInfo.gender}
+                  aria-describedby={!healthInfo.gender ? 'gender-error' : undefined}
                 >
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+                {!healthInfo.gender && <span id="gender-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Free-text Medication Entry */}
               <div className={styles.inputGroup}>
                 <label htmlFor="medicationNotes" className="block text-sm font-medium text-black mb-1">
-                  Write your medications (optional)
+                  Write your medications (optional) <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="medicationNotes"
@@ -451,12 +455,18 @@ export default function UploadPage () {
 
           {/* Agreement Checkbox */}
           <div className={styles.agreementSection}>
-            <label className={styles.agreementLabel}>
+            <label className={
+              styles.agreementLabel + (!isAgreed && uploadMessage === 'Please agree to the anonymous analysis terms.' ? ' text-red-600' : '')
+            }>
               <input
                 type="checkbox"
                 checked={isAgreed}
                 onChange={e => setIsAgreed(e.target.checked)}
-                className={styles.agreementCheckbox}
+                className={
+                  styles.agreementCheckbox + (!isAgreed && uploadMessage === 'Please agree to the anonymous analysis terms.' ? ' border-red-500 ring-2 ring-red-500' : '')
+                }
+                aria-invalid={!isAgreed && uploadMessage === 'Please agree to the anonymous analysis terms.'}
+                aria-describedby={!isAgreed && uploadMessage === 'Please agree to the anonymous analysis terms.' ? 'agreement-error' : undefined}
               />
               <span className={styles.agreementText}>
                 I agree to the{' '}
@@ -470,6 +480,9 @@ export default function UploadPage () {
                 </a>
               </span>
             </label>
+            {!isAgreed && uploadMessage === 'Please agree to the anonymous analysis terms.' && (
+              <span id="agreement-error" className="text-xs text-red-600">You must agree to the terms.</span>
+            )}
           </div>
 
           {/* Submit Button and Follow-up Link in vertical flex container */}
