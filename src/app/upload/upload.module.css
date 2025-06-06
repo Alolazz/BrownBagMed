@@ -17,7 +17,14 @@
 }
 
 .title {
-  font-size: 32px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e40af;
+  margin: 0 0 16px 0;
+}
+
+.mainTitle {
+  font-size: 50px;
   font-weight: 700;
   color: #1e40af;
   margin: 0 0 16px 0;

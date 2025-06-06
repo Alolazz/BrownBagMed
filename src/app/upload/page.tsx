@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import CreatableSelect from 'react-select/creatable';
+import Link from 'next/link';
 import Image from 'next/image'
 import styles from './upload.module.css'
 
@@ -172,6 +173,15 @@ export default function UploadPage () {
 
   return (
     <div className={styles.page}>
+      {/* Brown Bag Med Title with Link */}
+      <div style={{ textAlign: 'center', marginBottom: 12 }}>
+        <Link href="/" aria-label="Back to Home">
+          <h1 className={styles.mainTitle} style={{ cursor: 'pointer', marginBottom: 0 }}>
+            Brown Bag Med
+          </h1>
+        </Link>
+      </div>
+
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>Upload Your Medications</h1>
@@ -259,7 +269,7 @@ export default function UploadPage () {
             <h3 className={styles.healthInfoTitle}> Basic Information</h3>
             <p className={styles.healthInfoSubtitle}>
               This information helps our pharmacists provide more accurate
-              analysis (all fields are optional)
+              analysis and recommendations.
             </p>
 
             <div className={styles.healthInfoGrid}>
