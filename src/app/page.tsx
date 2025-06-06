@@ -105,9 +105,9 @@ export default function Home () {
                 {/* FileCheck Icon */}
                 <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
               </div>
-              <h3 className={styles.featureTitle}>Results in 48 Hours</h3>
+              <h3 className={styles.featureTitle}>Results within 72 Hours</h3>
               <p className={styles.featureDescription}>
-                Receive a personalized PDF report within 2 working days.
+                Receive a personalized PDF report within 3 working days.
               </p>
             </div>
           </div>
