@@ -17,8 +17,36 @@ export const metadata: Metadata = {
   title: "Brown Bag Med – Medication Analysis and Management",
   description: "We help patients safely manage medications through structured analysis by licensed pharmacists.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.ico", // Use favicon.ico for browser tab icon
+    shortcut: "/favicon.ico",
+    apple: "/logo1.png", // Apple touch icon
   },
+  openGraph: {
+    title: "Brown Bag Med",
+    description: "Medication Analysis & Management – Private & Secure",
+    images: [
+      {
+        url: "/logo1.png",
+        width: 1200,
+        height: 630,
+        alt: "Brown Bag Med Logo",
+        type: "image/png"
+      }
+    ],
+    type: "website",
+    url: "https://yourdomain.com"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brown Bag Med",
+    description: "Medication Analysis & Management – Private & Secure",
+    images: [
+      {
+        url: "/logo1.png",
+        alt: "Brown Bag Med Logo"
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
@@ -40,7 +68,7 @@ export default function RootLayout({
         <meta name="twitter:title" content="Brown Bag Med" />
         <meta name="twitter:description" content="Medication Analysis & Management – Private & Secure" />
         <meta name="twitter:image" content="/logo1.png" />
-        <link rel="icon" href="/logo1.png" type="image/png" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo1.png" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
