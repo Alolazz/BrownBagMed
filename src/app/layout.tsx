@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Brown Bag Med – Medication Analysis and Management",
   description: "We help patients safely manage medications through structured analysis by licensed pharmacists.",
   icons: {
-    icon: "/logo1.webp",
+    icon: "/favicon.ico",
   },
 };
 
@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {process.env.NODE_ENV === 'production' && (
           <>
