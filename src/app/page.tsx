@@ -163,7 +163,7 @@ export default function Home () {
               </div>
               <h3 className={styles.featureTitle}>Interaction Check</h3>
               <p className={styles.featureDescription}>
-                We review all your medications for interactions, duplications, and dosing issues.Certified pharmacists analyze your medication list.You receive a clear, actionable report to share with your doctor.
+                We analyze your medication list and help you make sense of your medications — what they’re for, how they interact, and whether they’re still needed.
               </p>
             </div>
 
@@ -192,8 +192,7 @@ export default function Home () {
               </div>
               <h3 className={styles.featureTitle}>Dose Evaluation</h3>
               <p className={styles.featureDescription}>
-                We assess your prescriptions to ensure correct dosing.
-              </p>
+                We review all your medications for interactions, duplications, and dosing issues.  </p>
             </div>
 
             {/* Feature 3: Comprehensive Report */}
@@ -216,7 +215,7 @@ export default function Home () {
               </div>
               <h3 className={styles.featureTitle}>Comprehensive Report</h3>
               <p className={styles.featureDescription}>
-                Receive a detailed PDF summarizing an analysis.
+                You receive a clear, actionable report to share with your doctor.
               </p>
             </div>
           </div>
