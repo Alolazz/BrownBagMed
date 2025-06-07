@@ -76,70 +76,68 @@ export default function Home () {
         <div className={styles.featuresContainer}>
           <h2 className={styles.featuresTitle}>Why Brown Bag Med</h2>
           <div className={styles.featuresGrid}>
-            {/* Card 1: The Problem */}
+            {/* Card 1: More Medications = Higher Risk */}
             <div className={styles.featureCard}>
-              <div className={styles.featureIcon} style={{ fontSize: 36 }}>📉</div>
-              <div style={{ fontWeight: 700, fontSize: 22, color: '#ef4444', marginBottom: 4 }}>
-                🚨 60% of adults 60+
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600, marginBottom: 2 }}>
-                take 5+ meds daily
-              </div>
-              <div style={{ fontSize: 13, color: '#64748b', marginBottom: 8 }}>
-                Study by <span style={{ color: '#0ea5e9' }}>WHO</span>
-              </div>
-              <div style={{ fontWeight: 700, fontSize: 20, color: '#ef4444', margin: '16px 0 4px 0' }}>
-                🏥 1 in 4 hospitalizations
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600, marginBottom: 2 }}>
-                due to preventable medication issues
-              </div>
-              <div style={{ fontSize: 13, color: '#64748b' }}>
-                Source: <span style={{ color: '#0ea5e9' }}>EMA</span>
-              </div>
+              <div className={styles.featureIcon} style={{ fontSize: 36, color: '#2563eb' }}>⚠️</div>
+              <h3 className={styles.featureTitle}>
+                <span style={{ fontSize: '1em' }}>More</span> Medications = <span style={{ fontSize: '1.2em' }}>⬆️</span> Risk
+              </h3>
+              <p className={styles.featureDescription}>
+                People taking <span className="font-bold">5–9</span> medications are <span className="font-bold">2× side effects</span> more likely to experience side effects.
+              </p>
+              <p className={styles.featureDescription}>
+                Those on <span className="font-bold">10+</span> medications face <span className="font-bold">3× the risk</span>.
+              </p>
+              <p className={styles.featureDescription}>
+                Adverse drug reactions cause up to <span className="font-bold">1 in 5 hospital visits</span> for older adults — and most can be prevented with proper review.
+              </p>
+              <footer className="text-sm text-gray-500">
+                Sources: <a href="https://www.bhf.org.uk/informationsupport/heart-matters-magazine/news/behind-the-headlines/adverse-drug-reactions" className="text-blue-500" target="_blank" rel="noopener noreferrer">British Journal of General Practice, ADAPT Study</a>
+              </footer>
             </div>
             {/* Card 2: Common Hidden Risks */}
             <div className={styles.featureCard}>
-              <div className={styles.featureIcon} style={{ fontSize: 36 }}>⚠️</div>
-              <div style={{ fontWeight: 700, fontSize: 20, color: '#ef4444', marginBottom: 4 }}>
+              <div className={styles.featureIcon} style={{ fontSize: 36, color: '#2563eb' }}>❗</div>
+              <h3 className={styles.featureTitle}>
                 Hidden Risks
-              </div>
-              <div style={{ fontSize: 16, color: '#ef4444', fontWeight: 700, marginBottom: 2 }}>
-                🚫 Drug–drug interactions
-              </div>
-              <div style={{ fontSize: 16, color: '#f59e42', fontWeight: 700, marginBottom: 2 }}>
-                🧪 Duplicate therapies from different doctors
-              </div>
-              <div style={{ fontSize: 16, color: '#f59e42', fontWeight: 700, marginBottom: 2 }}>
-                ⚠️ Meds continued too long or wrong dose
-              </div>
-              <div style={{ fontSize: 16, color: '#ef4444', fontWeight: 700 }}>
-                ❌ Supplements interfering with prescriptions
-              </div>
+              </h3>
+              <p className={styles.featureDescription}>
+                Drug–drug interactions
+              </p>
+              <p className={styles.featureDescription}>
+                Duplicate therapies from different doctors
+              </p>
+              <p className={styles.featureDescription}>
+                Meds continued too long or wrong dose
+              </p>
+              <p className={styles.featureDescription}>
+                Supplements interfering with prescriptions
+              </p>
             </div>
             {/* Card 3: Who should do it? */}
             <div className={styles.featureCard}>
-              <div className={styles.featureIcon} style={{ fontSize: 36 }}>🛡️</div>
-              <div style={{ fontWeight: 700, fontSize: 20, color: '#22c55e', marginBottom: 4 }}>
+              <div className={styles.featureIcon} style={{ fontSize: 36, color: '#2563eb' }}>👥</div>
+              <h3 className={styles.featureTitle}>
                 Who Needs a Review?
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600, marginBottom: 2 }}>
-                Taking <span style={{ color: '#ef4444', fontWeight: 700 }}>4+ meds</span>
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600, marginBottom: 2 }}>
-                Seeing <span style={{ color: '#ef4444', fontWeight: 700 }}>multiple doctors</span>
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600, marginBottom: 2 }}>
-                Recent <span style={{ color: '#ef4444', fontWeight: 700 }}>med changes</span>
-              </div>
-              <div style={{ fontSize: 16, color: '#1e293b', fontWeight: 600 }}>
-                Long-term meds (e.g., <span style={{ color: '#ef4444', fontWeight: 700 }}>diabetes, hypertension, pain</span>)
-              </div>
+              </h3>
+              <p className={styles.featureDescription}>
+                Taking <span className="font-bold">4+ meds</span>
+              </p>
+              <p className={styles.featureDescription}>
+                Seeing <span className="font-bold">multiple doctors</span>
+              </p>
+              <p className={styles.featureDescription}>
+                Recent <span className="font-bold">med changes</span>
+              </p>
+              <p className={styles.featureDescription}>
+                Long-term meds (e.g., <span className="font-bold">diabetes, hypertension, pain</span>)
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+     
       {/* Features Section */}
       <section className={styles.features}>
         <div className={styles.featuresContainer}>
@@ -344,6 +342,8 @@ export default function Home () {
           </div>
         </div>
       </section>
+
+   
 
       {/* Footer */}
       <footer className={styles.footer}>
