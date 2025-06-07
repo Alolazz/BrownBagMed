@@ -163,7 +163,7 @@ export default function Home () {
               </div>
               <h3 className={styles.featureTitle}>Interaction Check</h3>
               <p className={styles.featureDescription}>
-                We help you make sense of your medications — what they’re for, how they interact, and whether they’re still needed.Brown Bag Med reviews all your medications for interactions, duplications, and dosing issues.Certified pharmacists analyze your medication list.You receive a clear, actionable report to share with your doctor.
+                We review all your medications for interactions, duplications, and dosing issues.Certified pharmacists analyze your medication list.You receive a clear, actionable report to share with your doctor.
               </p>
             </div>
 
