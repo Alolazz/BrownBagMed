@@ -16,7 +16,7 @@ export default function Home () {
               Medication Analysis & Management
             </h1>
             <p className={styles.heroSubtitle}>
-              We make your treatment journey safer
+              We make your treatment journey safer.
               We identify potential drug interactions, dosage issues, and more
               for better medication safety.
             </p>
@@ -80,7 +80,7 @@ export default function Home () {
             <div className={styles.featureCard}>
               <div className={styles.featureIcon} style={{ fontSize: 36, color: '#2563eb' }}>⚠️</div>
               <h3 className={styles.featureTitle}>
-                <span style={{ fontSize: '1em' }}>More</span> Medications = <span style={{ fontSize: '1.2em' }}>⬆️</span> Risk
+                <span style={{ fontSize: '1em' }}>More</span> Medications = <span style={{ fontSize: '1em' }}>More</span> Risk
               </h3>
               <p className={styles.featureDescription}>
                 People taking <span className="font-bold">5–9</span> medications are <span className="font-bold">2× side effects</span> more likely to experience side effects.
@@ -161,9 +161,9 @@ export default function Home () {
                   <path d='M15 3h6v6' />
                 </svg>
               </div>
-              <h3 className={styles.featureTitle}>Interaction Check</h3>
+              <h3 className={styles.featureTitle}>Medications Check</h3>
               <p className={styles.featureDescription}>
-                We analyze your medication list and help you make sense of your medications — what they’re for, how they interact, and whether they’re still needed.
+                We analyze your medications list and help you make sense of your medications — what they’re for, how they interact, and whether they’re still needed.
               </p>
             </div>
 
