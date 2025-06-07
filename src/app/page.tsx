@@ -74,7 +74,7 @@ export default function Home () {
       {/* Why a Brown Bag Medication Review Could Save Your Health Section */}
       <section className={styles.features} style={{ background: '#fff', paddingTop: 0 }}>
         <div className={styles.featuresContainer}>
-          <h2 className={styles.featuresTitle}>Why Brown Bag Med</h2>
+          <h2 className={styles.featuresTitle}>Why Brown Bag Med?</h2>
           <div className={styles.featuresGrid}>
             {/* Card 1: More Medications = Higher Risk */}
             <div className={styles.featureCard}>
@@ -141,7 +141,7 @@ export default function Home () {
       {/* Features Section */}
       <section className={styles.features}>
         <div className={styles.featuresContainer}>
-          <h2 className={styles.featuresTitle}> How can we help </h2>
+          <h2 className={styles.featuresTitle}> How can we help? </h2>
 
           <div className={styles.featuresGrid}>
             {/* Feature 1: Interaction Check */}
@@ -225,7 +225,7 @@ export default function Home () {
       {/* How It Works Section */}
       <section className={styles.features} style={{ background: '#f8fafc', paddingTop: 0 }}>
         <div className={styles.featuresContainer}>
-          <h2 className={styles.featuresTitle}>How It Works</h2>
+          <h2 className={styles.featuresTitle}>How It Works?</h2>
           <div className={styles.featuresGrid}>
             {/* Card 1: Upload Anonymously */}
             <Link href="/upload" passHref legacyBehavior>
