@@ -1,0 +1,44 @@
+/* Terms and Conditions Page Styles */
+
+.termsContainer {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background-color: #ffffff; /* Set background to white */
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.termsContainer h1 {
+  font-size: 2rem;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.termsContainer h2 {
+  font-size: 1.5rem;
+  color: #1e40af;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.termsContainer p {
+  margin-bottom: 1rem;
+}
+
+.termsContainer ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.termsContainer a {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.termsContainer a:hover {
+  text-decoration: none;
+}

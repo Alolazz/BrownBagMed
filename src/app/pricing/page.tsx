@@ -47,9 +47,13 @@ export default function PricingPage() {
 		<div className={styles.page}>
 			<div className={styles.container}>
 				<div className={styles.header}>
-					<h1 className={styles.heroTitle} style={{marginBottom: 8}}>Pricing Plans</h1>
-					<p className={styles.subtitle}>
-						Transparent and simple pricing.
+					<h1 style={{ textAlign: 'center' }}>
+						<a href="/" style={{ color: '#1e40af', textDecoration: 'none', fontSize: '3.25rem' }}>
+							Brown Bag Med
+						</a>
+					</h1>
+					<p style={{ textAlign: 'center', marginTop: '10px', color: '#1e40af', fontSize: '2.25rem', fontWeight: 'bold' }}>
+						Pricing Plan
 					</p>
 				</div>
 				<div className={styles.pricingGrid}>

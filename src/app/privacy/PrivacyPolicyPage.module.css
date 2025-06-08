@@ -1,0 +1,43 @@
+/* Privacy Policy Page Styles */
+
+.privacyPolicy {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background-color: #ffffff; /* Set background to white */
+  padding: 2rem; /* Add padding to ensure content is not flush with edges */
+  margin: 0 auto; /* Center the content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for better visibility */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.privacyPolicy h1 {
+  font-size: 2rem;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.privacyPolicy h2 {
+  font-size: 1.5rem;
+  color: #1e40af;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacyPolicy p {
+  margin-bottom: 1rem;
+}
+
+.privacyPolicy ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.privacyPolicy a {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.privacyPolicy a:hover {
+  text-decoration: none;
+}
