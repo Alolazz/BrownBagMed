@@ -1,12 +1,17 @@
+import Link from 'next/link';
 import styles from './TermsPage.module.css';
 
 export default function TermsPage() {
   return (
     <main className={styles.termsContainer}>
-      <h1><a href="/" style={{ color: '#1e40af', textDecoration: 'none' }}>Terms and Conditions for Brown Bag Med</a></h1>
+      <h1>
+        <Link href="/" style={{ color: '#1e40af', textDecoration: 'none' }}>
+          Terms and Conditions for Brown Bag Med
+        </Link>
+      </h1>
       <p><strong>Effective Date:</strong> 08.06.2025</p>
 
-      <p>Welcome to <a href="/" style={{ color: '#1e40af', textDecoration: 'underline' }}>Brown Bag Med</a>. These Terms and Conditions ("Terms") govern your use of our website ("Site") and services ("Services"). By accessing or using our Site or Services, you agree to be bound by these Terms. If you do not agree, please do not use our Site or Services.</p>
+      <p>Welcome to <Link href="/" style={{ color: '#1e40af', textDecoration: 'underline' }}>Brown Bag Med</Link>. These Terms and Conditions ("Terms") govern your use of our website ("Site") and services ("Services"). By accessing or using our Site or Services, you agree to be bound by these Terms. If you do not agree, please do not use our Site or Services.</p>
 
       <h2>1. Use of Services</h2>
       <p><strong>1.1</strong> You must be at least 18 years old or have parental consent to use our Services.</p>

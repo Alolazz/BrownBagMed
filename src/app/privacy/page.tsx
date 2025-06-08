@@ -1,10 +1,15 @@
+import Link from 'next/link';
 import styles from './PrivacyPolicyPage.module.css';
 
 export default function PrivacyPolicyPage() {
   return (
     <main style={{ maxWidth: 700, margin: '0 auto', padding: '2rem 1rem', backgroundColor: '#ffffff' }}>
       <section className={styles.privacyPolicy}>
-        <h1><a href="/" style={{ color: '#1e40af', textDecoration: 'none' }}>Privacy Policy for Brown Bag Med</a></h1>
+        <h1>
+          <Link href="/" style={{ color: '#1e40af', textDecoration: 'none' }}>
+            Privacy Policy for Brown Bag Med
+          </Link>
+        </h1>
         <p><a href="/pricing" style={{ color: '#1e40af', textDecoration: 'none' }}>Pricing Plan</a></p>
         <p>Last updated: June 2025</p>
 

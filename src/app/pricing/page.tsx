@@ -48,9 +48,9 @@ export default function PricingPage() {
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<h1 style={{ textAlign: 'center' }}>
-						<a href="/" style={{ color: '#1e40af', textDecoration: 'none', fontSize: '3.25rem' }}>
+						<Link href="/" style={{ color: '#1e40af', textDecoration: 'none', fontSize: '3.25rem' }}>
 							Brown Bag Med
-						</a>
+						</Link>
 					</h1>
 					<p style={{ textAlign: 'center', marginTop: '10px', color: '#1e40af', fontSize: '2.25rem', fontWeight: 'bold' }}>
 						Pricing Plan
