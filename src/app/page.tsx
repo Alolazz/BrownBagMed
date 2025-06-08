@@ -99,7 +99,7 @@ export default function Home () {
             <div className={styles.featureCard}>
               <div className={styles.featureIcon} style={{ fontSize: 36, color: '#2563eb' }}>❗</div>
               <h3 className={styles.featureTitle}>
-                Hidden Risks
+                Potential Hazards
               </h3>
               <p className={styles.featureDescription}>
                 Drug–drug interactions

@@ -62,6 +62,9 @@ export default function RootLayout({
         <meta property="og:title" content="Brown Bag Med" />
         <meta property="og:description" content="Medication Analysis & Management – Private & Secure" />
         <meta property="og:image" content="/logo1.png" />
+        <meta property="og:image" content="/logo1.webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yourdomain.com" />
         <meta name="twitter:card" content="summary_large_image" />
