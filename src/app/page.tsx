@@ -83,10 +83,10 @@ export default function Home () {
                 <span style={{ fontSize: '1em' }}>More</span> Medications = <span style={{ fontSize: '1em' }}>More</span> Risk
               </h3>
               <p className={styles.featureDescription}>
-                People taking <span className="font-bold">5–9</span> medications are <span className="font-bold">2× side effects</span> more likely to experience side effects.
+                People taking <span className="font-bold">5–9</span> medications are <span className="font-bold"></span> more likely to experience 2x side effects.
               </p>
               <p className={styles.featureDescription}>
-                Those on <span className="font-bold">10+</span> medications face <span className="font-bold">3× the risk</span>.
+                Those on <span className="font-bold">10+</span> medications face <span className="font-bold">3× the risk</span> compared to people taking less than 5 medications.
               </p>
               <p className={styles.featureDescription}>
                 Adverse drug reactions cause up to <span className="font-bold">1 in 5 hospital visits</span> for older adults — and most can be prevented with proper review.
