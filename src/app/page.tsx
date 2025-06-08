@@ -102,16 +102,19 @@ export default function Home () {
                 Potential Hazards
               </h3>
               <p className={styles.featureDescription}>
-                Drug–drug interactions
+              
+              </p>
+              <p className={styles.featureDescription}>
+                Harmful drug–drug interactions
               </p>
               <p className={styles.featureDescription}>
                 Duplicate therapies from different doctors
               </p>
               <p className={styles.featureDescription}>
-                Meds continued too long or wrong dose
+                Outdated medications still in use
               </p>
               <p className={styles.featureDescription}>
-                Supplements interfering with prescriptions
+                Supplements that reduce prescription effectiveness
               </p>
             </div>
             {/* Card 3: Who should do it? */}

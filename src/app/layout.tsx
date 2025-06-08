@@ -31,6 +31,13 @@ export const metadata: Metadata = {
         height: 630,
         alt: "Brown Bag Med Logo",
         type: "image/png"
+      },
+      {
+        url: "/logo1.webp",
+        width: 1200,
+        height: 630,
+        alt: "Brown Bag Med Logo",
+        type: "image/webp"
       }
     ],
     type: "website",
