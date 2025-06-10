@@ -5,6 +5,7 @@ import prisma from '@/app/models/patient';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 export async function POST(request: NextRequest) {
+  // Ensure all responses return valid JSON
   try {
     const data = await request.formData();
     const files: File[] = data.getAll('files') as File[];
@@ -82,6 +83,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Upload failed', details: error instanceof Error ? error.message : String(error) }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error occurred' }, { status: 500 });
   }
 }

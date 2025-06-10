@@ -177,15 +177,23 @@ export default function UploadPage () {
       medications.forEach((file) => formData.append('files', file));
       formData.append('healthInfo', JSON.stringify(healthInfo));
 
+      // Update fetch logic to handle unexpected server responses
       const response = await fetch('/api/uploadReport', {
         method: 'POST',
         body: formData,
       });
-      const result = await response.json();
-      if (result.success) {
-        router.push(result.link);
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          router.push(result.link);
+        } else {
+          setUploadMessage(result.error || 'Upload failed. Please try again.');
+        }
       } else {
-        setUploadMessage(result.error || 'Upload failed. Please try again.');
+        const errorText = await response.text();
+        console.error('Unexpected server response:', errorText);
+        setUploadMessage('Unexpected server response. Please try again later.');
       }
     } catch (error) {
       setUploadMessage(error instanceof Error ? error.message : 'Upload failed. Please try again.');
@@ -229,6 +237,7 @@ export default function UploadPage () {
             <label htmlFor='fileInput' className={styles.uploadLabel}>
               <div className={styles.uploadArea}>
                 <div className={styles.uploadIcon}>
+                  {/* Update the SVG icon to represent an upload arrow */}
                   <svg
                     width='48'
                     height='48'
@@ -238,8 +247,8 @@ export default function UploadPage () {
                     strokeWidth='2'
                   >
                     <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
-                    <polyline points='7,10 12,15 17,10' />
-                    <line x1='12' y1='15' x2='12' y2='3' />
+                    <polyline points='7,15 12,10 17,15' />
+                    <line x1='12' y1='10' x2='12' y2='21' />
                   </svg>
                 </div>
                 <div className={styles.uploadText}>
