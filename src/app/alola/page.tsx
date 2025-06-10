@@ -3,9 +3,8 @@ import prisma from "@/app/models/patient";
 import Link from "next/link";
 
 export default async function AlolaDashboard() {
-  // Fetch all patients from Prisma
   const patients = await prisma.patient.findMany({
-    orderBy: { uploadedAt: "desc" }
+    orderBy: { uploadedAt: "desc" },
   });
 
   return (

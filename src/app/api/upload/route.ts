@@ -19,18 +19,6 @@ export async function POST(request: NextRequest) {
     // Generate unique patient ID using UUID
     const patientId = `patient_${uuidv4()}`;
 
-    // Upload files to Vercel Blob storage
-    const savedFiles: string[] = [];
-    const fileUrls: string[] = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const fileExtension = file.name.split('.').pop() || '';
-      const fileName = `medication_${i + 1}.${fileExtension}`;
-      const blob = await put(`${patientId}/${fileName}`, file, { access: 'public' });
-      savedFiles.push(fileName);
-      fileUrls.push(blob.url);
-    }
-
     // Parse health info
     const parsedHealth = healthInfo ? JSON.parse(healthInfo) : {};
 
@@ -50,6 +38,18 @@ export async function POST(request: NextRequest) {
     } catch (dbError) {
       console.error('Database insertion error:', dbError);
       return NextResponse.json({ error: 'Failed to save patient data' }, { status: 500 });
+    }
+
+    // Upload files to Vercel Blob storage
+    const savedFiles: string[] = [];
+    const fileUrls: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileExtension = file.name.split('.').pop() || '';
+      const fileName = `medication_${i + 1}.${fileExtension}`;
+      const blob = await put(`${patientId}/${fileName}`, file, { access: 'public' });
+      savedFiles.push(fileName);
+      fileUrls.push(blob.url);
     }
 
     // Generate PDF summary of healthInfo (still in memory, not saved to disk)
