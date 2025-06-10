@@ -103,92 +103,59 @@ export default function UploadPage () {
     e.preventDefault();
     let hasError = false;
 
-    // Validate date of birth (required)
-    if (!healthInfo.dateOfBirth) {
-        setDobError('This field is required.');
-        hasError = true;
-    } else if (!/^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth) || !isValidGermanDate(healthInfo.dateOfBirth)) {
-        setDobError('Please enter a valid date in DD.MM.YYYY format.');
-        hasError = true;
-    } else {
-        setDobError('');
+    // Validate required fields
+    if (!healthInfo.dateOfBirth || !isValidGermanDate(healthInfo.dateOfBirth)) {
+      setDobError('Please enter a valid date in DD.MM.YYYY format.');
+      hasError = true;
     }
-
-    // Validate medicationNotes (required)
-    if (!healthInfo.medicationNotes || healthInfo.medicationNotes.trim() === '') {
-        setMedicationNotesError('This field is required.');
-        hasError = true;
-    } else {
-        setMedicationNotesError('');
+    if (!healthInfo.medicationNotes.trim()) {
+      setMedicationNotesError('This field is required.');
+      hasError = true;
     }
-
-    // Validate known allergies (required)
-    if (!healthInfo.knownAllergies || healthInfo.knownAllergies.trim() === '') {
-        setUploadMessage('Please enter your known allergies.');
-        hasError = true;
-    } 
-
-    // Validate additional comments (required)
-    if (!healthInfo.additionalComments || healthInfo.additionalComments.trim() === '') {
-        setUploadMessage('Please enter any additional comments.');
-        hasError = true;
-    } 
-
-    // Validate gender (required)
+    if (!healthInfo.knownAllergies.trim()) {
+      setUploadMessage('Please enter your known allergies.');
+      hasError = true;
+    }
+    if (!healthInfo.additionalComments.trim()) {
+      setUploadMessage('Please enter any additional comments.');
+      hasError = true;
+    }
     if (!healthInfo.gender) {
-        setUploadMessage('Please select your gender.');
-        hasError = true;
-    } 
-
-    // Validate medicalConditions (required)
-    if (!healthInfo.medicalConditions || healthInfo.medicalConditions.length === 0) {
-        setMedicalConditionsError('This field is required.');
-        hasError = true;
-    } else {
-        setMedicalConditionsError('');
+      setUploadMessage('Please select your gender.');
+      hasError = true;
     }
-
-    if (hasError) {
-        setUploadMessage('Please fill in all required fields.');
-        return;
+    if (!healthInfo.medicalConditions.length) {
+      setMedicalConditionsError('This field is required.');
+      hasError = true;
     }
-
-    if (medications.length === 0) {
-        setUploadMessage('Please select at least one file to upload.')
-        return
-    }
-
     if (!isAgreed) {
-        setUploadMessage('Please agree to the anonymous analysis terms.')
-        return
+      setUploadMessage('Please agree to the anonymous analysis terms.');
+      hasError = true;
+    }
+    if (medications.length === 0) {
+      setUploadMessage('Please select at least one file to upload.');
+      hasError = true;
     }
 
-    // Validate date of birth if provided
-    if (healthInfo.dateOfBirth) {
-      if (!/^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth) || !isValidGermanDate(healthInfo.dateOfBirth)) {
-        setDobError('Please enter a valid date in DD.MM.YYYY format.');
-        setUploadMessage('');
-        return;
-      }
-    }
+    if (hasError) return;
 
     setIsUploading(true);
-    setUploadMessage('Uploading your medications...')
+    setUploadMessage('Uploading your medications...');
+
     try {
       const formData = new FormData();
-      medications.forEach((file) => formData.append('report', file)); // Ensure 'report' matches backend expectation
-      formData.append('patientId', 'example_patient_id'); // Replace with actual patientId logic
+      medications.forEach((file) => formData.append('files', file));
+      formData.append('healthInfo', JSON.stringify(healthInfo));
 
-      // Update fetch logic to handle unexpected server responses
-      const response = await fetch('/api/alola/uploadReport', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         const result = await response.json();
-        if (result.success) {
-          router.push('/upload/confirmation');
+        if (result.success && result.patientId) {
+          router.push(`/uploads/${result.patientId}`);
         } else {
           setUploadMessage(result.error || 'Upload failed. Please try again.');
         }
@@ -199,6 +166,7 @@ export default function UploadPage () {
       }
     } catch (error) {
       setUploadMessage(error instanceof Error ? error.message : 'Upload failed. Please try again.');
+    } finally {
       setIsUploading(false);
     }
   }
