@@ -14,6 +14,8 @@ interface OptionType {
 }
 
 export default function UploadPage () {
+  const router = useRouter();
+
   // Change files state to an array of File
   const [medications, setMedications] = useState<File[]>([]);
   const [isAgreed, setIsAgreed] = useState(false)
@@ -30,8 +32,8 @@ export default function UploadPage () {
     medicationNotes: '' // <-- add this field for free-text medication entry
   })
 
-  // Use useState to generate a stable, client-only ID for react-select
-  const [medicalConditionsId] = useState(() => `react-select-${Math.random().toString(36).slice(2)}`);
+  // Replace dynamic generation of `medicalConditionsId` with a static value
+  const medicalConditionsId = 'react-select-medical-conditions';
 
   // --- Date of Birth Formatting and Validation ---
   const [dobError, setDobError] = useState<string>('');
@@ -174,11 +176,11 @@ export default function UploadPage () {
     setUploadMessage('Uploading your medications...')
     try {
       const formData = new FormData();
-      medications.forEach((file) => formData.append('files', file));
-      formData.append('healthInfo', JSON.stringify(healthInfo));
+      medications.forEach((file) => formData.append('report', file)); // Ensure 'report' matches backend expectation
+      formData.append('patientId', 'example_patient_id'); // Replace with actual patientId logic
 
       // Update fetch logic to handle unexpected server responses
-      const response = await fetch('/api/uploadReport', {
+      const response = await fetch('/api/alola/uploadReport', {
         method: 'POST',
         body: formData,
       });
@@ -186,7 +188,7 @@ export default function UploadPage () {
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          router.push(result.link);
+          router.push('/upload/confirmation');
         } else {
           setUploadMessage(result.error || 'Upload failed. Please try again.');
         }
@@ -208,8 +210,6 @@ export default function UploadPage () {
   const clearAllMedications = () => {
     setMedications([]);
   };
-
-  const router = useRouter();
 
   return (
     <div className={styles.page}>
