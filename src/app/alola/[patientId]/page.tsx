@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
-import styles from "../upload/upload.module.css";
+import styles from "../../upload/upload.module.css";
 
 export default function PatientDetailPage() {
   const params = useParams();

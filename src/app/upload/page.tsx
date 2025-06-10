@@ -35,9 +35,8 @@ export default function UploadPage () {
   // --- Date of Birth Formatting and Validation ---
   const [dobError, setDobError] = useState<string>('');
   const [medicationNotesError, setMedicationNotesError] = useState<string>('');
-  const [knownAllergiesError, setKnownAllergiesError] = useState<string>('');
-  const [additionalCommentsError, setAdditionalCommentsError] = useState<string>('');
-  const [genderError, setGenderError] = useState<string>('');
+  // Add state for medicalConditionsError
+  const [medicalConditionsError, setMedicalConditionsError] = useState<string>('');
 
   // Helper: Format input as DD.MM.YY or DD.MM.YYYY with dots
   function formatGermanDateInput(raw: string): string {
@@ -122,26 +121,28 @@ export default function UploadPage () {
 
     // Validate known allergies (required)
     if (!healthInfo.knownAllergies || healthInfo.knownAllergies.trim() === '') {
-        setKnownAllergiesError('This field is required.');
+        setUploadMessage('Please enter your known allergies.');
         hasError = true;
-    } else {
-        setKnownAllergiesError('');
-    }
+    } 
 
     // Validate additional comments (required)
     if (!healthInfo.additionalComments || healthInfo.additionalComments.trim() === '') {
-        setAdditionalCommentsError('This field is required.');
+        setUploadMessage('Please enter any additional comments.');
         hasError = true;
-    } else {
-        setAdditionalCommentsError('');
-    }
+    } 
 
     // Validate gender (required)
     if (!healthInfo.gender) {
-        setGenderError('This field is required.');
+        setUploadMessage('Please select your gender.');
+        hasError = true;
+    } 
+
+    // Validate medicalConditions (required)
+    if (!healthInfo.medicalConditions || healthInfo.medicalConditions.length === 0) {
+        setMedicalConditionsError('This field is required.');
         hasError = true;
     } else {
-        setGenderError('');
+        setMedicalConditionsError('');
     }
 
     if (hasError) {
@@ -377,7 +378,7 @@ export default function UploadPage () {
                   />
                 </div>
                 {/* Add dynamic error message for 'Medical Conditions' field */}
-                {/* {medicalConditionsError && <span id="medicalConditions-error" className="text-xs text-red-600">{medicalConditionsError}</span>} */}
+                {medicalConditionsError && <span id="medicalConditions-error" className="text-xs text-red-600">{medicalConditionsError}</span>}
               </div>
 
               {/* Known Allergies */}
