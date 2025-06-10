@@ -399,8 +399,6 @@ export default function UploadPage () {
                   aria-invalid={!healthInfo.knownAllergies}
                   aria-describedby={!healthInfo.knownAllergies ? 'knownAllergies-error' : undefined}
                 />
-                {/* Add dynamic error message for 'Known Allergies' field */}
-                {!healthInfo.knownAllergies && <span id="knownAllergies-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Additional Comments */}
@@ -421,8 +419,6 @@ export default function UploadPage () {
                   aria-invalid={!healthInfo.additionalComments}
                   aria-describedby={!healthInfo.additionalComments ? 'additionalComments-error' : undefined}
                 />
-                {/* Add dynamic error message for 'Additional Comments' field */}
-                {!healthInfo.additionalComments && <span id="additionalComments-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Gender Selection */}
@@ -444,8 +440,6 @@ export default function UploadPage () {
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
-                {/* Add dynamic error message for 'Gender' field */}
-                {!healthInfo.gender && <span id="gender-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Free-text Medication Entry */}

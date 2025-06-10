@@ -524,6 +524,19 @@
   outline-offset: 1px;
 }
 
+/* Add custom styles for validation error states */
+.border-red-500 {
+  border-color: #ef4444 !important;
+}
+
+.focus\:ring-red-500:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5) !important;
+}
+
+.focus\:border-red-500:focus {
+  border-color: #ef4444 !important;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .page {
