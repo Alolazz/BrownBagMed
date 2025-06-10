@@ -72,7 +72,7 @@ export default function Home () {
       </div>
 
       {/* Why a Brown Bag Medication Review Could Save Your Health Section */}
-      <section className={styles.features} style={{ background: '#fff', paddingTop: 0 }}>
+      <section className={styles.features} style={{ background: '#fff', padding: '40px 0' }}>
         <div className={styles.featuresContainer}>
           <h2 className={styles.featuresTitle}>Why Brown Bag Med?</h2>
           <div className={styles.featuresGrid}>
@@ -140,9 +140,8 @@ export default function Home () {
         </div>
       </section>
 
-     
       {/* Features Section */}
-      <section className={styles.features}>
+      <section className={styles.features} style={{ background: '#f8fafc', padding: '40px 0' }}>
         <div className={styles.featuresContainer}>
           <h2 className={styles.featuresTitle}> How can we help? </h2>
 
@@ -226,7 +225,7 @@ export default function Home () {
       </section>
 
       {/* How It Works Section */}
-      <section className={styles.features} style={{ background: '#f8fafc', paddingTop: 0 }}>
+      <section className={styles.features} style={{ background: '#fff', padding: '40px 0' }}>
         <div className={styles.featuresContainer}>
           <h2 className={styles.featuresTitle}>How It Works?</h2>
           <div className={styles.featuresGrid}>
