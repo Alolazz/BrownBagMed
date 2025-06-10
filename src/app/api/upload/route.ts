@@ -10,8 +10,9 @@ export async function POST(request: NextRequest) {
     const files: File[] = data.getAll('files') as File[];
     const healthInfo = data.get('healthInfo') as string;
 
-    if (!files || files.length === 0) {
-      return NextResponse.json({ error: 'No files received' }, { status: 400 });
+    // Add validation for files and healthInfo
+    if (!files || files.length === 0 || !healthInfo) {
+      return NextResponse.json({ error: 'Missing file or health information' }, { status: 400 });
     }
 
     // Generate unique patient ID using UUID
@@ -33,18 +34,22 @@ export async function POST(request: NextRequest) {
     const parsedHealth = healthInfo ? JSON.parse(healthInfo) : {};
 
     // Insert Patient into Prisma DB
-    await prisma.patient.create({
-      data: {
-        id: patientId.replace('patient_', ''),
-        folderName: patientId,
-        dateOfBirth: parsedHealth.dateOfBirth || null,
-        gender: parsedHealth.gender || null,
-        conditions: Array.isArray(parsedHealth.medicalConditions) ? parsedHealth.medicalConditions.join(', ') : parsedHealth.medicalConditions || null,
-        allergies: parsedHealth.knownAllergies || null,
-        comments: parsedHealth.additionalComments || null,
-        // uploadedAt, reportReady, paid use defaults
-      }
-    });
+    try {
+      await prisma.patient.create({
+        data: {
+          id: patientId.replace('patient_', ''),
+          folderName: patientId,
+          dateOfBirth: parsedHealth.dateOfBirth || null,
+          gender: parsedHealth.gender || null,
+          conditions: Array.isArray(parsedHealth.medicalConditions) ? parsedHealth.medicalConditions.join(', ') : parsedHealth.medicalConditions || null,
+          allergies: parsedHealth.knownAllergies || null,
+          comments: parsedHealth.additionalComments || null,
+        }
+      });
+    } catch (dbError) {
+      console.error('Database insertion error:', dbError);
+      return NextResponse.json({ error: 'Failed to save patient data' }, { status: 500 });
+    }
 
     // Generate PDF summary of healthInfo (still in memory, not saved to disk)
     const pdfDoc = await PDFDocument.create();

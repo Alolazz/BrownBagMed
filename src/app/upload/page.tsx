@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import CreatableSelect from 'react-select/creatable';
 import Link from 'next/link';
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 import styles from './upload.module.css'
 
 // Explicit type for react-select options
@@ -182,7 +183,7 @@ export default function UploadPage () {
       });
       const result = await response.json();
       if (result.success) {
-        window.location.href = `/uploads/${result.patientId}`;
+        router.push(result.link);
       } else {
         setUploadMessage(result.error || 'Upload failed. Please try again.');
       }
@@ -199,6 +200,8 @@ export default function UploadPage () {
   const clearAllMedications = () => {
     setMedications([]);
   };
+
+  const router = useRouter();
 
   return (
     <div className={styles.page}>
