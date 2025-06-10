@@ -78,6 +78,7 @@ export default function RootLayout({
         <meta name="twitter:title" content="Brown Bag Med" />
         <meta name="twitter:description" content="Medication Analysis & Management – Private & Secure" />
         <meta name="twitter:image" content="/logo1.png" />
+        <meta name="google-site-verification" content="your-google-site-verification-code" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo1.png" />
       </head>
