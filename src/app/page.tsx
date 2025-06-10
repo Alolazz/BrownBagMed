@@ -23,6 +23,23 @@ export default function Home () {
             <a href='/upload'>
               <button className={styles.ctaButton}>Upload Medications</button>
             </a>
+            <div style={{ textAlign: 'left', marginTop: 0.5 }}>
+              <a
+                href="/follow-up"
+                style={{
+                  color: '#2563eb',
+                  fontWeight: 600,
+                  fontSize: 18,
+                  textDecoration: 'underline',
+                  display: 'inline-block',
+                  marginTop: 8,
+                  letterSpacing: '0.01em',
+                  transition: 'color 0.2s',
+                }}
+              >
+                Have a question about your report? &rarr;
+              </a>
+            </div>
           </div>
           <div className={styles.heroImage}>
             <Image
@@ -40,17 +57,6 @@ export default function Home () {
           </div>
         </div>
       </section>
-
-      {/* Follow-up Link Section */}
-      <div style={{ textAlign: 'center', marginTop: 16 }}>
-        <a
-          href="/follow-up"
-          className="text-sm underline text-blue-600 hover:text-blue-800 text-center block"
-          style={{ margin: '16px auto', maxWidth: 320 }}
-        >
-          Have a question about your report?
-        </a>
-      </div>
 
       {/* Pricing Link Section */}
       <div style={{ textAlign: 'center', margin: '32px 0 0 0' }}>
