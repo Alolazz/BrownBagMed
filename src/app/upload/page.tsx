@@ -35,6 +35,9 @@ export default function UploadPage () {
   // --- Date of Birth Formatting and Validation ---
   const [dobError, setDobError] = useState<string>('');
   const [medicationNotesError, setMedicationNotesError] = useState<string>('');
+  const [knownAllergiesError, setKnownAllergiesError] = useState<string>('');
+  const [additionalCommentsError, setAdditionalCommentsError] = useState<string>('');
+  const [genderError, setGenderError] = useState<string>('');
 
   // Helper: Format input as DD.MM.YY or DD.MM.YYYY with dots
   function formatGermanDateInput(raw: string): string {
@@ -93,42 +96,67 @@ export default function UploadPage () {
     }))
   }
 
+  // Add dynamic error message logic for all required fields
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let hasError = false;
 
     // Validate date of birth (required)
     if (!healthInfo.dateOfBirth) {
-      setDobError('This field is required.');
-      hasError = true;
+        setDobError('This field is required.');
+        hasError = true;
     } else if (!/^\d{2}\.\d{2}\.\d{4}$/.test(healthInfo.dateOfBirth) || !isValidGermanDate(healthInfo.dateOfBirth)) {
-      setDobError('Please enter a valid date in DD.MM.YYYY format.');
-      hasError = true;
+        setDobError('Please enter a valid date in DD.MM.YYYY format.');
+        hasError = true;
     } else {
-      setDobError('');
+        setDobError('');
     }
 
-    // Validate medicationNotes (required as "Question")
+    // Validate medicationNotes (required)
     if (!healthInfo.medicationNotes || healthInfo.medicationNotes.trim() === '') {
-      setMedicationNotesError('This field is required.');
-      hasError = true;
+        setMedicationNotesError('This field is required.');
+        hasError = true;
     } else {
-      setMedicationNotesError('');
+        setMedicationNotesError('');
+    }
+
+    // Validate known allergies (required)
+    if (!healthInfo.knownAllergies || healthInfo.knownAllergies.trim() === '') {
+        setKnownAllergiesError('This field is required.');
+        hasError = true;
+    } else {
+        setKnownAllergiesError('');
+    }
+
+    // Validate additional comments (required)
+    if (!healthInfo.additionalComments || healthInfo.additionalComments.trim() === '') {
+        setAdditionalCommentsError('This field is required.');
+        hasError = true;
+    } else {
+        setAdditionalCommentsError('');
+    }
+
+    // Validate gender (required)
+    if (!healthInfo.gender) {
+        setGenderError('This field is required.');
+        hasError = true;
+    } else {
+        setGenderError('');
     }
 
     if (hasError) {
-      setUploadMessage('Please fill in all required fields.');
-      return;
+        setUploadMessage('Please fill in all required fields.');
+        return;
     }
 
     if (medications.length === 0) {
-      setUploadMessage('Please select at least one file to upload.')
-      return
+        setUploadMessage('Please select at least one file to upload.')
+        return
     }
 
     if (!isAgreed) {
-      setUploadMessage('Please agree to the anonymous analysis terms.')
-      return
+        setUploadMessage('Please agree to the anonymous analysis terms.')
+        return
     }
 
     // Validate date of birth if provided
@@ -265,8 +293,8 @@ export default function UploadPage () {
           )}
 
           {/* Optional Health Info Section */}
-          <div className={styles.healthInfoSection + " bg-white/80"}>
-            <h3 className={styles.healthInfoTitle}> Basic Information</h3>
+          <div className={styles.healthInfoSection} style={{ background: '#ffffff' }}>
+            <h3 className={styles.healthInfoTitle}> Patient Information</h3>
             <p className={styles.healthInfoSubtitle}>
               This information helps our pharmacists provide more accurate
               analysis and recommendations.
@@ -295,8 +323,10 @@ export default function UploadPage () {
                   aria-invalid={!!dobError}
                   aria-describedby={dobError ? 'dob-error' : undefined}
                 />
-                {dobError && <span id="dob-error" className="text-xs text-red-600">{dobError}</span>}
+                {/* Remove inline error message and display it dynamically */}
                 <span className="date-format-note">Format: DD.MM.YYYY</span>
+                {/* Add dynamic error message for 'Date of Birth' field */}
+                {dobError && <span id="dob-error" className="text-xs text-red-600">{dobError}</span>}
               </div>
 
               {/* Medical Conditions */}
@@ -346,7 +376,8 @@ export default function UploadPage () {
                     aria-label="Medical Conditions"
                   />
                 </div>
-                {/* Add error message if needed, e.g. medicalConditionsError */}
+                {/* Add dynamic error message for 'Medical Conditions' field */}
+                {/* {medicalConditionsError && <span id="medicalConditions-error" className="text-xs text-red-600">{medicalConditionsError}</span>} */}
               </div>
 
               {/* Known Allergies */}
@@ -367,6 +398,7 @@ export default function UploadPage () {
                   aria-invalid={!healthInfo.knownAllergies}
                   aria-describedby={!healthInfo.knownAllergies ? 'knownAllergies-error' : undefined}
                 />
+                {/* Add dynamic error message for 'Known Allergies' field */}
                 {!healthInfo.knownAllergies && <span id="knownAllergies-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
@@ -388,6 +420,7 @@ export default function UploadPage () {
                   aria-invalid={!healthInfo.additionalComments}
                   aria-describedby={!healthInfo.additionalComments ? 'additionalComments-error' : undefined}
                 />
+                {/* Add dynamic error message for 'Additional Comments' field */}
                 {!healthInfo.additionalComments && <span id="additionalComments-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
@@ -410,13 +443,14 @@ export default function UploadPage () {
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+                {/* Add dynamic error message for 'Gender' field */}
                 {!healthInfo.gender && <span id="gender-error" className="text-xs text-red-600">This field is required.</span>}
               </div>
 
               {/* Free-text Medication Entry */}
               <div className={styles.inputGroup}>
-                <label htmlFor="medicationNotes" className="block text-sm font-medium text-black mb-1">
-                  Write your medications (optional) <span className="text-red-600" aria-hidden="true">*</span>
+                <label htmlFor="medicationNotes" className={styles.inputLabel}>
+                  Write your medications <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="medicationNotes"
@@ -432,6 +466,7 @@ export default function UploadPage () {
                   aria-invalid={!!medicationNotesError}
                   aria-describedby={medicationNotesError ? 'medicationNotes-error' : undefined}
                 />
+                {/* Add dynamic error message for 'Write your medications' field */}
                 {medicationNotesError && <span id="medicationNotes-error" className="text-xs text-red-600">{medicationNotesError}</span>}
               </div>
             </div>

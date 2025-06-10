@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
+import styles from "../upload/upload.module.css";
 
 export default function PatientDetailPage() {
   const params = useParams();
@@ -40,72 +41,62 @@ export default function PatientDetailPage() {
       setUploading(false);
       return;
     }
+
     const formData = new FormData();
-    formData.append("report", file);
+    formData.append("file", file);
+    formData.append("patientId", patientId || "");
+
     try {
-      const res = await fetch(`/api/alola/uploadReport?patientId=${patientId}`, {
+      const res = await fetch("/api/alola/uploadReport", {
         method: "POST",
         body: formData,
       });
-      if (!res.ok) throw new Error("Upload failed");
-      setMessage("Report uploaded successfully!");
-      // Refresh file list
-      const data = await res.json();
-      setFiles(data.files || []);
+      const result = await res.json();
+      if (res.ok) {
+        setMessage("File uploaded successfully.");
+        setFiles((prev) => [...prev, file.name]);
+      } else {
+        setError(result.error || "Upload failed.");
+      }
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Upload failed");
+      setError(error instanceof Error ? error.message : "Upload failed.");
     }
     setUploading(false);
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">Patient {patientId}</h1>
-        <div className="bg-white rounded shadow p-4 mb-6">
-          <h2 className="text-lg font-semibold mb-2">Files</h2>
-          {loading ? (
-            <div className="text-gray-500">Loading...</div>
-          ) : error ? (
-            <div className="text-red-600">{error}</div>
-          ) : (
-            <ul className="divide-y divide-gray-200">
-              {files.length === 0 && <li className="py-2 text-gray-500">No files found.</li>}
-              {files.map((filename) => (
-                <li key={filename} className="flex items-center justify-between py-2">
-                  <span className="truncate mr-2">{filename}</span>
-                  <a
-                    href={`/api/alola/download?patientId=${patientId}&filename=${encodeURIComponent(filename)}`}
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
-                    download
-                  >
-                    Download
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <form onSubmit={handleUpload} className="bg-white rounded shadow p-4 flex flex-col gap-3">
-          <label className="font-semibold">Upload New report.pdf</label>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Patient Files</h1>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className={styles.error}>{error}</p>
+        ) : (
+          <ul>
+            {files.map((file, idx) => (
+              <li key={idx}>{file}</li>
+            ))}
+          </ul>
+        )}
+
+        <form onSubmit={handleUpload} className={styles.form}>
+          <label htmlFor="fileInput" className={styles.uploadLabel}>
+            Upload a report.pdf file
+          </label>
           <input
+            id="fileInput"
             type="file"
-            accept="application/pdf"
             ref={fileInputRef}
-            className="border rounded px-2 py-1"
-            required
+            className={styles.fileInput}
           />
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
-            disabled={uploading}
-          >
-            {uploading ? "Uploading..." : "Upload Report"}
+          <button type="submit" className={styles.submitButton} disabled={uploading}>
+            {uploading ? "Uploading..." : "Upload"}
           </button>
-          {message && <div className="text-center text-green-600 text-sm mt-2">{message}</div>}
-          {error && <div className="text-center text-red-600 text-sm mt-2">{error}</div>}
         </form>
+
+        {message && <p className={styles.success}>{message}</p>}
       </div>
-    </main>
+    </div>
   );
 }
