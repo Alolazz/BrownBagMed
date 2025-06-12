@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import CreatableSelect from 'react-select/creatable';
 import Link from 'next/link';
 import Image from 'next/image'
-import { useRouter } from 'next/navigation';
+// Removed unused useRouter import
 import styles from './upload.module.css'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ interface OptionType {
 }
 
 export default function UploadPage () {
-  const router = useRouter();
+  // Removed unused router variable
 
   // Change files state to an array of File
   const [medications, setMedications] = useState<File[]>([]);
@@ -161,7 +161,7 @@ export default function UploadPage () {
         throw new Error('Failed to upload');
       }
 
-      const { blobUrl } = await response.json();
+      await response.json(); // Removed unused blobUrl variable
       setUploadMessage(`Upload successful! Patient ID: ${patientId}`);
       // Updated redirection path to dynamic confirmation page
       window.location.href = `/confirmation/${patientId}`;
