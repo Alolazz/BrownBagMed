@@ -1,0 +1,29 @@
+/* Styling for the Blog page */
+.blogContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-geist-sans);
+  color: #333;
+}
+
+.blogContainer h1 {
+  font-size: 2rem;
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.blogContainer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.blogContainer li {
+  margin-bottom: 15px;
+}
+
+.blogContainer a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: bold;
+}

@@ -1,45 +1,34 @@
 import Link from 'next/link';
+import styles from './Blog.module.css';
 
-export default function BlogPage() {
-  const articles = [
-    {
-      title: "5 Signs You Might Be Taking Too Many Medications",
-      description: "Learn how to recognize when your medication list is too long — and what to do about it.",
-      link: "/blog/too-many-medications"
-    },
-    {
-      title: "What to Do if You Don’t Understand Your Medications",
-      description: "Confused by names, doses, or schedules? Here's how to make sense of your prescriptions.",
-      link: "/blog/understand-medications"
-    },
-    {
-      title: "How Pharmacists Can Help Prevent Medication Side Effects",
-      description: "Discover how a professional review can reduce risk and improve your treatment safety.",
-      link: "/blog/prevent-side-effects"
-    },
-    {
-      title: "Your Doctor Prescribed a New Drug – Should You Be Worried?",
-      description: "A checklist to help you ask the right questions when you're given something new.",
-      link: "/blog/new-drug-checklist"
-    }
-  ];
-
+const BlogPage = () => {
   return (
-    <section style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px', fontSize: '28px', fontWeight: 'bold' }}>Blog & Articles</h1>
-      <div style={{ display: 'grid', gap: '20px' }}>
-        {articles.map((article, index) => (
-          <div key={index} style={{ border: '1px solid #ddd', borderRadius: '5px', padding: '15px' }}>
-            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{article.title}</h2>
-            <p style={{ marginBottom: '15px' }}>{article.description}</p>
-            <Link href={article.link} passHref>
-              <button style={{ padding: '10px 15px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                Read more
-              </button>
-            </Link>
-          </div>
-        ))}
-      </div>
-    </section>
+    <div className={styles.blogContainer}>
+      <h1>Blog</h1>
+      <ul>
+        <li>
+          <h2>5 Signs You Might Be Taking Too Many Medications</h2>
+          <p>Learn about the risks of polypharmacy and how to stay safe.</p>
+          <Link href="/blog/too-many-medications">Read more</Link>
+        </li>
+        <li>
+          <h2>What to Do if You Don’t Understand Your Medications</h2>
+          <p>Confused by names, doses, or schedules? Here&apos;s how to make sense of your prescriptions.</p>
+          <Link href="/blog/understand-medications">Read more</Link>
+        </li>
+        <li>
+          <h2>How Pharmacists Can Help Prevent Medication Side Effects</h2>
+          <p>Discover how a professional review can reduce risk and improve your treatment safety.</p>
+          <Link href="/blog/prevent-side-effects">Read more</Link>
+        </li>
+        <li>
+          <h2>Your Doctor Prescribed a New Drug – Should You Be Worried?</h2>
+          <p>A checklist to help you ask the right questions when you&apos;re given something new.</p>
+          <Link href="/blog/new-drug-checklist">Read more</Link>
+        </li>
+      </ul>
+    </div>
   );
-}
+};
+
+export default BlogPage;

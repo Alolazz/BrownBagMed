@@ -1,0 +1,40 @@
+/* Styling for the Too Many Medications article page */
+.articleContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-geist-sans);
+  color: #333;
+}
+
+.articleContainer h1 {
+  font-size: 2rem;
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.articleContainer h2 {
+  font-size: 1.5rem;
+  color: #2563eb;
+  margin-top: 20px;
+}
+
+.articleContainer p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.articleContainer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.articleContainer ul li {
+  margin-bottom: 10px;
+}
+
+/* Scoped the 'strong' selector under .articleContainer */
+.articleContainer strong {
+  color: #2563eb;
+}
