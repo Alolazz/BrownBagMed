@@ -99,7 +99,7 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        <Script type="application/ld+json">
+        <Script id="json-ld-organization" type="application/ld+json">
           {`
             {
               "@context": "https://schema.org",
