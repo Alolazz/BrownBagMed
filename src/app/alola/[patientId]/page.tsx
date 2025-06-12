@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import styles from "../../upload/upload.module.css";
+import LogoutButton from "../LogoutButton";
 
 export default function PatientDetailPage() {
   const params = useParams();
@@ -72,12 +73,15 @@ export default function PatientDetailPage() {
       <div className={styles.container}>
         <div className="flex justify-between items-center mb-4">
           <h1 className={styles.title}>Patient Files: {patientId}</h1>
-          <button 
-            onClick={() => window.history.back()} 
-            className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-800"
-          >
-            Back to Dashboard
-          </button>
+          <div className="flex space-x-3">
+            <button 
+              onClick={() => window.history.back()} 
+              className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-800"
+            >
+              Back to Dashboard
+            </button>
+            <LogoutButton />
+          </div>
         </div>
         {loading ? (
           <p className="text-center py-4">Loading patient files...</p>

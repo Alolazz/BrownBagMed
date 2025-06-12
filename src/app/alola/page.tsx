@@ -1,6 +1,7 @@
 import React from "react";
 import prisma from "@/app/models/patient";
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
 
 export default async function AlolaDashboard() {
   const patients = await prisma.patient.findMany({
@@ -10,7 +11,10 @@ export default async function AlolaDashboard() {
   return (
     <main className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
       <div className="w-full max-w-6xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Alola Dashboard</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Alola Dashboard</h1>
+          <LogoutButton />
+        </div>
         <div className="overflow-x-auto bg-white rounded shadow">
           <table className="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
             <thead className="bg-gray-100">
