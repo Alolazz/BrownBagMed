@@ -100,9 +100,7 @@ export default function RootLayout({
                 <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>Arabic</a>
               </div>
             </div>
-            <Link href="/upload" legacyBehavior>
-              <a style={{ textDecoration: 'none', background: '#2563eb', color: '#fff', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold' }}>Get Started</a>
-            </Link>
+            <Link href="/upload" style={{ textDecoration: 'none', background: '#2563eb', color: '#fff', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold' }}>Get Started</Link>
             <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb', fontWeight: 'bold' }}>Toggle Theme</button>
           </div>
         </header>

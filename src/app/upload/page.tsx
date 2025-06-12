@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import styles from './upload.module.css'
+import { v4 as uuidv4 } from 'uuid';
 
 // Explicit type for react-select options
 interface OptionType {
@@ -143,6 +144,7 @@ export default function UploadPage () {
     setUploadMessage('Uploading your medications...');
 
     try {
+      const patientId = uuidv4();
       const formData = new FormData();
       medications.forEach((file) => formData.append('files', file));
       formData.append('healthInfo', JSON.stringify(healthInfo));
@@ -150,22 +152,21 @@ export default function UploadPage () {
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
+        headers: {
+          'X-Patient-ID': patientId,
+        },
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.patientId) {
-          router.push(`/uploads/${result.patientId}`);
-        } else {
-          setUploadMessage(result.error || 'Upload failed. Please try again.');
-        }
-      } else {
-        const errorText = await response.text();
-        console.error('Unexpected server response:', errorText);
-        setUploadMessage('Unexpected server response. Please try again later.');
+      if (!response.ok) {
+        throw new Error('Failed to upload');
       }
+
+      const { blobUrl } = await response.json();
+      setUploadMessage(`Upload successful! Patient ID: ${patientId}`);
+      // Updated redirection path to dynamic confirmation page
+      window.location.href = `/confirmation/${patientId}`;
     } catch (error) {
-      setUploadMessage(error instanceof Error ? error.message : 'Upload failed. Please try again.');
+      setUploadMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     } finally {
       setIsUploading(false);
     }
