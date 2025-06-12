@@ -104,51 +104,84 @@ export default function UploadPage () {
     e.preventDefault();
     let hasError = false;
 
+    // Reset error states
+    setDobError('');
+    setMedicationNotesError('');
+    setMedicalConditionsError('');
+    setUploadMessage('');
+
     // Validate required fields
     if (!healthInfo.dateOfBirth || !isValidGermanDate(healthInfo.dateOfBirth)) {
       setDobError('Please enter a valid date in DD.MM.YYYY format.');
       hasError = true;
     }
+    
     if (!healthInfo.medicationNotes.trim()) {
       setMedicationNotesError('This field is required.');
       hasError = true;
     }
+    
     if (!healthInfo.knownAllergies.trim()) {
       setUploadMessage('Please enter your known allergies.');
       hasError = true;
     }
+    
     if (!healthInfo.additionalComments.trim()) {
       setUploadMessage('Please enter any additional comments.');
       hasError = true;
     }
+    
     if (!healthInfo.gender) {
       setUploadMessage('Please select your gender.');
       hasError = true;
     }
+    
     if (!healthInfo.medicalConditions.length) {
       setMedicalConditionsError('This field is required.');
       hasError = true;
     }
+    
     if (!isAgreed) {
       setUploadMessage('Please agree to the anonymous analysis terms.');
       hasError = true;
     }
+    
     if (medications.length === 0) {
       setUploadMessage('Please select at least one file to upload.');
       hasError = true;
     }
 
+    // Exit if validation failed
     if (hasError) return;
 
+    // Start upload process
     setIsUploading(true);
     setUploadMessage('Uploading your medications...');
 
     try {
+      // Generate unique patient ID
       const patientId = uuidv4();
+      
+      // Prepare form data for upload
       const formData = new FormData();
-      medications.forEach((file) => formData.append('files', file));
-      formData.append('healthInfo', JSON.stringify(healthInfo));
+      
+      // Add all medication files to form data
+      medications.forEach((file) => {
+        formData.append('files', file);
+      });
+      
+      // Add patient's health information as JSON string
+      formData.append('healthInfo', JSON.stringify({
+        dateOfBirth: healthInfo.dateOfBirth,
+        medicalConditions: healthInfo.medicalConditions,
+        knownAllergies: healthInfo.knownAllergies,
+        additionalComments: healthInfo.additionalComments,
+        gender: healthInfo.gender,
+        medicationNotes: healthInfo.medicationNotes,
+        timestamp: new Date().toISOString()
+      }));
 
+      // Send to API endpoint with patientId in header
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
@@ -157,18 +190,23 @@ export default function UploadPage () {
         },
       });
 
+      // Parse response
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to upload');
+        throw new Error(result.error || 'Failed to upload');
       }
 
-      await response.json(); // Removed unused blobUrl variable
-      setUploadMessage(`Upload successful! Patient ID: ${patientId}`);
-      // Updated redirection path to dynamic confirmation page
-      window.location.href = `/confirmation/${patientId}`;
+      // Set success message
+      setUploadMessage(`Upload successful! Your patient ID is: ${patientId}`);
+      
+      // Redirect to uploads page with patient ID
+      window.location.href = `/uploads/${patientId}`;
     } catch (error) {
-      setUploadMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
-    } finally {
+      // Handle errors
       setIsUploading(false);
+      setUploadMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      console.error('Upload error:', error);
     }
   }
 
