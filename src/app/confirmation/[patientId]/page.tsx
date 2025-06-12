@@ -4,12 +4,25 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams, usePathname } from 'next/navigation'
 import styles from './confirmation.module.css'
 
+interface PatientInfo {
+  name: string
+  age: number
+  conditions: string[]
+}
+
+interface UploadedFile {
+  name: string
+  url: string
+}
+
 export default function ConfirmationPage() {
   const params = useParams()
   const patientId = params.patientId as string
   const [reportReady, setReportReady] = useState<null | boolean>(null)
   const [checking, setChecking] = useState(true)
   const [copied, setCopied] = useState(false)
+  const [patientInfo, setPatientInfo] = useState<PatientInfo | null>(null)
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const pathname = usePathname()
 
@@ -21,6 +34,8 @@ export default function ConfirmationPage() {
   useEffect(() => {
     if (!patientId) return
     setChecking(true)
+
+    // Fetch report status
     fetch(`/api/checkReportReady?patientId=${encodeURIComponent(patientId)}`)
       .then(res => res.json())
       .then(data => {
@@ -30,6 +45,18 @@ export default function ConfirmationPage() {
       .catch(() => {
         setReportReady(null)
         setChecking(false)
+      })
+
+    // Fetch patient information and uploaded files
+    fetch(`/api/getPatientInfo?patientId=${encodeURIComponent(patientId)}`)
+      .then(res => res.json())
+      .then(data => {
+        setPatientInfo(data.patientInfo)
+        setUploadedFiles(data.uploadedFiles)
+      })
+      .catch(() => {
+        setPatientInfo(null)
+        setUploadedFiles([])
       })
   }, [patientId])
 
@@ -49,25 +76,35 @@ export default function ConfirmationPage() {
           {checking ? (
             <p className={styles.message}>Checking report status...</p>
           ) : reportReady ? (
-            <>
-              <p className={styles.message}>
-                <span role="img" aria-label="ready">✅</span> Your medication analysis is ready. Click below to download your report.
-              </p>
-              <a
-                href={`/uploads/${patientId}/report.pdf`}
-                className={styles.reportButton}
-                download
-              >
-                <span role="img" aria-label="download">🔽</span> Download Report PDF
-              </a>
-            </>
+            <p className={styles.message}>Your report is ready!</p>
           ) : (
-            <>
-              <p className={styles.message}>
-                <span role="img" aria-label="waiting">⏳</span> Your report is being prepared. Please check again in 24–72 hours.
-              </p>
-            </>
+            <p className={styles.message}>Your report is not ready yet.</p>
           )}
+
+          {patientInfo && (
+            <div className={styles.patientInfo}>
+              <h2>Patient Information</h2>
+              <p><strong>Name:</strong> {patientInfo.name}</p>
+              <p><strong>Age:</strong> {patientInfo.age}</p>
+              <p><strong>Medical Conditions:</strong> {patientInfo.conditions.join(', ')}</p>
+            </div>
+          )}
+
+          {uploadedFiles.length > 0 && (
+            <div className={styles.uploadedFiles}>
+              <h2>Uploaded Files</h2>
+              <ul>
+                {uploadedFiles.map((file, index) => (
+                  <li key={index}>
+                    <a href={file.url} target="_blank" rel="noopener noreferrer">
+                      {file.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div style={{ width: '100%', marginTop: 24 }}>
             <textarea
               ref={textareaRef}

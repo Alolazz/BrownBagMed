@@ -1,6 +1,35 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Metadata } from 'next';
 import styles from './page.module.css'
+
+export const metadata: Metadata = {
+  title: 'Brown Bag Med | Medication Analysis & Management',
+  description: 'We make your treatment journey safer by identifying potential drug interactions, dosage issues, and more for better medication safety.',
+  keywords: 'medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks',
+  openGraph: {
+    title: 'Brown Bag Med | Medication Analysis & Management',
+    description: 'We make your treatment journey safer by identifying potential drug interactions, dosage issues, and more for better medication safety.',
+    url: 'https://brownbagmed.eu',
+    siteName: 'Brown Bag Med',
+    images: [
+      {
+        url: '/logo.webp',
+        width: 380,
+        height: 180,
+        alt: 'Brown Bag Med Logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Brown Bag Med | Medication Analysis & Management',
+    description: 'We make your treatment journey safer by identifying potential drug interactions, dosage issues, and more for better medication safety.',
+    images: ['/logo.webp'],
+  },
+};
 
 export default function Home () {
   return (
@@ -16,8 +45,7 @@ export default function Home () {
               Medication Analysis & Management
             </h1>
             <p className={styles.heroSubtitle}>
-              We make your treatment journey safer.
-              We identify potential drug interactions, dosage issues, and more
+              We make your treatment journey safer by identifying potential drug interactions, dosage issues, and more
               for better medication safety.
             </p>
             <a href='/upload'>

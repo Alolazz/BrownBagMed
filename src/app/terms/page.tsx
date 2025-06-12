@@ -1,5 +1,25 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
 import styles from './TermsPage.module.css';
+
+export const metadata: Metadata = {
+  title: 'Terms and Conditions | Brown Bag Med',
+  description: 'Read the terms and conditions for using Brown Bag Med services, including medication reviews and safety checks.',
+  keywords: 'medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks',
+  openGraph: {
+    title: 'Terms and Conditions | Brown Bag Med',
+    description: 'Read the terms and conditions for using Brown Bag Med services, including medication reviews and safety checks.',
+    url: 'https://brownbagmed.eu/terms',
+    siteName: 'Brown Bag Med',
+    locale: 'en_US',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms and Conditions | Brown Bag Med',
+    description: 'Read the terms and conditions for using Brown Bag Med services, including medication reviews and safety checks.',
+  },
+};
 
 export default function TermsPage() {
   return (

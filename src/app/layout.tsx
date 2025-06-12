@@ -14,29 +14,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Brown Bag Med – Medication Analysis and Management",
-  description: "We help patients safely manage medications through structured analysis by licensed pharmacists.",
+  title: "Pharmacist Medication Check | Brown Bag Med – Medication Review for Seniors, Polypharmacy Risks",
+  description: "Pharmacist medication check online. Review prescription drugs online. Safe medication use for elderly. Check my medications for interactions.",
   icons: {
-    icon: "/favicon.ico", // Use favicon.ico for browser tab icon
+    icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/logo1.png", // Apple touch icon
+    apple: "/logo1.png",
   },
   openGraph: {
-    title: "Brown Bag Med",
-    description: "Medication Analysis & Management – Private & Secure",
+    title: "Pharmacist Medication Check | Brown Bag Med",
+    description: "Medication review for seniors. Polypharmacy risks. Are my medications safe? Help with too many medications.",
     images: [
       {
         url: "/logo1.png",
         width: 1200,
         height: 630,
-        alt: "Brown Bag Med Logo",
+        alt: "Brown Bag Med Logo - safe medication use for elderly, medication review for seniors",
         type: "image/png"
       },
       {
         url: "/logo1.webp",
         width: 1200,
         height: 630,
-        alt: "Brown Bag Med Logo",
+        alt: "Brown Bag Med Logo - review prescription drugs online, polypharmacy risks",
         type: "image/webp"
       }
     ],
@@ -45,22 +45,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brown Bag Med",
-    description: "Medication Analysis & Management – Private & Secure",
+    title: "Pharmacist Medication Check | Brown Bag Med",
+    description: "Pharmacist medication check online. Review prescription drugs online. Safe medication use for elderly.",
     images: [
-      {
-        url: "/logo1.png",
-        alt: "Brown Bag Med Logo"
-      }
+      "/logo1.png"
     ]
-  }
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <head>
@@ -81,6 +78,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="your-google-site-verification-code" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo1.png" />
+        <meta name="keywords" content="medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {process.env.NODE_ENV === 'production' && (

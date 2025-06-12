@@ -1,5 +1,25 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
 import styles from './PrivacyPolicyPage.module.css';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | Brown Bag Med',
+  description: 'Learn how Brown Bag Med collects, uses, and protects your information when you use our services.',
+  keywords: 'medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks',
+  openGraph: {
+    title: 'Privacy Policy | Brown Bag Med',
+    description: 'Learn how Brown Bag Med collects, uses, and protects your information when you use our services.',
+    url: 'https://brownbagmed.eu/privacy',
+    siteName: 'Brown Bag Med',
+    locale: 'en_US',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | Brown Bag Med',
+    description: 'Learn how Brown Bag Med collects, uses, and protects your information when you use our services.',
+  },
+};
 
 export default function PrivacyPolicyPage() {
   return (
