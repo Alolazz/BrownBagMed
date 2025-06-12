@@ -88,7 +88,7 @@ export default function RootLayout({
               src="https://www.googletagmanager.com/gtag/js?id=G-5XLB8C4V1X"
               strategy="afterInteractive"
             />
-            <Script id="ga4-inline" strategy="afterInteractive">
+            <Script id="google-analytics-inline" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
