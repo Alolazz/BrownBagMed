@@ -51,10 +51,17 @@ export default function ConfirmationPage() {
     fetch(`/api/getPatientInfo?patientId=${encodeURIComponent(patientId)}`)
       .then(res => res.json())
       .then(data => {
-        setPatientInfo(data.patientInfo)
-        setUploadedFiles(data.uploadedFiles)
+        if (data.success) {
+          setPatientInfo(data.patientInfo)
+          setUploadedFiles(data.uploadedFiles)
+        } else {
+          console.error('Error fetching patient data:', data.error)
+          setPatientInfo(null)
+          setUploadedFiles([])
+        }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Error fetching patient information:', error)
         setPatientInfo(null)
         setUploadedFiles([])
       })
@@ -84,15 +91,18 @@ export default function ConfirmationPage() {
           {patientInfo && (
             <div className={styles.patientInfo}>
               <h2>Patient Information</h2>
-              <p><strong>Name:</strong> {patientInfo.name}</p>
-              <p><strong>Age:</strong> {patientInfo.age}</p>
-              <p><strong>Medical Conditions:</strong> {patientInfo.conditions.join(', ')}</p>
+              {patientInfo.name && <p><strong>Name:</strong> {patientInfo.name}</p>}
+              {patientInfo.age && <p><strong>Age:</strong> {patientInfo.age}</p>}
+              {patientInfo.conditions && patientInfo.conditions.length > 0 && (
+                <p><strong>Medical Conditions:</strong> {patientInfo.conditions.join(', ')}</p>
+              )}
+              <p><strong>Patient ID:</strong> {patientId}</p>
             </div>
           )}
 
-          {uploadedFiles.length > 0 && (
-            <div className={styles.uploadedFiles}>
-              <h2>Uploaded Files</h2>
+          <div className={styles.uploadedFiles}>
+            <h2>Uploaded Files</h2>
+            {uploadedFiles.length > 0 ? (
               <ul>
                 {uploadedFiles.map((file, index) => (
                   <li key={index}>
@@ -102,8 +112,10 @@ export default function ConfirmationPage() {
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+            ) : (
+              <p>No files were uploaded or files are still processing.</p>
+            )}
+          </div>
 
           <div style={{ width: '100%', marginTop: 24 }}>
             <textarea

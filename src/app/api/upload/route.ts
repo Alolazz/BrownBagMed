@@ -48,18 +48,24 @@ export async function POST(request: Request) {
     }
 
     // Save patient data in Prisma database
-    await prisma.patient.create({
-      data: {
-        id: patientId,
-        folderName: patientId,
-        dateOfBirth: healthInfo.dateOfBirth || null,
-        gender: healthInfo.gender || null,
-        conditions: healthInfo.medicalConditions ? JSON.stringify(healthInfo.medicalConditions) : null,
-        allergies: healthInfo.knownAllergies || null,
-        comments: healthInfo.additionalComments || null,
-        uploadedAt: new Date(),
-      },
-    });
+    try {
+      await prisma.patient.create({
+        data: {
+          id: patientId,
+          folderName: patientId,
+          dateOfBirth: healthInfo.dateOfBirth || null,
+          gender: healthInfo.gender || null,
+          conditions: healthInfo.medicalConditions ? JSON.stringify(healthInfo.medicalConditions) : null,
+          allergies: healthInfo.knownAllergies || null,
+          comments: healthInfo.additionalComments || null,
+          uploadedAt: new Date(),
+        },
+      });
+    } catch (dbError) {
+      console.error('Database error:', dbError);
+      // Continue with the request even if database save fails
+      // This way files are still uploaded to Blob storage
+    }
 
     // Return success response with URLs and patient data
     return NextResponse.json({ 

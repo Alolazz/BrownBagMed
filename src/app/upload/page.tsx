@@ -200,8 +200,11 @@ export default function UploadPage () {
       // Set success message
       setUploadMessage(`Upload successful! Your patient ID is: ${patientId}`);
       
-      // Redirect to uploads page with patient ID
-      window.location.href = `/uploads/${patientId}`;
+      // Add a slight delay before redirecting to ensure the message is seen
+      setTimeout(() => {
+        // Redirect to confirmation page with patient ID
+        window.location.href = `/confirmation/${patientId}`;
+      }, 1000);
     } catch (error) {
       // Handle errors
       setIsUploading(false);
