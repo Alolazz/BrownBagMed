@@ -6,7 +6,7 @@ export default function FAQPage() {
   const faqs = [
     {
       question: "What happens after I upload my medications?",
-      answer: "After you upload your medications, our pharmacist securely reviews them. You’ll receive a personalized report with insights and recommendations within 48 hours."
+      answer: "After you upload your medications, our pharmacist securely reviews them. You’ll receive a personalized report with insights and recommendations within 72 hours."
     },
     {
       question: "How do I know if I’m taking too many medications?",

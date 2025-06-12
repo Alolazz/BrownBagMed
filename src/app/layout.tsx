@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pharmacist Medication Check | Brown Bag Med – Medication Review for Seniors, Polypharmacy Risks",
+  title: "Brown Bag Med | Pharmacist Medication Check | Medication Review for Seniors, Polypharmacy Risks",
   description: "Pharmacist medication check online. Review prescription drugs online. Safe medication use for elderly. Check my medications for interactions.",
   icons: {
     icon: "/favicon.ico",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     apple: "/logo1.png",
   },
   openGraph: {
-    title: "Pharmacist Medication Check | Brown Bag Med",
+    title: " Brown Bag Med | Pharmacist Medication Check  ",
     description: "Medication review for seniors. Polypharmacy risks. Are my medications safe? Help with too many medications.",
     images: [
       {
