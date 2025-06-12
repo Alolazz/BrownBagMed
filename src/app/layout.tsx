@@ -84,27 +84,38 @@ export default function RootLayout({
         <link rel="canonical" href="https://www.brownbagmed.eu" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1000, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/">
-            <Image src="/logo1.png" alt="Brown Bag Med Logo" width={120} height={40} style={{ cursor: 'pointer' }} />
-          </Link>
-          <nav style={{ display: 'flex', gap: '20px' }}>
-            <Link href="/" passHref>
+        <header style={{ position: 'sticky', top: 0, background: '#f8fafc', zIndex: 1000, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <Link href="/" legacyBehavior>
               <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Home</a>
             </Link>
-            <Link href="/upload" passHref>
+            <Link href="/upload" legacyBehavior>
               <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Upload</a>
             </Link>
-            <Link href="/blog" passHref>
+            <Link href="/blog" legacyBehavior>
               <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Blog</a>
             </Link>
-            <Link href="/faq" passHref>
+            <Link href="/faq" legacyBehavior>
               <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>FAQ</a>
             </Link>
-            <Link href="/contact" passHref>
+            <Link href="/contact" legacyBehavior>
               <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Contact</a>
             </Link>
           </nav>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div style={{ position: 'relative' }}>
+              <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb', fontWeight: 'bold' }}>Languages</button>
+              <div style={{ position: 'absolute', top: '100%', left: 0, background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px', display: 'none' }}>
+                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>English</a>
+                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>German</a>
+                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>Arabic</a>
+              </div>
+            </div>
+            <Link href="/upload" legacyBehavior>
+              <a style={{ textDecoration: 'none', background: '#2563eb', color: '#fff', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold' }}>Get Started</a>
+            </Link>
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb', fontWeight: 'bold' }}>Toggle Theme</button>
+          </div>
         </header>
         {process.env.NODE_ENV === 'production' && (
           <>
