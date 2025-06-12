@@ -1,14 +1,30 @@
+'use client';
+
 import Image from 'next/image'
 import Link from 'next/link'
-import { Metadata } from 'next';
+import { useState } from 'react';
 import styles from './page.module.css'
 
-export const metadata: Metadata = {
-  title: "Medication Review by Pharmacists | Brown Bag Med",
-  description: "Confused by your medications? Our licensed pharmacists review your prescriptions and supplements to ensure safety, avoid side effects, and help you take back control.",
-};
-
 export default function Home () {
+  const faqs = [
+    {
+      question: "What happens after I upload my medications?",
+      answer: "After you upload your medications, our pharmacist securely reviews them. You’ll receive a personalized report with insights and recommendations within 48 hours."
+    },
+    {
+      question: "How do I know if I’m taking too many medications?",
+      answer: "If you're taking 4 or more medications regularly, especially from multiple doctors, a medication review is strongly recommended."
+    },
+    {
+      question: "Can my medications be harmful together?",
+      answer: "Yes. Some drug combinations can increase the risk of side effects or reduce effectiveness. We help identify these risks."
+    },
+    {
+      question: "Why do I need a medication check?",
+      answer: "To stay safe, avoid hospital visits, and ensure every medication you take is truly needed and dosed correctly."
+    }
+  ];
+
   return (
     <div className={styles.page}>
       {/* Hero Section */}
@@ -355,20 +371,11 @@ export default function Home () {
         </div>
       </section>
 
-   
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className="mt-2 text-sm text-gray-500">
-            {/* Disclaimer moved to Terms & Conditions page */}
-          </div>
-          <div style={{ marginTop: 12, fontSize: 14 }}>
-            <a href="/privacy" style={{ color: '#2563eb', marginRight: 18 }}>Privacy Policy</a>
-            <a href="/terms" style={{ color: '#2563eb', marginRight: 18 }}>Terms &amp; Conditions</a>
-          </div>
-        </div>
+      {/* Footer Section */}
+      <footer style={{ textAlign: 'center', marginTop: '20px', padding: '10px', background: '#f9f9f9' }}>
+        <a href="/privacy" style={{ marginRight: '15px', textDecoration: 'underline', color: '#2563eb' }}>Privacy Policy</a>
+        <a href="/terms" style={{ textDecoration: 'underline', color: '#2563eb' }}>Terms and Conditions</a>
       </footer>
     </div>
-  )
+  );
 }

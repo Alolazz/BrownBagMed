@@ -13,11 +13,6 @@ interface OptionType {
   label: string;
 }
 
-export const metadata = {
-  title: "Upload Your Medications | Brown Bag Med",
-  description: "Send your medications securely. We’ll review them and provide a clear, professional summary to help you understand and manage your treatment."
-};
-
 export default function UploadPage () {
   const router = useRouter();
 
