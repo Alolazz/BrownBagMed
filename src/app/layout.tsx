@@ -85,6 +85,7 @@ export default function RootLayout({
         {process.env.NODE_ENV === 'production' && (
           <>
             <Script
+              id="ga4-inline"
               src="https://www.googletagmanager.com/gtag/js?id=G-5XLB8C4V1X"
               strategy="afterInteractive"
             />
