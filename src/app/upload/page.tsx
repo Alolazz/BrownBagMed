@@ -317,8 +317,8 @@ export default function UploadPage () {
                 </label>
                 <div className={dobError ? 'border border-red-500 rounded' : ''}>
                   <CreatableSelect<OptionType, true>
-                    inputId={medicalConditionsId}
-                    key={medicalConditionsId}
+                    inputId="react-select-medical-conditions"
+                    key="react-select-medical-conditions"
                     isMulti
                     placeholder="e.g. diabetes, hypertension..."
                     options={[

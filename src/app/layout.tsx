@@ -85,21 +85,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header style={{ position: 'sticky', top: 0, background: '#f8fafc', zIndex: 1000, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <Link href="/" legacyBehavior>
-              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Home</a>
-            </Link>
-            <Link href="/upload" legacyBehavior>
-              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Upload</a>
-            </Link>
-            <Link href="/blog" legacyBehavior>
-              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Blog</a>
-            </Link>
-            <Link href="/faq" legacyBehavior>
-              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>FAQ</a>
-            </Link>
-            <Link href="/contact" legacyBehavior>
-              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Contact</a>
-            </Link>
+            <Link href="/" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Home</Link>
+            <Link href="/upload" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Upload</Link>
+            <Link href="/blog" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Blog</Link>
+            <Link href="/faq" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>FAQ</Link>
+            <Link href="/contact" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Contact</Link>
           </nav>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ position: 'relative' }}>

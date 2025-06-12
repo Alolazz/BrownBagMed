@@ -44,12 +44,7 @@ export async function POST(request: NextRequest) {
       fileUrls.push(blob.url);
     }
 
-    return NextResponse.json({
-      success: true,
-      patientId: patientId.replace('patient_', ''),
-      files: savedFiles,
-      fileUrls,
-    });
+    return NextResponse.redirect(`/uploads/${patientId.replace('patient_', '')}`);
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error occurred' }, { status: 500 });
