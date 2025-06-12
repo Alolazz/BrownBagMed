@@ -3,7 +3,7 @@ import { put } from '@vercel/blob';
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const file = formData.get('report') as File;
+    const file = formData.get('file') as File;
     const patientId = formData.get('patientId')?.toString();
 
     if (!file || !patientId) {
@@ -14,7 +14,8 @@ export async function POST(req: Request) {
     }
 
     try {
-      const { url } = await put(`uploads/${patientId}/${file.name}`, file, {
+      // Use the same folder structure as the main upload API - patientId as the prefix
+      const { url } = await put(`${patientId}/report_${Date.now()}_${file.name}`, file, {
         access: 'public',
       });
 

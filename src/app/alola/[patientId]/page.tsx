@@ -6,7 +6,7 @@ import styles from "../../upload/upload.module.css";
 export default function PatientDetailPage() {
   const params = useParams();
   const patientId = params?.patientId as string | undefined;
-  const [files, setFiles] = useState<string[]>([]);
+  const [fileData, setFileData] = useState<{ name: string; url: string; uploadedAt: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -21,7 +21,7 @@ export default function PatientDetailPage() {
         const res = await fetch(`/api/alola/listFiles?patientId=${patientId}`);
         if (!res.ok) throw new Error("Could not load files");
         const data = await res.json();
-        setFiles(data.files || []);
+        setFileData(data.fileData || []);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Error loading files");
       }
@@ -54,7 +54,10 @@ export default function PatientDetailPage() {
       const result = await res.json();
       if (res.ok) {
         setMessage("File uploaded successfully.");
-        setFiles((prev) => [...prev, file.name]);
+        // Refresh file list after successful upload
+        const filesRes = await fetch(`/api/alola/listFiles?patientId=${patientId}`);
+        const filesData = await filesRes.json();
+        setFileData(filesData.fileData || []);
       } else {
         setError(result.error || "Upload failed.");
       }
@@ -67,35 +70,78 @@ export default function PatientDetailPage() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Patient Files</h1>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className={styles.title}>Patient Files: {patientId}</h1>
+          <button 
+            onClick={() => window.history.back()} 
+            className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-800"
+          >
+            Back to Dashboard
+          </button>
+        </div>
         {loading ? (
-          <p>Loading...</p>
+          <p className="text-center py-4">Loading patient files...</p>
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (
-          <ul>
-            {files.map((file, idx) => (
-              <li key={idx}>{file}</li>
-            ))}
-          </ul>
+          <div>
+            {fileData.length === 0 ? (
+              <p>No files found for this patient.</p>
+            ) : (
+              <ul className="list-disc pl-5 mb-4">
+                {fileData.map((file, idx) => (
+                  <li key={idx} className="mb-2">
+                    <a 
+                      href={file.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {file.name}
+                    </a>
+                    <span className="text-xs text-gray-500 ml-2">
+                      {new Date(file.uploadedAt).toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
 
-        <form onSubmit={handleUpload} className={styles.form}>
-          <label htmlFor="fileInput" className={styles.uploadLabel}>
-            Upload a report.pdf file
-          </label>
-          <input
-            id="fileInput"
-            type="file"
-            ref={fileInputRef}
-            className={styles.fileInput}
-          />
-          <button type="submit" className={styles.submitButton} disabled={uploading}>
-            {uploading ? "Uploading..." : "Upload"}
-          </button>
-        </form>
-
-        {message && <p className={styles.success}>{message}</p>}
+        <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <h3 className="text-lg font-semibold mb-2">Upload Report</h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Upload a report file that will be stored with this patient&apos;s information.
+          </p>
+          
+          <form onSubmit={handleUpload} className="flex flex-col space-y-4">
+            <div>
+              <label htmlFor="fileInput" className="block text-sm font-medium text-gray-700 mb-1">
+                Select Report File
+              </label>
+              <input
+                id="fileInput"
+                type="file"
+                ref={fileInputRef}
+                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg p-2"
+                accept=".pdf,.png,.jpg,.jpeg"
+              />
+            </div>
+            
+            <div>
+              <button 
+                type="submit" 
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                disabled={uploading}
+              >
+                {uploading ? "Uploading..." : "Upload Report"}
+              </button>
+            </div>
+          </form>
+          
+          {message && <p className="mt-2 text-green-600">{message}</p>}
+        </div>
       </div>
     </div>
   );
