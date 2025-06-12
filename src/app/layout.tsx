@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,6 +84,28 @@ export default function RootLayout({
         <link rel="canonical" href="https://www.brownbagmed.eu" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <header style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1000, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/">
+            <Image src="/logo1.png" alt="Brown Bag Med Logo" width={120} height={40} style={{ cursor: 'pointer' }} />
+          </Link>
+          <nav style={{ display: 'flex', gap: '20px' }}>
+            <Link href="/" passHref>
+              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Home</a>
+            </Link>
+            <Link href="/upload" passHref>
+              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Upload</a>
+            </Link>
+            <Link href="/blog" passHref>
+              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Blog</a>
+            </Link>
+            <Link href="/faq" passHref>
+              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>FAQ</a>
+            </Link>
+            <Link href="/contact" passHref>
+              <a style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Contact</a>
+            </Link>
+          </nav>
+        </header>
         {process.env.NODE_ENV === 'production' && (
           <>
             <Script

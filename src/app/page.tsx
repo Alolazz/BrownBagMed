@@ -1,47 +1,28 @@
 'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react';
-import styles from './page.module.css'
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './page.module.css';
 
-export default function Home () {
-  const faqs = [
-    {
-      question: "What happens after I upload my medications?",
-      answer: "After you upload your medications, our pharmacist securely reviews them. You’ll receive a personalized report with insights and recommendations within 48 hours."
-    },
-    {
-      question: "How do I know if I’m taking too many medications?",
-      answer: "If you're taking 4 or more medications regularly, especially from multiple doctors, a medication review is strongly recommended."
-    },
-    {
-      question: "Can my medications be harmful together?",
-      answer: "Yes. Some drug combinations can increase the risk of side effects or reduce effectiveness. We help identify these risks."
-    },
-    {
-      question: "Why do I need a medication check?",
-      answer: "To stay safe, avoid hospital visits, and ensure every medication you take is truly needed and dosed correctly."
-    }
-  ];
-
+export default function Home() {
   return (
     <div className={styles.page}>
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
-            <h1 className={styles.heroTitle}>
-              Brown Bag Med
-            </h1>
-            <h1 className="text-center font-normal text-xl md:text-2xl text-blue-900 mb-2" style={{letterSpacing: '-1px'}}>
+            <h1 className={styles.heroTitle}>Brown Bag Med</h1>
+            <h1
+              className="text-center font-normal text-xl md:text-2xl text-blue-900 mb-2"
+              style={{ letterSpacing: '-1px' }}
+            >
               Medication Analysis & Management
             </h1>
             <p className={styles.heroSubtitle}>
-              We make your treatment journey safer by identifying potential drug interactions, dosage issues, and more
-              for better medication safety.
+              We make your treatment journey safer by identifying potential drug
+              interactions, dosage issues, and more for better medication safety.
             </p>
-            <a href='/upload'>
+            <a href="/upload">
               <button className={styles.ctaButton}>Upload Medications</button>
             </a>
             <div style={{ textAlign: 'left', marginTop: 0.5 }}>
@@ -372,9 +353,30 @@ export default function Home () {
       </section>
 
       {/* Footer Section */}
-      <footer style={{ textAlign: 'center', marginTop: '20px', padding: '10px', background: '#f9f9f9' }}>
-        <a href="/privacy" style={{ marginRight: '15px', textDecoration: 'underline', color: '#2563eb' }}>Privacy Policy</a>
-        <a href="/terms" style={{ textDecoration: 'underline', color: '#2563eb' }}>Terms and Conditions</a>
+      <footer
+        style={{
+          textAlign: 'center',
+          marginTop: '20px',
+          padding: '10px',
+          background: '#f9f9f9',
+        }}
+      >
+        <a
+          href="/privacy"
+          style={{
+            marginRight: '15px',
+            textDecoration: 'underline',
+            color: '#2563eb',
+          }}
+        >
+          Privacy Policy
+        </a>
+        <a
+          href="/terms"
+          style={{ textDecoration: 'underline', color: '#2563eb' }}
+        >
+          Terms and Conditions
+        </a>
       </footer>
     </div>
   );
