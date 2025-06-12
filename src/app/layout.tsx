@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       }
     ],
     type: "website",
-    url: "https://yourdomain.com"
+    url: "https://www.brownbagmed.eu"
   },
   twitter: {
     card: "summary_large_image",
@@ -70,7 +70,7 @@ export default function RootLayout({
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:url" content="https://www.brownbagmed.eu" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Brown Bag Med" />
         <meta name="twitter:description" content="Medication Analysis & Management – Private & Secure" />
@@ -79,6 +79,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo1.png" />
         <meta name="keywords" content="medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks" />
+        <link rel="canonical" href="https://www.brownbagmed.eu" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {process.env.NODE_ENV === 'production' && (
@@ -97,6 +98,43 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        <Script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://www.brownbagmed.eu/#organization",
+              "mainEntityOfPage": "https://www.brownbagmed.eu",
+              "name": "Brown Bag Med",
+              "url": "https://www.brownbagmed.eu",
+              "logo": "https://www.brownbagmed.eu/logo1.png",
+              "description": "Brown Bag Med offers structured medication reviews to help patients understand and optimize their medication regimen, reduce risks, and improve health outcomes.",
+              "founder": {
+                "@type": "Person",
+                "name": "Aly Nabil Abotaleb"
+              },
+              "sameAs": [
+                "https://www.instagram.com/brownbag.med",
+                "https://www.facebook.com/brownbag.med"
+              ],
+              "areaServed": {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 51.1657,
+                  "longitude": 10.4515
+                },
+                "geoRadius": 2000
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Support",
+                "email": "info@brownbagmed.eu",
+                "availableLanguage": ["English", "German", "Arabic"]
+              }
+            }
+          `}
+        </Script>
         {children}
       </body>
     </html>
