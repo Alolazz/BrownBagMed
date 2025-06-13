@@ -9,7 +9,7 @@ export default function FAQPage() {
       answer: "After you upload your medications, our pharmacist securely reviews them. You’ll receive a personalized report with insights and recommendations within 72 hours."
     },
     {
-      question: "How do I know if I’m taking too many medications?",
+      question: "How do I know if I’m taking too many medications?!",
       answer: "If you're taking 4 or more medications regularly, especially from multiple doctors, a medication review is strongly recommended."
     },
     {
