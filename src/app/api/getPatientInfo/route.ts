@@ -1,12 +1,15 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/models/patient';
 import { list } from '@vercel/blob';
+import { unstable_noStore } from 'next/cache';
 
 /**
  * API route handler for retrieving patient information
  * This endpoint fetches patient data from Prisma DB and uploaded files from Vercel Blob Storage
  */
 export async function GET(request: Request) {
+  // Disable caching to ensure fresh data on every request
+  unstable_noStore();
   try {
     // Get the patient ID from the URL params
     const url = new URL(request.url);

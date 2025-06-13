@@ -2,8 +2,11 @@ import React from "react";
 import prisma, { Patient } from "@/app/models/patient";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
+import { unstable_noStore } from 'next/cache';
 
 export default async function AlolaDashboard() {
+  // Disable caching to ensure fresh data on each request
+  unstable_noStore();
   // For server-side logging only, won't expose to client
   console.log("Starting Alola Dashboard render");
   console.log("DATABASE_URL type:", typeof process.env.DATABASE_URL);
