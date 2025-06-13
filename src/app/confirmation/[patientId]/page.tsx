@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useParams, usePathname } from 'next/navigation'
+import Link from 'next/link'
 import styles from './confirmation.module.css'
 
 interface PatientInfo {
@@ -76,10 +77,21 @@ export default function ConfirmationPage() {
   }
 
   return (
-    <div className={styles.page}>
-      <div className={styles.container}>
+    <main className={styles.confirmationBg}>
+      <div className={styles.confirmationCard}>
+        <div className={styles.iconWrapper}>
+          <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="var(--success-color, #22c55e)">
+            <circle cx="12" cy="12" r="10" strokeWidth="2" />
+            <path d="M8 12l2 2 4-4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <h1 className={styles.title}>Upload Successful!</h1>
+        <p className={styles.subtitle}>
+          Thank you for submitting your information. Your patient ID is:
+        </p>
+        <div className={styles.patientId}>{patientId}</div>
+
         <div className={styles.content}>
-          <h1 className={styles.title}>Thank you for your submission!</h1>
           {checking ? (
             <p className={styles.message}>Checking report status...</p>
           ) : reportReady ? (
@@ -146,7 +158,11 @@ export default function ConfirmationPage() {
             </div>
           </div>
         </div>
+
+        <Link href="/" className={styles.homeBtn}>
+          Back to Home
+        </Link>
       </div>
-    </div>
+    </main>
   )
 }

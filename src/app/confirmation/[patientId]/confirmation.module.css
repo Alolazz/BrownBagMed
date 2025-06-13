@@ -135,6 +135,68 @@
   animation: fade-in-out 1.8s linear;
 }
 
+/* Confirmation Page Styles */
+.confirmationBg {
+  min-height: 100vh;
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.confirmationCard {
+  background: var(--card-background);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px var(--shadow);
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.iconWrapper {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary, #666);
+  margin-bottom: 1rem;
+}
+
+.patientId {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary, #2563eb);
+  background: var(--background-accent, #f1f5f9);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+.homeBtn {
+  display: inline-block;
+  background: var(--button-background, #2563eb);
+  color: var(--button-text, #fff);
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.homeBtn:hover {
+  background: var(--button-background-hover, #1d4ed8);
+}
+
 /* Responsive design */
 @media (max-width: 640px) {
   .container {
