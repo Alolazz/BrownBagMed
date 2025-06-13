@@ -75,6 +75,7 @@ export async function GET(request: Request) {
         conditions: conditions,
         allergies: patient.allergies,
         comments: patient.comments,
+        medications: patient.medications,
         uploadedAt: patient.uploadedAt,
       },
     });

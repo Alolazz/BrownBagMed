@@ -55,6 +55,7 @@ export default async function AlolaDashboard() {
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Conditions</th>
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Allergies</th>
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Comments</th>
+                <th className="px-4 py-2 text-left font-semibold text-gray-700">Medications</th>
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Uploaded At</th>
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Paid</th>
                 <th className="px-4 py-2 text-left font-semibold text-gray-700">Report Ready</th>
@@ -64,7 +65,7 @@ export default async function AlolaDashboard() {
             <tbody className="divide-y divide-gray-100">
               {(!patients || patients.length === 0) && (
                 <tr>
-                  <td colSpan={9} className="px-4 py-4 text-center text-gray-500">
+                  <td colSpan={10} className="px-4 py-4 text-center text-gray-500">
                     {error ? "Database unavailable." : "No patients found."}
                   </td>
                 </tr>
@@ -76,6 +77,7 @@ export default async function AlolaDashboard() {
                   <td className="px-4 py-2 max-w-[120px] md:max-w-[200px] truncate" title={p.conditions || "-"}>{p.conditions || "-"}</td>
                   <td className="px-4 py-2 max-w-[120px] md:max-w-[200px] truncate" title={p.allergies || "-"}>{p.allergies || "-"}</td>
                   <td className="px-4 py-2 max-w-[120px] md:max-w-[200px] truncate" title={p.comments || "-"}>{p.comments || "-"}</td>
+                  <td className="px-4 py-2 max-w-[120px] md:max-w-[200px] truncate" title={p.medications || "-"}>{p.medications || "-"}</td>
                   <td className="px-4 py-2 whitespace-nowrap">{new Date(p.uploadedAt).toLocaleString()}</td>
                   <td className="px-4 py-2">
                     <span className={p.paid ? "text-green-600" : "text-gray-400"}>{p.paid ? "Yes" : "No"}</span>

@@ -12,6 +12,7 @@ export default function PatientDetailPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [patientInfo, setPatientInfo] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -28,7 +29,18 @@ export default function PatientDetailPage() {
       }
       setLoading(false);
     }
-    if (patientId) fetchFiles();
+    async function fetchPatientInfo() {
+      if (!patientId) return;
+      try {
+        const res = await fetch(`/api/getPatientInfo?patientId=${patientId}`);
+        const data = await res.json();
+        if (data.success) setPatientInfo(data.patient);
+      } catch {}
+    }
+    if (patientId) {
+      fetchFiles();
+      fetchPatientInfo();
+    }
   }, [patientId]);
 
   async function handleUpload(e: React.FormEvent<HTMLFormElement>) {
@@ -110,6 +122,28 @@ export default function PatientDetailPage() {
                 ))}
               </ul>
             )}
+          </div>
+        )}
+
+        {/* Patient Info Boxes */}
+        {patientInfo && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+            <div className="bg-white rounded-lg shadow p-4 border border-gray-200">
+              <h3 className="font-semibold text-gray-700 mb-1">Medical Condition(s)</h3>
+              <div className="text-gray-900 text-sm whitespace-pre-line min-h-[32px]">{Array.isArray(patientInfo.conditions) ? patientInfo.conditions.join(', ') : patientInfo.conditions || '-'}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border border-gray-200">
+              <h3 className="font-semibold text-gray-700 mb-1">Known Allergies</h3>
+              <div className="text-gray-900 text-sm whitespace-pre-line min-h-[32px]">{patientInfo.allergies || '-'}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border border-gray-200">
+              <h3 className="font-semibold text-gray-700 mb-1">Additional Information</h3>
+              <div className="text-gray-900 text-sm whitespace-pre-line min-h-[32px]">{patientInfo.comments || '-'}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border border-gray-200">
+              <h3 className="font-semibold text-gray-700 mb-1">Write Your Medications</h3>
+              <div className="text-gray-900 text-sm whitespace-pre-line min-h-[32px]">{patientInfo.medications || '-'}</div>
+            </div>
           </div>
         )}
 

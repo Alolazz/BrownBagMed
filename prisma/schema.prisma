@@ -15,6 +15,7 @@ model Patient {
   conditions  String?
   allergies   String?
   comments    String?
+  medications String?
   uploadedAt  DateTime @default(now())
   reportReady Boolean  @default(false)
   paid        Boolean  @default(false)

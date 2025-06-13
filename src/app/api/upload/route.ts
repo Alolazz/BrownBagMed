@@ -59,6 +59,7 @@ export async function POST(request: Request) {
         conditions: healthInfo.medicalConditions ? JSON.stringify(healthInfo.medicalConditions) : null,
         allergies: healthInfo.knownAllergies || null,
         comments: healthInfo.additionalComments || null,
+        medications: healthInfo.medicationNotes || null,
         uploadedAt: new Date(),
       };
       

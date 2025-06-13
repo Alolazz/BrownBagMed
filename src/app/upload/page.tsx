@@ -467,7 +467,7 @@ export default function UploadPage () {
               {/* Free-text Medication Entry */}
               <div className={styles.inputGroup}>
                 <label htmlFor="medicationNotes" className={styles.inputLabel}>
-                  Write your medications <span className="text-red-600" aria-hidden="true">*</span>
+                  Other medications (OTC, etc.) <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="medicationNotes"
@@ -483,7 +483,7 @@ export default function UploadPage () {
                   aria-invalid={!!medicationNotesError}
                   aria-describedby={medicationNotesError ? 'medicationNotes-error' : undefined}
                 />
-                {/* Add dynamic error message for 'Write your medications' field */}
+                {/* Add dynamic error message for 'Other medications' field */}
                 {medicationNotesError && <span id="medicationNotes-error" className="text-xs text-red-600">{medicationNotesError}</span>}
               </div>
             </div>
