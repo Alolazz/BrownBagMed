@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Brown Bag Med | Pharmacist Medication Check | Medication Review for Seniors, Polypharmacy Risks",
+  title: "Brown Bag Med | Pharmacist Medication Check | Medication Review for Seniors, Polypharmacy Risks ",
   description: "Pharmacist medication check online. Review prescription drugs online. Safe medication use for elderly. Check my medications for interactions.",
   icons: {
     icon: "/favicon.ico",
