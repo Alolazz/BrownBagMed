@@ -12,7 +12,17 @@ export default function PatientDetailPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
-  const [patientInfo, setPatientInfo] = useState<any>(null);
+  // Use a more specific type for patientInfo
+  const [patientInfo, setPatientInfo] = useState<{
+    id: string;
+    dateOfBirth?: string;
+    gender?: string;
+    conditions?: string[] | string;
+    allergies?: string;
+    comments?: string;
+    medications?: string;
+    uploadedAt?: string;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
