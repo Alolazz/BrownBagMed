@@ -1,6 +1,3 @@
-// Prisma schema for SQLite
-// Patient model as specified
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,14 +8,14 @@ datasource db {
 }
 
 model Patient {
-  id           String   @id @default(uuid())
-  folderName   String
-  dateOfBirth  String?  // optional
-  gender       String?  // optional, added for gender field
-  conditions   String?  // optional
-  allergies    String?  // optional
-  comments     String?  // optional
-  uploadedAt   DateTime @default(now())
-  reportReady  Boolean  @default(false)
-  paid         Boolean  @default(false)
+  id          String   @id @default(uuid())
+  folderName  String
+  dateOfBirth String?
+  gender      String?
+  conditions  String?
+  allergies   String?
+  comments    String?
+  uploadedAt  DateTime @default(now())
+  reportReady Boolean  @default(false)
+  paid        Boolean  @default(false)
 }

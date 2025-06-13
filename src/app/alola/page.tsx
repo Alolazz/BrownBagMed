@@ -4,13 +4,28 @@ import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
 export default async function AlolaDashboard() {
+  // For server-side logging only, won't expose to client
+  console.log("Starting Alola Dashboard render");
+  console.log("DATABASE_URL type:", typeof process.env.DATABASE_URL);
+  console.log("DATABASE_URL prefix:", process.env.DATABASE_URL?.substring(0, 12) + "...");
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+  
   let patients: Patient[] = [];
   let error = null;
+  let databaseInfo = null;
+
   try {
+    console.log("Attempting to query patients...");
     patients = await prisma.patient.findMany({
       orderBy: { uploadedAt: "desc" },
     });
-  } catch {
+    console.log("Query successful, patient count:", patients.length);
+    
+    // Get database connection info for debugging
+    const databaseType = process.env.DATABASE_URL?.startsWith('file:') ? 'SQLite' : 'PostgreSQL';
+    databaseInfo = `Connected to ${databaseType} database`;
+  } catch (err) {
+    console.error("Database error:", err);
     error = 'Could not load patients. Database may be unavailable.';
   }
 
@@ -21,6 +36,11 @@ export default async function AlolaDashboard() {
           <h1 className="text-2xl font-bold">Alola Dashboard</h1>
           <LogoutButton />
         </div>
+        {databaseInfo && (
+          <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded mb-4 text-xs">
+            {databaseInfo} • Environment: {process.env.NODE_ENV || 'development'}
+          </div>
+        )}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}

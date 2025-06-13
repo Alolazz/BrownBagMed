@@ -49,22 +49,35 @@ export async function POST(request: Request) {
 
     // Save patient data in Prisma database
     try {
-      await prisma.patient.create({
-        data: {
-          id: patientId,
-          folderName: patientId,
-          dateOfBirth: healthInfo.dateOfBirth || null,
-          gender: healthInfo.gender || null,
-          conditions: healthInfo.medicalConditions ? JSON.stringify(healthInfo.medicalConditions) : null,
-          allergies: healthInfo.knownAllergies || null,
-          comments: healthInfo.additionalComments || null,
-          uploadedAt: new Date(),
-        },
+      console.log(`Saving patient data to database (URL type: ${typeof process.env.DATABASE_URL})`);
+      
+      const patientData = {
+        id: patientId,
+        folderName: patientId,
+        dateOfBirth: healthInfo.dateOfBirth || null,
+        gender: healthInfo.gender || null,
+        conditions: healthInfo.medicalConditions ? JSON.stringify(healthInfo.medicalConditions) : null,
+        allergies: healthInfo.knownAllergies || null,
+        comments: healthInfo.additionalComments || null,
+        uploadedAt: new Date(),
+      };
+      
+      const result = await prisma.patient.create({
+        data: patientData
       });
+      
+      console.log('Patient data saved successfully:', result.id);
     } catch (dbError) {
       console.error('Database error:', dbError);
-      // Continue with the request even if database save fails
-      // This way files are still uploaded to Blob storage
+      // Return error response for database failures in production
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json({ 
+          success: false, 
+          message: 'Failed to save patient data',
+          error: dbError instanceof Error ? dbError.message : 'Unknown database error'
+        }, { status: 500 });
+      }
+      // In development, continue with the request even if database save fails
     }
 
     // Return success response with URLs and patient data
