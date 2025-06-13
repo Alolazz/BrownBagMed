@@ -4,9 +4,15 @@ import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
 export default async function AlolaDashboard() {
-  const patients = await prisma.patient.findMany({
-    orderBy: { uploadedAt: "desc" },
-  });
+  let patients: any[] = [];
+  let error = null;
+  try {
+    patients = await prisma.patient.findMany({
+      orderBy: { uploadedAt: "desc" },
+    });
+  } catch (e) {
+    error = 'Could not load patients. Database may be unavailable.';
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
@@ -15,6 +21,11 @@ export default async function AlolaDashboard() {
           <h1 className="text-2xl font-bold">Alola Dashboard</h1>
           <LogoutButton />
         </div>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
         <div className="overflow-x-auto bg-white rounded shadow">
           <table className="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
             <thead className="bg-gray-100">
@@ -31,14 +42,14 @@ export default async function AlolaDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {patients.length === 0 && (
+              {(!patients || patients.length === 0) && (
                 <tr>
                   <td colSpan={9} className="px-4 py-4 text-center text-gray-500">
-                    No patients found.
+                    {error ? "Database unavailable." : "No patients found."}
                   </td>
                 </tr>
               )}
-              {patients.map((p) => (
+              {patients && patients.map((p) => (
                 <tr key={p.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 break-all max-w-[120px] md:max-w-[200px]">{p.id}</td>
                   <td className="px-4 py-2">{p.dateOfBirth || "-"}</td>
