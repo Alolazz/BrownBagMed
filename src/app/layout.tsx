@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import Link from 'next/link';
+import ClientThemeProvider from './components/ClientThemeProvider';
+import ThemeToggleWrapper from './components/ThemeToggleWrapper';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,29 +83,89 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/logo1.png" />
         <meta name="keywords" content="medication review for seniors, check my medications for interactions, pharmacist medication check online, are my medications safe?, help with too many medications, review prescription drugs online, safe medication use for elderly, polypharmacy risks" />
         <link rel="canonical" href="https://www.brownbagmed.eu" />
+        {/* Add script to prevent flash of incorrect theme */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', initialTheme);
+                if (initialTheme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            })();
+          `
+        }} />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header style={{ position: 'sticky', top: 0, background: '#f8fafc', zIndex: 1000, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <Link href="/" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Home</Link>
-            <Link href="/upload" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Upload</Link>
-            <Link href="/blog" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Blog</Link>
-            <Link href="/faq" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>FAQ</Link>
-            <Link href="/contact" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold' }}>Contact</Link>
-          </nav>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ position: 'relative' }}>
-              <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb', fontWeight: 'bold' }}>Languages</button>
-              <div style={{ position: 'absolute', top: '100%', left: 0, background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '10px', display: 'none' }}>
-                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>English</a>
-                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>German</a>
-                <a href="#" style={{ display: 'block', textDecoration: 'none', color: '#2563eb', padding: '5px 10px' }}>Arabic</a>
+        <ClientThemeProvider>
+          <header style={{ 
+            position: 'sticky', 
+            top: 0, 
+            background: 'var(--header-background)', 
+            zIndex: 1000, 
+            boxShadow: '0 2px 4px var(--shadow)', 
+            padding: '10px 20px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            color: 'var(--text-color)'
+          }}>
+            <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+              <Link href="/" style={{ textDecoration: 'none', color: 'var(--link-color)', fontWeight: 'bold' }}>Home</Link>
+              <Link href="/upload" style={{ textDecoration: 'none', color: 'var(--link-color)', fontWeight: 'bold' }}>Upload</Link>
+              <Link href="/blog" style={{ textDecoration: 'none', color: 'var(--link-color)', fontWeight: 'bold' }}>Blog</Link>
+              <Link href="/faq" style={{ textDecoration: 'none', color: 'var(--link-color)', fontWeight: 'bold' }}>FAQ</Link>
+              <Link href="/contact" style={{ textDecoration: 'none', color: 'var(--link-color)', fontWeight: 'bold' }}>Contact</Link>
+            </nav>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <div style={{ position: 'relative' }}>
+                <button style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  cursor: 'pointer', 
+                  color: 'var(--link-color)', 
+                  fontWeight: 'bold' 
+                }}>
+                  Languages
+                </button>
+                <div style={{ 
+                  position: 'absolute', 
+                  top: '100%', 
+                  left: 0, 
+                  background: 'var(--card-background)', 
+                  boxShadow: '0 2px 4px var(--shadow)', 
+                  padding: '10px', 
+                  display: 'none',
+                  zIndex: 1000
+                }}>
+                  <a href="#" style={{ display: 'block', textDecoration: 'none', color: 'var(--link-color)', padding: '5px 10px' }}>English</a>
+                  <a href="#" style={{ display: 'block', textDecoration: 'none', color: 'var(--link-color)', padding: '5px 10px' }}>German</a>
+                  <a href="#" style={{ display: 'block', textDecoration: 'none', color: 'var(--link-color)', padding: '5px 10px' }}>Arabic</a>
+                </div>
               </div>
+              <Link href="/upload" style={{ 
+                textDecoration: 'none', 
+                background: 'var(--button-background)', 
+                color: 'var(--button-text)', 
+                padding: '10px 20px', 
+                borderRadius: '5px', 
+                fontWeight: 'bold' 
+              }}>
+                Get Started
+              </Link>
+              <ThemeToggleWrapper />
             </div>
-            <Link href="/upload" style={{ textDecoration: 'none', background: '#2563eb', color: '#fff', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold' }}>Get Started</Link>
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb', fontWeight: 'bold' }}>Toggle Theme</button>
-          </div>
-        </header>
+          </header>
+
+          {/* Main content */}
+          {children}
+        </ClientThemeProvider>
+
+        {/* Analytics scripts */}
         {process.env.NODE_ENV === 'production' && (
           <>
             <Script
@@ -158,7 +220,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        {children}
       </body>
     </html>
   );

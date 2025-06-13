@@ -1,13 +1,31 @@
 :root {
+  /* Light theme variables */
   --background: #ffffff;
   --foreground: #171717;
+  --text-color: #333333;
+  --card-background: #f8f8f8;
+  --border-color: #e0e0e0;
+  --link-color: #0070f3;
+  --button-background: #0070f3;
+  --button-text: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --header-background: #ffffff;
+  --hover-background: #f5f5f5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root[data-theme="dark"] {
+  /* Dark theme variables */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --text-color: #e0e0e0;
+  --card-background: #1a1a1a;
+  --border-color: #333333;
+  --link-color: #3291ff;
+  --button-background: #3291ff;
+  --button-text: #ffffff;
+  --shadow: rgba(255, 255, 255, 0.05);
+  --header-background: #0f0f0f;
+  --hover-background: #252525;
 }
 
 html,
@@ -22,9 +40,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff; /* Ensure the entire page has a white background */
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
@@ -38,8 +56,15 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Apply theme transition to various elements */
+button, a, input, select, textarea, div, header, nav, footer, section, aside {
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease, 
+              box-shadow 0.3s ease;
+}
+
+/* Remove default media query as we're handling it with JavaScript */
+[data-theme="dark"] {
+  color-scheme: dark;
 }

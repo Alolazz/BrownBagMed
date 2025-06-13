@@ -1,0 +1,22 @@
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  color: var(--text-color);
+  margin-left: auto;
+}
+
+.themeToggle:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.themeToggle svg {
+  width: 22px;
+  height: 22px;
+}
