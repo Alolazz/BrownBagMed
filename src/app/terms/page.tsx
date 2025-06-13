@@ -39,7 +39,7 @@ export default function TermsPage() {
       <p><strong>1.3</strong> You are responsible for maintaining the confidentiality of any access credentials or personal information shared with Brown Bag Med.</p>
 
       <h2>2. Medical Disclaimer</h2>
-      <p><strong>2.1</strong> Brown Bag Med does not provide medical advice. The Services are intended for informational and educational purposes only.</p>
+      <p><strong>2.1</strong> Brown Bag Med Services are intended for informational and educational purposes only.</p>
       <p><strong>2.2</strong> Always consult a qualified healthcare provider before making any changes to your medications, treatments, or healthcare routines.</p>
 
       <h2>3. Privacy</h2>
