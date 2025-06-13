@@ -1,16 +1,16 @@
 import React from "react";
-import prisma from "@/app/models/patient";
+import prisma, { Patient } from "@/app/models/patient";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
 export default async function AlolaDashboard() {
-  let patients: any[] = [];
+  let patients: Patient[] = [];
   let error = null;
   try {
     patients = await prisma.patient.findMany({
       orderBy: { uploadedAt: "desc" },
     });
-  } catch (e) {
+  } catch {
     error = 'Could not load patients. Database may be unavailable.';
   }
 
