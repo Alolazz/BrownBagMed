@@ -426,7 +426,7 @@ export default function UploadPage () {
               {/* Additional Comments */}
               <div className={styles.inputGroup}>
                 <label htmlFor='additionalComments' className={styles.inputLabel}>
-                  Additional Comments <span className="text-red-600" aria-hidden="true">*</span>
+                  Questions and Comments <span className="text-red-600" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id='additionalComments'
