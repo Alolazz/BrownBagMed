@@ -12,7 +12,7 @@ DATABASE_URL="postgresql://username:password@hostname:5432/database_name"
 
 # NowPayments API Configuration
 NOWPAYMENTS_API_KEY="your-api-key-from-nowpayments"
-NOWPAYMENTS_IPN_SECRET="your-ipn-secret-from-nowpayments"
+NOWPAYMENTS_IPN_SECRET="70yT7jJURapV9qLwSaGUZM7PmvjhAqyF" # IPN Secret for signature verification
 
 # Admin Authentication
 ADMIN_API_KEY="secure-admin-key-for-protected-routes"

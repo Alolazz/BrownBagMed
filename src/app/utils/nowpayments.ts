@@ -30,7 +30,8 @@ interface ProcessedPayment {
 class NOWPaymentsService {
   private static readonly API_BASE_URL = 'https://api.nowpayments.io/v1';
   private static readonly API_KEY = process.env.NOWPAYMENTS_API_KEY || '';
-  private static readonly IPN_SECRET = process.env.NOWPAYMENTS_IPN_SECRET || '';
+  // Use the new IPN secret for HMAC verification
+  private static readonly IPN_SECRET = process.env.NOWPAYMENTS_IPN_SECRET || '70yT7jJURapV9qLwSaGUZM7PmvjhAqyF';
 
   /**
    * Process IPN (Instant Payment Notification) callback from NOWPayments

@@ -12,7 +12,9 @@
     "prisma:push": "prisma db push --accept-data-loss",
     "postinstall": "prisma generate",
     "test:e2e": "playwright test",
-    "test:payment": "node scripts/create-test-patient.js && playwright test tests/payment-flow.test.ts"
+    "test:payment": "node scripts/create-test-patient.js && playwright test tests/payment-flow.test.ts",
+    "verify:payments": "node scripts/verify-nowpayments-config.js",
+    "setup:payments": "node scripts/update-nowpayments-env.js"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",

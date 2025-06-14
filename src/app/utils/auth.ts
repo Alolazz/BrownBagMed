@@ -1,5 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
+import { createHmac } from 'crypto';
+
+/**
+ * Verify NOWPayments HMAC signature
+ * 
+ * @param payload The callback payload data
+ * @param signature The HMAC signature from the header
+ * @returns boolean indicating if the signature is valid
+ */
+export function verifyNOWPaymentsSignature(
+  payload: any, 
+  signature: string
+): boolean {
+  // For testing, allow validation to be skipped in development
+  if (process.env.NODE_ENV === 'development' && process.env.SKIP_HMAC_VERIFY === 'true') {
+    console.warn('HMAC verification skipped in development mode');
+    return true;
+  }
+  
+  try {
+    // Get IPN secret from environment variables
+    const ipnSecret = process.env.NOWPAYMENTS_IPN_SECRET || '70yT7jJURapV9qLwSaGUZM7PmvjhAqyF';
+    
+    if (!signature) {
+      console.error('HMAC signature is missing');
+      return false;
+    }
+    
+    // Create HMAC using SHA-512 and the IPN secret
+    const hmac = createHmac('sha512', ipnSecret);
+    
+    // Generate the signature from the payload
+    const computedSignature = hmac
+      .update(JSON.stringify(payload))
+      .digest('hex');
+    
+    // Compare the computed signature with the provided one
+    const isValid = computedSignature === signature;
+    
+    if (!isValid) {
+      console.error('HMAC signature verification failed');
+      console.error('Expected:', computedSignature.substring(0, 16) + '...');
+      console.error('Received:', signature.substring(0, 16) + '...');
+    }
+    
+    return isValid;
+  } catch (error) {
+    console.error('Error verifying HMAC signature:', error);
+    return false;
+  }
+}
 
 /**
  * Check if the user has admin authorization
