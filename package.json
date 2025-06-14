@@ -10,7 +10,9 @@
     "cleanup": "node scripts/cleanup.js",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push --accept-data-loss",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test:e2e": "playwright test",
+    "test:payment": "node scripts/create-test-patient.js && playwright test tests/payment-flow.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",

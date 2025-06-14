@@ -8,15 +8,23 @@ datasource db {
 }
 
 model Patient {
-  id          String   @id @default(uuid())
-  folderName  String
-  dateOfBirth String?
-  gender      String?
-  conditions  String?
-  allergies   String?
-  comments    String?
-  medications String?
-  uploadedAt  DateTime @default(now())
-  reportReady Boolean  @default(false)
-  paid        Boolean  @default(false)
+  id               String    @id @default(uuid())
+  folderName       String
+  dateOfBirth      String?
+  gender           String?
+  conditions       String?
+  allergies        String?
+  comments         String?
+  uploadedAt       DateTime  @default(now())
+  reportReady      Boolean   @default(false)
+  medications      String?
+  paymentConfirmed Boolean   @default(false)
+  reportUrl        String?
+  // Payment related fields
+  paid             Boolean   @default(false)
+  requiredPlanType String?   @default("basic") // "basic", "standard", or "premium"
+  paymentId        String?
+  paymentAmount    Float?
+  paymentCurrency  String?
+  paymentDate      DateTime?
 }

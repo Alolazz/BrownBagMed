@@ -1,8 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Brown Bag Med
+
+Brown Bag Med is a medical review service that allows healthcare professionals to review patient medications and provide tailored reports. The system includes a cryptocurrency payment integration with NOWPayments.
+
 ## Getting Started
 
-First, run the development server:
+First, set up your environment variables:
+
+1. Create a `.env.local` file in the root directory
+2. Add the required variables (see Environment Variables section below)
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -16,9 +25,37 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The following environment variables are required:
+
+```
+DATABASE_URL="postgresql://username:password@hostname:5432/database_name"
+NOWPAYMENTS_API_KEY="your-api-key"
+NOWPAYMENTS_IPN_SECRET="your-ipn-secret"
+ADMIN_API_KEY="secure-admin-key"
+```
+
+For more details, see [NOWPAYMENTS_ENV_SETUP.md](./NOWPAYMENTS_ENV_SETUP.md)
+
+## Payment System
+
+The application integrates with NOWPayments to accept cryptocurrency payments. The payment flow is as follows:
+
+1. Healthcare professionals review patient data and set an appropriate payment plan (basic, standard, or premium)
+2. Patients are presented with their required payment plan and a payment button
+3. Upon clicking the payment button, patients are directed to the NOWPayments checkout page
+4. After successful payment, patients can access their medical reports
+5. Email notifications are sent to both patients and administrators
+
+For detailed documentation on the payment integration, see [NOWPAYMENTS_INTEGRATION.md](./NOWPAYMENTS_INTEGRATION.md)
+
+## Admin Dashboard
+
+An admin dashboard is available at `/admin/dashboard` to:
+- View all patients and their payment status
+- Set required payment plans for patients
+- Monitor payment confirmations
 
 ## Learn More
 
